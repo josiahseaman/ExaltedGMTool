@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExaltedCharacter repositoryId="Caedris" repositoryPrintName="Caedris">
+  <Description>
+    <CharacterName><![CDATA[Caedris]]></CharacterName>
+    <Player><![CDATA[David]]></Player>
+  </Description>
+  <Description>
+    <CharacterName><![CDATA[Caedris]]></CharacterName>
+    <Player><![CDATA[David]]></Player>
+  </Description>
+  <Statistics experienced="false">
+    <Rules>
+      <RuleSet name="SecondEdition"/>
+    </Rules>
+    <CharacterType subtype="TemplateType.Default">Solar</CharacterType>
+    <CharacterConcept age="0">
+      <Caste type="Eclipse"/>
+      <Motivation><![CDATA[To organize the floating islands into a unified force against threats to creation]]></Motivation>
+    </CharacterConcept>
+    <Essence creationValue="3"/>
+    <Willpower creationValue="7"/>
+    <Virtues>
+      <Compassion creationValue="1"/>
+      <Conviction creationValue="3"/>
+      <Temperance creationValue="3"/>
+      <Valor creationValue="2"/>
+    </Virtues>
+    <Attributes>
+      <Physical>
+        <Strength creationValue="2"/>
+        <Dexterity creationValue="3"/>
+        <Stamina creationValue="2"/>
+      </Physical>
+      <Social>
+        <Charisma creationValue="4"/>
+        <Manipulation creationValue="3"/>
+        <Appearance creationValue="4"/>
+      </Social>
+      <Mental>
+        <Perception creationValue="2"/>
+        <Intelligence creationValue="4"/>
+        <Wits creationValue="3"/>
+      </Mental>
+    </Attributes>
+    <Abilities>
+      <Archery creationValue="0"/>
+      <MartialArts creationValue="0"/>
+      <Melee creationValue="5" favored="true"/>
+      <Thrown creationValue="0"/>
+      <War creationValue="0"/>
+      <Integrity creationValue="0"/>
+      <Performance creationValue="3" favored="true"/>
+      <Presence creationValue="1"/>
+      <Resistance creationValue="1"/>
+      <Survival creationValue="0"/>
+      <Craft>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Air]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Earth]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Fire]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Water]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Wood]]></traitName>
+        </subTrait>
+      </Craft>
+      <Investigation creationValue="0"/>
+      <Lore creationValue="3" favored="true"/>
+      <Medicine creationValue="0"/>
+      <Occult creationValue="1">
+        <Specialty creationValue="2" name="Dvision of Journeys"/>
+      </Occult>
+      <Athletics creationValue="1" favored="true">
+        <Specialty creationValue="2" name="Weilding a sword"/>
+      </Athletics>
+      <Awareness creationValue="1" favored="true"/>
+      <Dodge creationValue="0"/>
+      <Larceny creationValue="0"/>
+      <Stealth creationValue="0"/>
+      <Bureaucracy creationValue="5"/>
+      <Linguistics creationValue="2"/>
+      <Ride creationValue="0"/>
+      <Sail creationValue="4"/>
+      <Socialize creationValue="2"/>
+    </Abilities>
+    <Backgrounds>
+      <Background creationValue="5"><![CDATA[Resources]]></Background>
+      <Background creationValue="2"><![CDATA[Followers]]>
+        <Description><![CDATA[(Henchmen Crew) 5 Loyal Crewmen]]></Description>
+      </Background>
+      <Background creationValue="2"><![CDATA[Influence]]>
+        <Description><![CDATA[Kingdom of Andraek]]></Description>
+      </Background>
+      <Background creationValue="1"><![CDATA[Allies]]>
+        <Description><![CDATA[Korian, Lesser god of Airships]]></Description>
+      </Background>
+    </Backgrounds>
+    <Charms>
+      <CharmGroup name="Bureaucracy" type="Solar">
+        <Charm name="Solar.SpeedWheels" experienceLearned="false"/>
+        <Charm name="Solar.ImmanentSolarGloryBureaucracy" experienceLearned="false">
+          <Special>
+            <LearnCount creationValue="1"/>
+          </Special>
+        </Charm>
+        <Charm name="Solar.2ndExcellency.Bureaucracy" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Lore" type="Solar">
+        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Sail" type="Solar">
+        <Charm name="Solar.Ship-ClaimingStance" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Sail" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Linguistics" type="Solar">
+        <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Melee" type="Solar">
+        <Charm name="Solar.2ndExcellency.Melee" experienceLearned="false"/>
+        <Charm name="Solar.HeavenlyGuardianDefense" experienceLearned="false"/>
+        <Charm name="Solar.DippingSwallowDefense" experienceLearned="false"/>
+        <Charm name="Solar.BulwarkStance" experienceLearned="false"/>
+      </CharmGroup>
+      <Combos/>
+      <CharmFilters>
+        <SourceFilter showprereqs="true"/>
+      </CharmFilters>
+    </Charms>
+    <Spells/>
+    <Experience/>
+    <AdditionalModels>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
+      </Model>
+      <Model templateId="Equipment">
+        <Content>
+          <item>
+            <templateId><![CDATA[Natural]]></templateId>
+            <printedStats><![CDATA[Punch]]></printedStats>
+            <printedStats><![CDATA[Kick]]></printedStats>
+            <printedStats><![CDATA[Clinch]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Wavecleaver Daiklave]]></templateId>
+            <material><![CDATA[Orichalcum]]></material>
+            <printedStats><![CDATA[Close]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Reaper Daiklave]]></templateId>
+            <material><![CDATA[Orichalcum]]></material>
+            <printedStats><![CDATA[Close]]></printedStats>
+          </item>
+        </Content>
+      </Model>
+      <Model templateId="Intimacies">
+        <Content>
+          <Intimacies>
+            <Intimacy name="Kingdom of Aderelith" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+            <Intimacy name="Korian" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+            <Intimacy name="The Party" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+            <Intimacy name="Mutants (negative)" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+            <Intimacy name="&quot;The Faulty Wind&quot; and crew" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+            <Intimacy name="The Wyld (negative)" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+          </Intimacies>
+        </Content>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics>
+            <language><![CDATA[OldRealm]]></language>
+            <language><![CDATA[Foresttongue]]></language>
+            <language><![CDATA[LowRealm]]></language>
+          </linguistics>
+        </Content>
+      </Model>
+      <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="SolarVirtueFlaw">
+        <Content>
+          <VirtueFlaw>
+            <RootVirtue name="Conviction"/>
+            <Name><![CDATA[Heart of Flint]]></Name>
+            <Limit creationValue="0"/>
+            <LimitBreak><![CDATA[no emotion. -2 to social rolls in face to face combat (social)]]></LimitBreak>
+          </VirtueFlaw>
+        </Content>
+      </Model>
+    </AdditionalModels>
+  </Statistics>
+</ExaltedCharacter>
