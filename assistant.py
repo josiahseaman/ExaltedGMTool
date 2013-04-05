@@ -54,10 +54,10 @@ def flurry(nAttacks, accuracy, damageCode, DV, soak):
 def characterFlurryAttack(nAttacks, attackingChar, defendingChar):
    return flurry(nAttacks, attackingChar.accuracy, attackingChar.damageCode, defendingChar.DV, defendingChar.soak)
 
-def testScene():
+def testScene(nAttacks=3):
    dace = ExaltedCharacter()
    swift = ExaltedCharacter()
-   characterFlurryAttack(3, dace, swift)
+   characterFlurryAttack(nAttacks, dace, swift)
 
 
 print "==Exalted GM Assistant Activated=="
