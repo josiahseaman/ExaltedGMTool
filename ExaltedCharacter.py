@@ -5,10 +5,10 @@ from ElementTree import *
 class ExaltedCharacter():
 
     def __init__(self, filename=None):
-        self.accuracy = 1
-        self.damageCode = 1
-        self.DV = 1
-        self.soak = 1
+        self.accuracy = 11
+        self.damageCode = 4
+        self.DV = 3
+        self.soak = 4
         self.characterSheet = None
         if filename:
             self.characterSheet = self.parseXML(filename)
@@ -45,10 +45,18 @@ class ExaltedCharacter():
     def getText(self, elem):
         print elem
         return ",".join(elem.itertext())
-    
+
+    def sumDicePool(self, *stats):
+        dicePool = 0
+        for stat in stats: #I can do this with reduce, but it's harder to read
+            dicePool += self.getStat(stat)
+        return dicePool
+
+
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
     usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Survival', 'Computers']
 
     for stat in usefulStats:
         print stat, ":", int(c.getStat(stat) or 0)
+    print "For 'Perception', 'Awareness' Roll", c.sumDicePool('Perception', 'Awareness'), "dice"
