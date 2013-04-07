@@ -13,9 +13,8 @@ class ExaltedCharacter():
         if filename:
             self.characterSheet = self.parseXML(filename)
 
-    def parseXML(self):
+    def parseXML(self, filename):
         """:return: Root node of the XML character sheet"""
-        filename = 'Willow.ecg'
         tree = ElementTree(file=filename)
         root = tree.getroot()
         return root
@@ -28,7 +27,7 @@ class ExaltedCharacter():
 
     def getStat(self, statName):
         try:
-            element = root.getiterator(statName).next()
+            element = self.characterSheet.getiterator(statName).next()
         except:
             return 0
         result = self.getStatNumber(element)
@@ -47,9 +46,7 @@ class ExaltedCharacter():
         return ",".join(elem.itertext())
     
 if __name__ == "__main__":
-    c = ExaltedCharacter()
-    root = c.parseXML()
-    # print tostring(root)
+    c = ExaltedCharacter('Willow.ecg')
     usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Survival', 'Computers']
 
     for stat in usefulStats:
