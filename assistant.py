@@ -1,5 +1,4 @@
 import random
-from ExaltedCharacter import ExaltedCharacter
 
 random.seed()
 
@@ -18,7 +17,7 @@ def rollDamage(nDice):
 def d(nDice):
    return rollDamage(nDice)
 
-def skillCheck(nDice, label=None):
+def skillCheckByNumber(nDice, label=None):
    if not label: label = "Skill:"
    rolls = roll(nDice, label)
    hits = filter(lambda x: x >= 7, rolls)
@@ -29,10 +28,10 @@ def skillCheck(nDice, label=None):
    return successes
 
 def s(nDice):
-   return skillCheck(nDice)
+   return skillCheckByNumber(nDice)
 
 def attack(accuracy, damageCode, DV, soak):
-   hits = skillCheck(accuracy, "Attack")
+   hits = skillCheckByNumber(accuracy, "Attack")
    if hits < DV:
       print "You missed"
       return 0 
@@ -50,21 +49,3 @@ def flurry(nAttacks, accuracy, damageCode, DV, soak):
       damageDone.append(attack(accuracy-penalty, damageCode, DV, soak))
    print "Total damage done:", sum(damageDone)
    return sum(damageDone)
-
-def characterFlurryAttack(nAttacks, attackingChar, defendingChar):
-   return flurry(nAttacks, attackingChar.accuracy, attackingChar.damageCode, defendingChar.DV, defendingChar.soak)
-
-def skillCheckPool(character, *stats):
-    skillCheck(character.sumDicePool(*stats))
-
-def testScene(nAttacks=3):
-   dace = ExaltedCharacter()
-   swift = ExaltedCharacter()
-   characterFlurryAttack(nAttacks, dace, swift)
-
-
-print "==Exalted GM Assistant Activated=="
-
-if __name__ == '__main__':
-    testScene()
-    

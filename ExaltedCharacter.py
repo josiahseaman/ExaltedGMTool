@@ -1,5 +1,6 @@
 from django.contrib.localflavor import us
 from ElementTree import *
+from assistant import *
 
 
 class ExaltedCharacter():
@@ -52,6 +53,11 @@ class ExaltedCharacter():
             dicePool += self.getStat(stat)
         return dicePool
 
+    def roll(self, *stats):
+        return skillCheckByNumber(self.sumDicePool())
+
+    def flurryAttack(self, nAttacks,  defendingChar):
+        return flurry(nAttacks, self.accuracy, self.damageCode, defendingChar.DV, defendingChar.soak)
 
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
