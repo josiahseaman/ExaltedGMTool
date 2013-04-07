@@ -26,6 +26,7 @@ class ExaltedCharacter():
         return int(result or 0)
 
     def getStat(self, statName):
+        statName = statName.lower().capitalize() #proper capitalization
         try:
             element = self.characterSheet.getiterator(statName).next()
         except:
