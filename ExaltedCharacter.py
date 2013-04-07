@@ -14,26 +14,32 @@ class ExaltedCharacter():
             self.characterSheet = self.parseXML(filename)
 
     def parseXML(self):
-        """
-        :return: Root node of the XML character sheet
-        """
+        """:return: Root node of the XML character sheet"""
         filename = 'Willow.ecg'
         tree = ElementTree(file=filename)
-        # the tree root is the toplevel html element
-        print tree.findtext("ExaltedCharacter")
-
-        # if you need the root element, use getroot
         root = tree.getroot()
         return root
+
+    def getStatNumber(self, element):
+        result = element.get('experiencedValue', None)
+        if not result:
+            result = element.get('creationValue', None)
+        return int(result or 0)
 
     def getStat(self, statName):
         try:
             element = root.getiterator(statName).next()
         except:
-            return None
-        result = element.get('experiencedValue',None)
-        if not result:
-            result = element.get('creationValue', None)
+            return 0
+        result = self.getStatNumber(element)
+        #check for specialties, assumes they are applicable to this roll
+        try:
+            specialtyElem = element.iter('Specialty').next()
+            print "Specialty:", specialtyElem.attrib['name'], #currently I'm print this out to remind people of the assumption
+            specialty = self.getStatNumber(specialtyElem)
+        except:
+            specialty = 0
+        result += specialty
         return result
 
     def getText(self, elem):
@@ -44,7 +50,7 @@ if __name__ == "__main__":
     c = ExaltedCharacter()
     root = c.parseXML()
     # print tostring(root)
-    usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Resistance', 'Computers']
+    usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Survival', 'Computers']
+
     for stat in usefulStats:
-        print stat, ":", c.getStat(stat)
-    # print root.find('Statistics')
+        print stat, ":", int(c.getStat(stat) or 0)
