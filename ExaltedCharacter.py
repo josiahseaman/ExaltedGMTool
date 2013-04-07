@@ -6,6 +6,7 @@ from DiceRoller import *
 class ExaltedCharacter():
 
     def __init__(self, filename=None):
+        self.name = "Unnamed"
         self.accuracy = 11
         self.damageCode = 4
         self.DV = 3
@@ -13,12 +14,15 @@ class ExaltedCharacter():
         self.characterSheet = None
         if filename:
             self.characterSheet = self.parseXML(filename)
+            self.name = self.getName()
 
     def parseXML(self, filename):
         """:return: Root node of the XML character sheet"""
         tree = ElementTree(file=filename)
         root = tree.getroot()
         return root
+    def getName(self):
+        return self.characterSheet.attrib['repositoryPrintName']
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
@@ -61,6 +65,7 @@ class ExaltedCharacter():
 
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
+    print c.name
     usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Survival', 'Computers']
 
     for stat in usefulStats:
