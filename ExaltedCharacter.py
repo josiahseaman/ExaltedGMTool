@@ -1,6 +1,6 @@
 from django.contrib.localflavor import us
 from ElementTree import *
-from assistant import *
+from DiceRoller import *
 
 
 class ExaltedCharacter():
