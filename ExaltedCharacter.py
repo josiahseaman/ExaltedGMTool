@@ -15,6 +15,8 @@ class ExaltedCharacter():
         if filename:
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
+    def __repr__(self):
+        return self.name
 
     def parseXML(self, filename):
         """:return: Root node of the XML character sheet"""
@@ -58,10 +60,13 @@ class ExaltedCharacter():
         return dicePool
 
     def roll(self, *stats):
-        return skillCheckByNumber(self.sumDicePool())
+        return skillCheckByNumber(self.sumDicePool(*stats))
 
     def flurryAttack(self, nAttacks,  defendingChar):
         return flurry(nAttacks, self.accuracy, self.damageCode, defendingChar.DV, defendingChar.soak)
+
+    def joinBattle(self):
+        return self.roll('Wits', 'Awareness')
 
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
