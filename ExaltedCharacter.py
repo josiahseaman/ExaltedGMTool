@@ -4,6 +4,12 @@ from DiceRoller import *
 import json
 
 
+class TemporaryStat():
+    def __init__(self, name, perm):
+        self.name = name
+        self.permanent = perm
+        self.temporary = self.permanent
+
 class ExaltedCharacter():
 
     def __init__(self, filename=None):
@@ -14,10 +20,17 @@ class ExaltedCharacter():
             self.name = self.getName()
         self.weaponStats = json.load(open('Daiklave.item'))
         self.armorStats = json.load(open('Articulated_Plate.item'))
+        self.temporaryWillpower = self.newStat('Willpower')
 
     def __repr__(self):
         return self.name
 
+    '''Temporary State'''
+    def newStat(self, name):
+        return TemporaryStat(name, self.getStat(name))
+
+
+    '''Items Stats'''
     def accuracy(self):
         return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['accuracy'] + self.sumDicePool('Dexterity', "Melee")
 
@@ -38,6 +51,8 @@ class ExaltedCharacter():
 
     def hardness(self):
         return self.armorStats["statsByRuleSet"]["SecondEdition"][0]["hardnessByHealthType"]['Lethal']
+
+
 
     def parseXML(self, filename):
         """:return: Root node of the XML character sheet"""
