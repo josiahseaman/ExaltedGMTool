@@ -2,19 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f39a7101-c74e-4ef8-bc37-acbe4d60f103" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Documents and Settings\Josiah\Documents\ExaltedGMTool\WanderingVengefulLink.ecg" afterPath="" />
-      <change type="MOVED" beforePath="C:\Documents and Settings\Josiah\Documents\ExaltedGMTool\assistant.py" afterPath="$PROJECT_DIR$/DiceRoller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExaltedCharacter.py" afterPath="$PROJECT_DIR$/ExaltedCharacter.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ExaltedGMTool.iml" afterPath="$PROJECT_DIR$/.idea/ExaltedGMTool.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Scene.py" afterPath="$PROJECT_DIR$/Scene.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ExaltedGMTool.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365262025596" ignored="false" />
+    <file path="/Dummy.txt" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365696552402" ignored="false" />
     <file path="/ExaltedCharacter.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365381310636" ignored="false" />
     <file path="/start_script.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365308357004" ignored="false" />
-    <file path="/Python Console" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365380840360" ignored="false" />
+    <file path="/Python Console" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365640041145" ignored="false" />
     <file path="/assistant.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365311672828" ignored="false" />
-    <file path="/Scene.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365383590447" ignored="false" />
+    <file path="/Scene.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365460012244" ignored="false" />
+    <file path="/TestCollection.py" changelist="f39a7101-c74e-4ef8-bc37-acbe4d60f103" time="1365711424647" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +36,8 @@
       <file leaf-file-name="ExaltedCharacter.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ExaltedCharacter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="20" selection-start="2057" selection-end="2069" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+            <state line="65" column="18" selection-start="2121" selection-end="2121" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,34 +45,25 @@
       <file leaf-file-name="DiceRoller.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiceRoller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="4" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0">
+            <state line="44" column="16" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scene.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Scene.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scene.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="39" selection-start="2043" selection-end="2043" vertical-scroll-proportion="2.0542636">
+            <state line="15" column="98" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Caedris.ecg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Caedris.ecg">
+      <file leaf-file-name="TestCollection.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Documents/TestArea/TestCollection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="17" selection-start="41" selection-end="57" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Willow.ecg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Willow.ecg">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="39" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0">
+            <state line="19" column="0" selection-start="460" selection-end="460" vertical-scroll-proportion="0.71302426">
               <folding />
             </state>
           </provider>
@@ -99,6 +90,7 @@
         <option value="$PROJECT_DIR$/assistant.py" />
         <option value="$PROJECT_DIR$/ExaltedCharacter.py" />
         <option value="$PROJECT_DIR$/Scene.py" />
+        <option value="$USER_HOME$/Documents/TestArea/TestCollection.py" />
       </list>
     </option>
   </component>
@@ -149,7 +141,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ExaltedGMTool" />
+              <option name="myItemId" value="TestArea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -161,7 +153,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="editor" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
@@ -176,7 +169,7 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.Scene">
+  <component name="RunManager" selected="Python.TestCollection">
     <configuration default="false" name="ExaltedCharacter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -232,6 +225,23 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
+    <configuration default="false" name="TestCollection" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Documents/TestArea" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <module name="TestArea" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Documents/TestArea/TestCollection.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -241,7 +251,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="ExaltedGMTool" />
+      <module name="TestArea" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
@@ -254,7 +264,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="ExaltedGMTool" />
+      <module name="TestArea" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
@@ -268,16 +278,36 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <list size="3">
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="TestArea" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.ExaltedCharacter" />
       <item index="1" class="java.lang.String" itemvalue="Python.DiceRoller" />
       <item index="2" class="java.lang.String" itemvalue="Python.Scene" />
+      <item index="3" class="java.lang.String" itemvalue="Python.TestCollection" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.Scene" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ExaltedCharacter" />
-        <item index="2" class="java.lang.String" itemvalue="Python.DiceRoller" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.TestCollection" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Scene" />
+        <item index="2" class="java.lang.String" itemvalue="Python.ExaltedCharacter" />
+        <item index="3" class="java.lang.String" itemvalue="Python.DiceRoller" />
       </list>
     </recent_temporary>
   </component>
@@ -309,26 +339,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="1" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21418637" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24388674" sideWeight="0.21557719" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25289574" sideWeight="0.6662031" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3991655" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.7844228" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33379695" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21418637" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -389,16 +419,51 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Willow.ecg">
+    <entry file="file://$PROJECT_DIR$/ExaltedCharacter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="39" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0">
+        <state line="65" column="18" selection-start="2121" selection-end="2121" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Caedris.ecg">
+    <entry file="file://$PROJECT_DIR$/DiceRoller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="17" selection-start="41" selection-end="57" vertical-scroll-proportion="0.0">
+        <state line="44" column="16" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scene.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="98" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExaltedCharacter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="18" selection-start="2121" selection-end="2121" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiceRoller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="16" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scene.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="98" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExaltedCharacter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="20" selection-start="2057" selection-end="2069" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -410,18 +475,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Scene.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="39" selection-start="2043" selection-end="2043" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Willow.ecg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="39" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Caedris.ecg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="32" selection-start="2597" selection-end="2597" vertical-scroll-proportion="-2.12" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Skogur.ecg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="305" column="12" selection-start="15927" selection-end="15927" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ExaltedCharacter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="20" selection-start="2057" selection-end="2069" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        <state line="65" column="18" selection-start="2121" selection-end="2121" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiceRoller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="16" selection-start="1120" selection-end="1120" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scene.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="39" selection-start="2043" selection-end="2043" vertical-scroll-proportion="2.0542636">
+        <state line="15" column="98" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/TestArea/TestCollection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="460" selection-end="460" vertical-scroll-proportion="0.71302426">
           <folding />
         </state>
       </provider>
