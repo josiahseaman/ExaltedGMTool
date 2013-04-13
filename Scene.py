@@ -13,7 +13,7 @@ class BattleWheel():
             initiatives[character] = character.joinBattle()
         self.reactionCount = max(initiatives.values())
         for character, initiative in initiatives.items():
-            self.addCharacterToTick(character, self.reactionCount - initiative)
+            self.addCharacterToTick(character, self.reactionCount - initiative + self.currentTick)
 
     def addCharacterToTick(self, character, tick):
         lineup = self.tickLayout.get(tick,[])
