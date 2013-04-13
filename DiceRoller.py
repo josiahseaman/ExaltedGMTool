@@ -30,22 +30,25 @@ def skillCheckByNumber(nDice, label=None):
 def s(nDice):
    return skillCheckByNumber(nDice)
 
-def attack(accuracy, damageCode, DV, soak):
+def attack(accuracy, damageCode, DV, soak, hardness=0):
    hits = skillCheckByNumber(accuracy, "Attack")
    if hits < DV:
       print "You missed"
       return 0 
    threshold = hits - DV
    print threshold, "successes over a DV of", DV
+   if damageCode + threshold <= hardness:
+       print "Didn't beat hardness", hardness
+       return 0
    damageDice = max(damageCode + threshold - soak, 1)
    damageDone = rollDamage(damageDice) or 0
    print "Take", damageDone, "out of", damageDice, "damage dice."
    return damageDone
 
-def flurry(nAttacks, accuracy, damageCode, DV, soak):
+def flurry(nAttacks, accuracy, damageCode, DV, soak, hardness=0):
    penalties = range( nAttacks-1, (nAttacks-1)+nAttacks)
    damageDone = []
    for penalty in penalties:
-      damageDone.append(attack(accuracy-penalty, damageCode, DV, soak))
+      damageDone.append(attack(accuracy-penalty, damageCode, DV, soak, hardness))
    print "Total damage done:", sum(damageDone)
    return sum(damageDone)

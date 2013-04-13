@@ -1,28 +1,50 @@
 from django.contrib.localflavor import us
 from ElementTree import *
 from DiceRoller import *
+import json
 
 
 class ExaltedCharacter():
 
     def __init__(self, filename=None):
         self.name = "Unnamed"
-        self.accuracy = 11
-        self.damageCode = 4
-        self.DV = 3
-        self.soak = 4
         self.characterSheet = None
         if filename:
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
+        self.weaponStats = json.load(open('Daiklave.item'))
+        self.armorStats = json.load(open('Articulated_Plate.item'))
+
     def __repr__(self):
         return self.name
+
+    def accuracy(self):
+        return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['accuracy'] + self.sumDicePool('Dexterity', "Melee")
+
+    def damageCode(self):
+        return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['damage'] + self.sumDicePool('Strength',)
+
+    def parryDV(self):
+        return (self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['defence'] + self.sumDicePool('Dexterity', "Melee"))/2
+
+    def dodgeDV(self):
+        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence'))/2
+
+    def DV(self):
+        return max(self.parryDV(), self.dodgeDV())
+
+    def soak(self):
+        return self.sumDicePool('Stamina')/2 + self.armorStats["statsByRuleSet"]["SecondEdition"][0]["soakByHealthType"]['Lethal']
+
+    def hardness(self):
+        return self.armorStats["statsByRuleSet"]["SecondEdition"][0]["hardnessByHealthType"]['Lethal']
 
     def parseXML(self, filename):
         """:return: Root node of the XML character sheet"""
         tree = ElementTree(file=filename)
         root = tree.getroot()
         return root
+
     def getName(self):
         return self.characterSheet.attrib['repositoryPrintName']
 
@@ -63,7 +85,7 @@ class ExaltedCharacter():
         return skillCheckByNumber(self.sumDicePool(*stats))
 
     def flurryAttack(self, nAttacks,  defendingChar):
-        return flurry(nAttacks, self.accuracy, self.damageCode, defendingChar.DV, defendingChar.soak)
+        return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(), defendingChar.hardness())
 
     def joinBattle(self):
         return self.roll('Wits', 'Awareness')

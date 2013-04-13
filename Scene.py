@@ -60,17 +60,10 @@ class CombatScene():
         self.beginBattle()
         for i in range(5):
             actor = self.battleWheel.nextAction()
-            actor.flurryAttack(3, actor)#do stuff
+            actor.flurryAttack(1, actor)#do stuff
             self.battleWheel.resolveAction(speed=5)
 
 
-def testScene(nAttacks=3):
-    scene = CombatScene()
-    caedris = ExaltedCharacter('Caedris.ecg')
-    willow = ExaltedCharacter('Willow.ecg')
-    scene.addCharacter(caedris)
-    scene.addCharacter(willow)
-    scene.beginScenario()
 
     # caedris.flurryAttack(nAttacks, willow)
 
