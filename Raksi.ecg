@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExaltedCharacter repositoryId="Raksi" repositoryPrintName="Raksi">
+  <Description>
+    <CharacterName><![CDATA[Raksi]]></CharacterName>
+    <Player><![CDATA[NPC]]></Player>
+    <Concept><![CDATA[Queen of Fangs]]></Concept>
+  </Description>
+  <Description>
+    <CharacterName><![CDATA[Raksi]]></CharacterName>
+    <Player><![CDATA[NPC]]></Player>
+    <Concept><![CDATA[Queen of Fangs]]></Concept>
+  </Description>
+  <Statistics experienced="false">
+    <Rules>
+      <RuleSet name="SecondEdition"/>
+    </Rules>
+    <CharacterType subtype="DreamsLegendary">Lunar</CharacterType>
+    <CharacterConcept age="0">
+      <Caste type="NoMoon"/>
+      <Motivation><![CDATA[Master Solar Circle Sorcery]]></Motivation>
+    </CharacterConcept>
+    <Essence creationValue="8"/>
+    <Willpower creationValue="10"/>
+    <Virtues>
+      <Compassion creationValue="1"/>
+      <Conviction creationValue="5"/>
+      <Temperance creationValue="2"/>
+      <Valor creationValue="4"/>
+    </Virtues>
+    <Attributes>
+      <Physical>
+        <Strength creationValue="3"/>
+        <Dexterity creationValue="7"/>
+        <Stamina creationValue="3"/>
+      </Physical>
+      <Social>
+        <Charisma creationValue="6"/>
+        <Manipulation creationValue="8"/>
+        <Appearance creationValue="6" favored="true"/>
+      </Social>
+      <Mental>
+        <Perception creationValue="6"/>
+        <Intelligence creationValue="8"/>
+        <Wits creationValue="6"/>
+      </Mental>
+    </Attributes>
+    <Abilities>
+      <Archery creationValue="0"/>
+      <Athletics creationValue="3"/>
+      <Awareness creationValue="8">
+        <Specialty creationValue="1" name="Suspicion"/>
+      </Awareness>
+      <Dodge creationValue="8"/>
+      <Integrity creationValue="4"/>
+      <MartialArts creationValue="5">
+        <Specialty creationValue="3" name="Debauchery"/>
+      </MartialArts>
+      <Melee creationValue="3"/>
+      <Resistance creationValue="4"/>
+      <Thrown creationValue="3"/>
+      <War creationValue="3"/>
+      <Craft>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Air]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Earth]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Fire]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Water]]></traitName>
+        </subTrait>
+        <subTrait creationValue="0">
+          <traitName><![CDATA[Wood]]></traitName>
+        </subTrait>
+        <subTrait creationValue="4">
+          <traitName><![CDATA[Elemental]]></traitName>
+        </subTrait>
+      </Craft>
+      <Larceny creationValue="0"/>
+      <Linguistics creationValue="4"/>
+      <Performance creationValue="6"/>
+      <Presence creationValue="8">
+        <Specialty creationValue="3" name="Seduction"/>
+      </Presence>
+      <Ride creationValue="0"/>
+      <Sail creationValue="1"/>
+      <Socialize creationValue="3"/>
+      <Stealth creationValue="3"/>
+      <Survival creationValue="6" favored="true"/>
+      <Bureaucracy creationValue="2"/>
+      <Investigation creationValue="0"/>
+      <Lore creationValue="8" favored="true">
+        <Specialty creationValue="3" name="Sorcery"/>
+      </Lore>
+      <Medicine creationValue="2"/>
+      <Occult creationValue="8" favored="true"/>
+    </Abilities>
+    <Backgrounds>
+      <Background creationValue="3"><![CDATA[Cult]]></Background>
+      <Background creationValue="3"><![CDATA[LunarDreamsArsenal]]></Background>
+    </Backgrounds>
+    <Charms>
+      <CharmGroup name="Interaction" type="Lunar">
+        <Charm name="Lunar.InstinctMemoryInsertion" experienceLearned="false"/>
+        <Charm name="Lunar.SecretSpeechMethod" experienceLearned="false"/>
+        <Charm name="Lunar.RapidSpeechTechnique" experienceLearned="false"/>
+        <Charm name="Lunar.NewFriendAroma" experienceLearned="false"/>
+        <Charm name="Lunar.FeralSmileTactic" experienceLearned="false"/>
+        <Charm name="Lunar.HardNosedDenialStyle" experienceLearned="false"/>
+        <Charm name="Lunar.PerfectFearScent" experienceLearned="false"/>
+        <Charm name="Lunar.CharismaticLunarTrick" experienceLearned="false"/>
+        <Charm name="Lunar.MindBlankingFearTechnique" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="SocialUnit" type="Lunar">
+        <Charm name="Lunar.CullingThePride" experienceLearned="false"/>
+        <Charm name="Lunar.HerdReinforcementStance" experienceLearned="false"/>
+        <Charm name="Lunar.ForsakingTheBloodPosture" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Sorcery" type="Lunar">
+        <Charm name="Lunar.MothToFlamesDefense" experienceLearned="false"/>
+        <Charm name="Lunar.CelestialCircleSorcery" experienceLearned="false"/>
+        <Charm name="Lunar.TerrestrialCircleSorcery" experienceLearned="false"/>
+        <Charm name="Lunar.PhantomCrossfireFeint" experienceLearned="false"/>
+        <Charm name="Lunar.ColdBreathOfTheMoon" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Fascination" type="Lunar">
+        <Charm name="Lunar.UnnoticedConfusionAttack" experienceLearned="false"/>
+        <Charm name="Lunar.ForgetfulVictimPrana" experienceLearned="false"/>
+        <Charm name="Lunar.CobraHypnoticMethod" experienceLearned="false"/>
+        <Charm name="Lunar.SubtleSilverCommand" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="DefenseAndDissembling" type="Lunar">
+        <Charm name="Lunar.MaskOfWhiteJade" experienceLearned="false"/>
+        <Charm name="Lunar.LabyrinthOfTheBeast" experienceLearned="false"/>
+        <Charm name="Lunar.CatFacePresentation" experienceLearned="false"/>
+        <Charm name="Lunar.CommandedToFly" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Subdual" type="Lunar">
+        <Charm name="Lunar.SubduingTheHonoredFoe" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Charisma" type="Lunar">
+        <Charm name="Lunar.1stExcellency.Charisma" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Manipulation" type="Lunar">
+        <Charm name="Lunar.3rdExcellency.Manipulation" experienceLearned="false"/>
+        <Charm name="Lunar.InstinctiveUnity.Manipulation" experienceLearned="false"/>
+        <Charm name="Lunar.1stExcellency.Manipulation" experienceLearned="false"/>
+      </CharmGroup>
+      <Combos/>
+      <CharmFilters>
+        <SourceFilter showprereqs="true"/>
+      </CharmFilters>
+    </Charms>
+    <Spells>
+      <Spell name="Celestial.SapphireCountermagic" experienceLearned="false"/>
+      <Spell name="Celestial.TravelwithoutDistance" experienceLearned="false"/>
+      <Spell name="Terrestrial.SpokeWoodenFace" experienceLearned="false"/>
+      <Spell name="Terrestrial.SproutingShaklesDoom" experienceLearned="false"/>
+      <Spell name="Terrestrial.PrivatePlazaDowncastEyes" experienceLearned="false"/>
+      <Spell name="Terrestrial.FlyingGuillotine" experienceLearned="false"/>
+      <Spell name="Terrestrial.FlightBrilliantRaptor" experienceLearned="false"/>
+      <Spell name="Terrestrial.FlightSeparation" experienceLearned="false"/>
+      <Spell name="Terrestrial.CoinDistantVision" experienceLearned="false"/>
+      <Spell name="Celestial.EternalCrystallineEnchantment" experienceLearned="false"/>
+      <Spell name="Celestial.HiddenJudgesSecretFlame" experienceLearned="false"/>
+      <Spell name="Celestial.ImbueAmalgam" experienceLearned="false"/>
+      <Spell name="Celestial.InsidiousTendrilsHate" experienceLearned="false"/>
+      <Spell name="Celestial.MagmaKraken" experienceLearned="false"/>
+      <Spell name="Celestial.ShadowTheft" experienceLearned="false"/>
+      <Spell name="Celestial.SummoningGreaterMinionsEyelessFace" experienceLearned="false"/>
+      <Spell name="Celestial.VoicesDistantRegard" experienceLearned="false"/>
+      <Spell name="Terrestrial.SummoningLesserMinionsEyelessFace" experienceLearned="false"/>
+    </Spells>
+    <Experience/>
+    <AdditionalModels>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations>
+            <Mutation id="SerpentsBody" value="6" creationActive="true" experienceActive="true">
+              <categorization type="Abomination"/>
+            </Mutation>
+          </Mutations>
+        </Content>
+      </Model>
+      <Model templateId="Equipment">
+        <Content>
+          <item>
+            <templateId><![CDATA[Natural]]></templateId>
+            <printedStats><![CDATA[Punch]]></printedStats>
+            <printedStats><![CDATA[Kick]]></printedStats>
+            <printedStats><![CDATA[Clinch]]></printedStats>
+          </item>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
+      <Model templateId="Intimacies">
+        <Content>
+          <Intimacies>
+            <Intimacy name="Solar Circle Sorcery (Jealous Desire)" complete="true">
+              <Trait creationValue="5"/>
+            </Intimacy>
+          </Intimacies>
+        </Content>
+      </Model>
+      <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics/>
+        </Content>
+      </Model>
+      <Model templateId="Lunar.DeadlyBeastmanTransformation.Template">
+        <Content>
+          <Beastform shape="Naga">
+            <BeastAttributes>
+              <Strength creationValue="4"/>
+              <Dexterity creationValue="8"/>
+              <Stamina creationValue="4"/>
+            </BeastAttributes>
+            <SpiritAttributes>
+              <Strength creationValue="7"/>
+              <Dexterity creationValue="12"/>
+              <Stamina creationValue="5"/>
+              <Appearance creationValue="2"/>
+            </SpiritAttributes>
+            <Mutations/>
+          </Beastform>
+        </Content>
+      </Model>
+      <Model templateId="Lunar.HeartsBlood.Template">
+        <Content>
+          <HeartsBlood/>
+        </Content>
+      </Model>
+      <Model templateId="Lunar.VirtueFlaw.Template">
+        <Content>
+          <VirtueFlaw>
+            <RootVirtue name="Conviction"/>
+            <Limit creationValue="5"/>
+          </VirtueFlaw>
+        </Content>
+      </Model>
+    </AdditionalModels>
+  </Statistics>
+</ExaltedCharacter>
