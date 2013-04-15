@@ -5,29 +5,75 @@ import json
 
 
 class TemporaryStat():
-    def __init__(self, name, perm):
+    def __init__(self, name, perm, temp=None):
         self.name = name
         self.permanent = perm
-        self.temporary = self.permanent
+        self.temporary = self.permanent if temp is None else temp
+
+    def __repr__(self):
+        return self.name + ": " + str(self.temporary) + " of " + str(self.permanent)
+
+    def __isub__(self, amount):
+        if self.temporary < amount:
+            raise ValueError("You don't have enough " + self.name + " to do that.")
+        self.temporary = self.temporary - amount
+        return self.temporary
+
+    def __iadd__(self, amount):
+        self.temporary = min( self.temporary + amount, self.permanent)
+        return self.temporary
+
+    def __eq__(self, other):
+        try:
+            return self.temporary == other.temporary
+        except:
+            return self.temporary == other
+
+class VirtueChannel(TemporaryStat):
+    def __isub__(self, other):
+        super.__isub__(self, other)
+        return self.permanent
+    def __iadd__(self, other):
+        super.__iadd__(self, other)
+        return self.permanent
+
 
 class ExaltedCharacter():
-
     def __init__(self, filename=None):
         self.name = "Unnamed"
         self.characterSheet = None
         if filename:
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
+        self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
         self.weaponStats = json.load(open('Daiklave.item'))
         self.armorStats = json.load(open('Articulated_Plate.item'))
         self.temporaryWillpower = self.newStat('Willpower')
+        self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
+        self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
+        self.wounds = self.newStat('Wounds', 0, 7)
+        # self.virtueChannel =
+        self.limit = self.newStat('Limit', 0, 10)
 
     def __repr__(self):
-        return self.name
+        return "Character: " + self.name
 
     '''Temporary State'''
-    def newStat(self, name):
-        return TemporaryStat(name, self.getStat(name))
+    def newStat(self, name, valueOverride=None, maximum=None):
+        if valueOverride is None:
+            return TemporaryStat(name, self.getStat(name))
+        else:
+            if maximum is None:
+                return TemporaryStat(name, perm=valueOverride, temp=valueOverride)
+            return TemporaryStat(name, perm=maximum, temp=valueOverride)
+
+    '''Derived Stats'''
+    def calcPersonalEssence(self): #This is only correct for Solars
+        return self['Essence'] * 3 + self['Willpower']
+
+    def calcPeripheralEssence(self): #This is only correct for Solars
+        return self['Essence'] * 7 + self['Willpower'] + sum(self[x] for x in self.virtues) # - committed artifacts - permanent charms
+
 
 
     '''Items Stats'''
@@ -86,6 +132,9 @@ class ExaltedCharacter():
         result += specialty
         return result
 
+    def __getitem__(self, item):
+        return self.getStat(item)
+
     def getText(self, elem):
         print elem
         return ",".join(elem.itertext())
@@ -93,7 +142,7 @@ class ExaltedCharacter():
     def sumDicePool(self, *stats):
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
-            dicePool += self.getStat(stat)
+            dicePool += self[stat]
         return dicePool
 
     def roll(self, *stats):
@@ -108,7 +157,7 @@ class ExaltedCharacter():
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
     print c.name
-    usefulStats = ['Charisma', 'Presence', 'Perception', 'Awareness', 'Dodge', 'Survival', 'Computers']
+    usefulStats = ['Charisma', 'Presence', 'Survival', 'Computers']
 
     for stat in usefulStats:
         print stat, ":", int(c.getStat(stat) or 0)
