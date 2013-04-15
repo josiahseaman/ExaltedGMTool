@@ -47,5 +47,10 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(self.c.peripheralEssence, 42)
         self.assertEqual(self.c.personalEssence, 17)
 
+    def testRunningOut(self):
+        self.c.roll('Compassion', 'Dexterity')
+        self.c.roll('Compassion', 'Dexterity')
+        self.assertRaises(ValueError, self.c.roll, 'Compassion', 'Dexterity' )
+
 if __name__ == '__main__':
     unittest.main()
