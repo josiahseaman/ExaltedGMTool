@@ -48,7 +48,7 @@ class ExaltedCharacter():
             self.name = self.getName()
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
         self.weaponStats = json.load(open('Daiklave.item'))
-        self.armorStats = json.load(open('Articulated_Plate.item'))
+        self.armorStats = self.parseArmor('Articulated_Plate__Artifact_.item')
         self.temporaryWillpower = self.newStat('Willpower')
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
@@ -82,6 +82,19 @@ class ExaltedCharacter():
 
 
     '''Items Stats'''
+    def parseArmor(self, filename):
+        stats = {}
+        raw = json.load(open('equipment/' + filename))
+        statBlock = raw["statsByRuleSet"]["SecondEdition"]
+        stats['lethalSoak'] = statBlock[0]["soakByHealthType"]['Lethal']
+        stats['bashingSoak'] = statBlock[0]["soakByHealthType"]['Bashing']
+        stats['lethalHardness'] = statBlock[0]["hardnessByHealthType"]['Lethal']
+        stats['bashingHardness'] = statBlock[0]["hardnessByHealthType"]['Bashing']
+        stats["fatigue"] = statBlock[0]["fatigue"]
+        stats["mobilityPenalty"] = statBlock[0]["mobilityPenalty"]
+        stats["attuneCost"] = statBlock[1]["attuneCost"]
+        return stats
+
     def accuracy(self):
         return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['accuracy'] + self.sumDicePool('Dexterity', "Melee")
 
@@ -97,11 +110,13 @@ class ExaltedCharacter():
     def DV(self):
         return max(self.parryDV(), self.dodgeDV())
 
-    def soak(self):
-        return self.sumDicePool('Stamina')/2 + self.armorStats["statsByRuleSet"]["SecondEdition"][0]["soakByHealthType"]['Lethal']
+    def soak(self, damageType='lethal'):
+        soakType = damageType + 'Soak'
+        return self.sumDicePool('Stamina')/2 + self.armorStats[soakType]
 
-    def hardness(self):
-        return self.armorStats["statsByRuleSet"]["SecondEdition"][0]["hardnessByHealthType"]['Lethal']
+    def hardness(self, damageType='lethal'):
+        hardnessType = damageType + 'Hardness'
+        return self.armorStats[hardnessType]
 
 
 
