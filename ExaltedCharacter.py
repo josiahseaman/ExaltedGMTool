@@ -146,7 +146,19 @@ class ExaltedCharacter():
         return dicePool
 
     def roll(self, *stats):
-        return skillCheckByNumber(self.sumDicePool(*stats))
+        autoSuccesses = 0
+        bonusDice = 0
+        if (stats[0].lower() == 'willpower' or stats[0] in self.virtues) and len(stats) > 1:
+            self.temporaryWillpower -= 1 #even if this is a virtue channel it still takes 1wp
+            if stats[0].lower() == 'willpower':
+                autoSuccesses += 1
+            else: #This is a virtue
+                #mark off virtue channel
+                bonusDice += self[stats[0]]
+            stats = stats[1:]#remove from list
+
+        rolledDice = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
+        return rolledDice + autoSuccesses
 
     def flurryAttack(self, nAttacks,  defendingChar):
         return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(), defendingChar.hardness())
