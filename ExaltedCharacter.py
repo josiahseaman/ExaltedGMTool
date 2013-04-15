@@ -47,8 +47,9 @@ class ExaltedCharacter():
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
-        self.weaponStats = json.load(open('Daiklave.item'))
+        self.weaponStats = self.parseWeapon('Daiklave.item')
         self.armorStats = self.parseArmor('Articulated_Plate__Artifact_.item')
+        '''Temporary Stats'''
         self.temporaryWillpower = self.newStat('Willpower')
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
@@ -95,14 +96,19 @@ class ExaltedCharacter():
         stats["attuneCost"] = statBlock[1]["attuneCost"]
         return stats
 
+    def parseWeapon(self, filename):
+        raw = json.load(open('equipment/' + filename))
+        return raw["statsByRuleSet"]["SecondEdition"][0]
+        #TODO: attunement cost not included [1]
+
     def accuracy(self):
-        return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['accuracy'] + self.sumDicePool('Dexterity', "Melee")
+        return self.weaponStats['accuracy'] + self.sumDicePool('Dexterity', "Melee")
 
     def damageCode(self):
-        return self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['damage'] + self.sumDicePool('Strength',)
+        return self.weaponStats['damage'] + self.sumDicePool('Strength',)
 
     def parryDV(self):
-        return (self.weaponStats["statsByRuleSet"]['SecondEdition'][0]['defence'] + self.sumDicePool('Dexterity', "Melee"))/2
+        return (self.weaponStats['defence'] + self.sumDicePool('Dexterity', "Melee"))/2
 
     def dodgeDV(self):
         return (self.sumDicePool('Dexterity', 'Dodge', 'Essence'))/2
