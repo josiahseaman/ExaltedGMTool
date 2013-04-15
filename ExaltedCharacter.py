@@ -17,11 +17,12 @@ class TemporaryStat():
         if self.temporary < amount:
             raise ValueError("You don't have enough " + self.name + " to do that.")
         self.temporary = self.temporary - amount
-        return self.temporary
+        print self.name, str(self.temporary), "remaining of", str(self.permanent)
+        return self
 
     def __iadd__(self, amount):
         self.temporary = min( self.temporary + amount, self.permanent)
-        return self.temporary
+        return self
 
     def __eq__(self, other):
         try:
@@ -52,8 +53,12 @@ class ExaltedCharacter():
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
         self.wounds = self.newStat('Wounds', 0, 7)
-        # self.virtueChannel =
         self.limit = self.newStat('Limit', 0, 10)
+        self.CompassionChannel = self.newStat('Compassion')
+        self.ConvictionChannel = self.newStat('Conviction')
+        self.TemperanceChannel = self.newStat('Temperance')
+        self.ValorChannel = self.newStat('Valor')
+        # self.virtueChannel =
 
     def __repr__(self):
         return "Character: " + self.name
@@ -145,6 +150,11 @@ class ExaltedCharacter():
             dicePool += self[stat]
         return dicePool
 
+    def channelVirtue(self, virtue):
+        attribName = virtue + 'Channel'
+        self.__dict__[attribName] -= 1
+        return self[virtue]
+
     def roll(self, *stats):
         autoSuccesses = 0
         bonusDice = 0
@@ -153,8 +163,7 @@ class ExaltedCharacter():
             if stats[0].lower() == 'willpower':
                 autoSuccesses += 1
             else: #This is a virtue
-                #mark off virtue channel
-                bonusDice += self[stats[0]]
+                bonusDice += self.channelVirtue(stats[0])#mark off virtue channel
             stats = stats[1:]#remove from list
 
         rolledDice = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
