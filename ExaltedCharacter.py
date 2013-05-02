@@ -2,6 +2,7 @@ from django.contrib.localflavor import us
 from ElementTree import *
 from DiceRoller import *
 import json
+import re
 
 
 class TemporaryStat():
@@ -21,7 +22,7 @@ class TemporaryStat():
         return self
 
     def __iadd__(self, amount):
-        self.temporary = min( self.temporary + amount, self.permanent)
+        self.temporary = min(self.temporary + amount, self.permanent)
         return self
 
     def __eq__(self, other):
@@ -30,10 +31,12 @@ class TemporaryStat():
         except:
             return self.temporary == other
 
+
 class VirtueChannel(TemporaryStat):
     def __isub__(self, other):
         super.__isub__(self, other)
         return self.permanent
+
     def __iadd__(self, other):
         super.__iadd__(self, other)
         return self.permanent
@@ -47,8 +50,7 @@ class ExaltedCharacter():
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
-        self.weaponStats = self.parseWeapon('Daiklave.item')
-        self.armorStats = self.parseArmor('Articulated_Plate__Artifact_.item')
+        self.populateGearStats()
         '''Temporary Stats'''
         self.temporaryWillpower = self.newStat('Willpower')
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
@@ -65,6 +67,7 @@ class ExaltedCharacter():
         return "Character: " + self.name
 
     '''Temporary State'''
+
     def newStat(self, name, valueOverride=None, maximum=None):
         if valueOverride is None:
             return TemporaryStat(name, self.getStat(name))
@@ -74,15 +77,49 @@ class ExaltedCharacter():
             return TemporaryStat(name, perm=maximum, temp=valueOverride)
 
     '''Derived Stats'''
+
     def calcPersonalEssence(self): #This is only correct for Solars
         return self['Essence'] * 3 + self['Willpower']
 
     def calcPeripheralEssence(self): #This is only correct for Solars
-        return self['Essence'] * 7 + self['Willpower'] + sum(self[x] for x in self.virtues) # - committed artifacts - permanent charms
+        return self['Essence'] * 7 + self['Willpower'] + sum(
+            self[x] for x in self.virtues) # - committed artifacts - permanent charms
 
 
+    """Items Stats"""
+    def populateGearStats(self):
+        gearList = self.gearList()
+        self.armorStats = None
+        self.weaponStats = None
+        for itemName in gearList:
+            fileName = re.sub(r'[\W_]', '_', itemName) + '.item'
+            try:
+                self.armorStats = self.parseArmor(fileName)
+                print "Parsed", fileName, "as armor"
+            except:
+                try:
+                    self.weaponStats = self.parseWeapon(fileName)
+                    print "Parsed", fileName, "as weapon"
+                except:  pass
+            if self.armorStats is not None and self.weaponStats is not None:
+                return
 
-    '''Items Stats'''
+
+    def gearList(self):
+        models = self.additionalModels()
+        gearNames = []
+        for i in range(1, 20):  # try grabbing a gear name
+            try:
+                gearNames.append(models['Equipment'][0][i][0].itertext().next())
+            except:
+                pass
+        return gearNames
+
+    def additionalModels(self):
+        e = self.characterSheet.getiterator('AdditionalModels').next()
+        availableModels = {x.get('templateId'): x for x in e.getchildren()}
+        return availableModels
+
     def parseArmor(self, filename):
         stats = {}
         raw = json.load(open('equipment/' + filename))
@@ -105,25 +142,24 @@ class ExaltedCharacter():
         return self.weaponStats['accuracy'] + self.sumDicePool('Dexterity', "Melee")
 
     def damageCode(self):
-        return self.weaponStats['damage'] + self.sumDicePool('Strength',)
+        return self.weaponStats['damage'] + self.sumDicePool('Strength', )
 
     def parryDV(self):
-        return (self.weaponStats['defence'] + self.sumDicePool('Dexterity', "Melee"))/2
+        return (self.weaponStats['defence'] + self.sumDicePool('Dexterity', "Melee")) / 2
 
     def dodgeDV(self):
-        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence'))/2
+        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence')) / 2
 
     def DV(self):
         return max(self.parryDV(), self.dodgeDV())
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
-        return self.sumDicePool('Stamina')/2 + self.armorStats[soakType]
+        return self.sumDicePool('Stamina') / 2 + self.armorStats[soakType]
 
     def hardness(self, damageType='lethal'):
         hardnessType = damageType + 'Hardness'
         return self.armorStats[hardnessType]
-
 
 
     def parseXML(self, filename):
@@ -151,7 +187,8 @@ class ExaltedCharacter():
         #check for specialties, assumes they are applicable to this roll
         try:
             specialtyElem = element.iter('Specialty').next()
-            print "Specialty:", specialtyElem.attrib['name'], #currently I'm print this out to remind people of the assumption
+            print "Specialty:", specialtyElem.attrib[
+                'name'], #currently I'm print this out to remind people of the assumption
             specialty = self.getStatNumber(specialtyElem)
         except:
             specialty = 0
@@ -190,11 +227,13 @@ class ExaltedCharacter():
         rolledDice = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
         return rolledDice + autoSuccesses
 
-    def flurryAttack(self, nAttacks,  defendingChar):
-        return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(), defendingChar.hardness())
+    def flurryAttack(self, nAttacks, defendingChar):
+        return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
+                      defendingChar.hardness())
 
     def joinBattle(self):
         return self.roll('Wits', 'Awareness')
+
 
 if __name__ == "__main__":
     c = ExaltedCharacter('Willow.ecg')
