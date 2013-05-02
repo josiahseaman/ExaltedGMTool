@@ -47,6 +47,7 @@ class ExaltedCharacter():
         self.name = "Unnamed"
         self.characterSheet = None
         if filename:
+            filename = filename if '.ecg' in filename else filename + '.ecg'
             self.characterSheet = self.parseXML(filename)
             self.name = self.getName()
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']

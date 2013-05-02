@@ -1,5 +1,6 @@
-
 from ExaltedCharacter import ExaltedCharacter
+
+PlayerCharacters = ['Blixorthodon', 'Caedris', 'Gin', 'Skogur', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
 
 class BattleWheel():
     def __init__(self):
@@ -48,6 +49,9 @@ class CombatScene():
     def __init__(self):
         self.characters = {}
         self.battleWheel = BattleWheel()
+        for character in PlayerCharacters:
+            ExChar = ExaltedCharacter(character)
+            self.addCharacter(ExChar)
 
     def addCharacter(self, character):
         self.characters[character.name] = character
@@ -64,10 +68,6 @@ class CombatScene():
             self.battleWheel.resolveAction(speed=5)
 
 
-
-    # caedris.flurryAttack(nAttacks, willow)
-
 if __name__ == '__main__':
     print "==Exalted GM Assistant Activated=="
-    testScene()
 
