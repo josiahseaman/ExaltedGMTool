@@ -23,9 +23,9 @@ class MyTestCase(unittest.TestCase):
         scene = Scene.CombatScene()
         caedris = ExaltedCharacter.ExaltedCharacter('Caedris.ecg')
         willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
-        scene.addCharacter(caedris)
-        scene.addCharacter(willow)
-        # scene.beginScenario()
+        # scene.addCharacter(caedris)
+        # scene.addCharacter(willow)
+        scene.beginScenario()
         print 'Done'
 
 

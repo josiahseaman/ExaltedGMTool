@@ -92,6 +92,8 @@ class ExaltedCharacter():
         gearList = self.gearList()
         self.armorStats = None
         self.weaponStats = None
+        # if self.name == "Caedris":
+        #     print "Hi Caedris!"
         for itemName in gearList:
             fileName = re.sub(r'[\W_]', '_', itemName) + '.item'
             try:
@@ -104,7 +106,12 @@ class ExaltedCharacter():
                 except:  pass
             if self.armorStats is not None and self.weaponStats is not None:
                 return
-
+        if self.armorStats is None:
+            print self.name, "is missing Armor"
+            self.armorStats = self.parseArmor(None)
+        if self.weaponStats is None:
+            print self.name, "is missing Weapon"
+            self.weaponStats = self.parseWeapon(None)
 
     def gearList(self):
         models = self.additionalModels()
@@ -122,6 +129,8 @@ class ExaltedCharacter():
         return availableModels
 
     def parseArmor(self, filename):
+        if filename is None:
+            return {'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
         stats = {}
         raw = json.load(open('equipment/' + filename))
         statBlock = raw["statsByRuleSet"]["SecondEdition"]
@@ -135,9 +144,14 @@ class ExaltedCharacter():
         return stats
 
     def parseWeapon(self, filename):
+        if filename is None:
+            return {"accuracy": 0, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 2, "speed": 5,
+                    "defence": 0, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Base", "type": "Natural"}
         raw = json.load(open('equipment/' + filename))
-        return raw["statsByRuleSet"]["SecondEdition"][0]
-        #TODO: attunement cost not included [1]
+        stats = raw["statsByRuleSet"]["SecondEdition"][0]
+        stats["damage"] = raw["statsByRuleSet"]["SecondEdition"][0]["damage"]  # this is so it fails if it's armor
+        stats["attuneCost"] = raw["statsByRuleSet"]["SecondEdition"][-1]["attuneCost"]
+        return stats
 
     def accuracy(self):
         return self.weaponStats['accuracy'] + self.sumDicePool('Dexterity', "Melee")
@@ -145,8 +159,8 @@ class ExaltedCharacter():
     def damageCode(self):
         return self.weaponStats['damage'] + self.sumDicePool('Strength', )
 
-    def parryDV(self):
-        return (self.weaponStats['defence'] + self.sumDicePool('Dexterity', "Melee")) / 2
+    def parryDV(self):  # Bows can lack the "defence" key
+        return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
 
     def dodgeDV(self):
         return (self.sumDicePool('Dexterity', 'Dodge', 'Essence')) / 2
