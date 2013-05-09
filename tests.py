@@ -3,7 +3,8 @@ __author__ = 'seaman'
 import unittest
 
 
-class MyTestCase(unittest.TestCase):
+import Scene
+class SceneTest(unittest.TestCase):
 
     def testAccuracy(self):
         import ExaltedCharacter as e
@@ -16,15 +17,20 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(c.damageCode(), 7)
         print c.sumDicePool('Essence')
 
-
-    def testScene(nAttacks=3):
-        import Scene
+    def testMembership(self):
+        scene = Scene.CombatScene(False)
+        self.assertEqual(len(scene.characters), 0)
         import ExaltedCharacter
+        c = ExaltedCharacter.ExaltedCharacter('Gin.ecg')
+        scene.addCharacter(c)
+        scene.beginBattle()
+        self.assertEqual(len(scene.battleWheel.activeCharacters), 1)
+        scene.battleWheel.removeCharacter(c)
+        self.assertEqual(len(scene.battleWheel.activeCharacters), 0)
+        self.assertFalse(any([c in tick for tick in scene.battleWheel.tickLayout.values()]))
+
+    def testBeginScenario(nAttacks=3):
         scene = Scene.CombatScene()
-        caedris = ExaltedCharacter.ExaltedCharacter('Caedris.ecg')
-        willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
-        # scene.addCharacter(caedris)
-        # scene.addCharacter(willow)
         scene.beginScenario()
         print 'Done'
 
@@ -33,7 +39,7 @@ class CharacterTest(unittest.TestCase):
     import ExaltedCharacter
     c = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
 
-    def testprintAttributes(self):
+    def testPrintAttributes(self):
         print self.c.name
         usefulStats = ['Charisma', 'Presence', 'Survival', 'Computers']
 
@@ -41,7 +47,7 @@ class CharacterTest(unittest.TestCase):
             print stat, ":", int(self.c.getStat(stat) or 0)
         print "For 'Perception', 'Awareness' Roll", self.c.sumDicePool('Perception', 'Awareness'), "dice"
 
-    def testderivedStats(self):
+    def testDerivedStats(self):
         print "Stat test"
         self.assertEqual(self.c['Essence'], 4)
         self.assertEqual(self.c.peripheralEssence, 42)

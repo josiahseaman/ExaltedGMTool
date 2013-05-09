@@ -3,12 +3,12 @@ from ExaltedCharacter import ExaltedCharacter
 PlayerCharacters = ['Blixorthodon', 'Caedris', 'Gin', 'Skogur', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
 
 class BattleWheel():
-    def __init__(self):
+    def __init__(self, allCharacters):
         self.tickLayout = {}
         self.currentTick = 0
         self.reactionCount = 0
-
-    def beginBattle(self, allCharacters):
+        self.activeCharacters = allCharacters  # all characters are assumed to be active at first, but can become
+                                               # inactive if they are injured or knocked out
         initiatives = {}
         for character in allCharacters:
             initiatives[character] = character.joinBattle()
@@ -29,9 +29,22 @@ class BattleWheel():
             except: self.currentTick += 1
         return current
 
+    def removeCharacter(self, character):
+        try:
+            self.activeCharacters.remove(character)
+            for tick in self.tickLayout.values():
+                if character in tick:
+                    tick.remove(character)
+            return True
+        except:
+            print "I didn't find the character"
+            return False
+
     def nextAction(self):
+        if len(self.activeCharacters) <= 1:
+            raise StopIteration
         current = self.fetchCurrentCharacter()
-        print "It is ", current, " turn to act."
+        print "It is", current, " turn to act."
         return current
 
     def resolveAction(self, speed=5):
@@ -45,19 +58,21 @@ class BattleWheel():
         self.addCharacterToTick(caedris, 4)
         print self.tickLayout
 
+
 class CombatScene():
-    def __init__(self):
+    def __init__(self, includePCs=True):
         self.characters = {}
-        self.battleWheel = BattleWheel()
-        for character in PlayerCharacters:
-            ExChar = ExaltedCharacter(character)
-            self.addCharacter(ExChar)
+        self.battleWheel = None
+        if includePCs:
+            for character in PlayerCharacters:
+                ExChar = ExaltedCharacter(character)
+                self.addCharacter(ExChar)
 
     def addCharacter(self, character):
         self.characters[character.name] = character
 
     def beginBattle(self):
-        self.battleWheel.beginBattle(self.characters.values())
+        self.battleWheel = BattleWheel(self.characters.values())
         print self.battleWheel.tickLayout
 
     def beginScenario(self):
