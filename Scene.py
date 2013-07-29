@@ -1,6 +1,15 @@
 from ExaltedCharacter import ExaltedCharacter
 
-PlayerCharacters = ['Blixorthodon', 'Caedris', 'Gin', 'Skogur', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
+
+'''Features:==
+
+==Still Needed:==
+
+'''
+
+
+PlayerCharacters = ['Blixorthodon', 'CaedrisEmissaryofTenThousandWinds', 'GintheFearlessRadianceofAwesomeHonor',
+                    'WanderingVengefulLink', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
 
 class BattleWheel():
     def __init__(self, allCharacters):
@@ -85,4 +94,5 @@ class CombatScene():
 
 if __name__ == '__main__':
     print "==Exalted GM Assistant Activated=="
-
+    combatScene = CombatScene()
+    print "New combat scene created containing: ", combatScene.characters.values()

@@ -90,8 +90,8 @@ class ExaltedCharacter():
     """Items Stats"""
     def populateGearStats(self):
         gearList = self.gearList()
-        self.armorStats = None
-        self.weaponStats = None
+        self.armorStats = {}
+        self.weaponStats = {}
         # if self.name == "Caedris":
         #     print "Hi Caedris!"
         for itemName in gearList:
@@ -104,12 +104,12 @@ class ExaltedCharacter():
                     self.weaponStats = self.parseWeapon(fileName)
                     print "Parsed", fileName, "as weapon"
                 except:  pass
-            if self.armorStats is not None and self.weaponStats is not None:
+            if self.armorStats and self.weaponStats:
                 return
-        if self.armorStats is None:
+        if not self.armorStats:
             print self.name, "is missing Armor"
             self.armorStats = self.parseArmor(None)
-        if self.weaponStats is None:
+        if not self.weaponStats:
             print self.name, "is missing Weapon"
             self.weaponStats = self.parseWeapon(None)
 
@@ -163,7 +163,7 @@ class ExaltedCharacter():
         return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
 
     def dodgeDV(self):
-        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence')) / 2
+        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence') - self.armorStats.get('mobilityPenalty',0)) / 2
 
     def DV(self):
         return max(self.parryDV(), self.dodgeDV())
@@ -221,7 +221,7 @@ class ExaltedCharacter():
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
             dicePool += self[stat]
-        return dicePool
+        return dicePool #- self.woundPenalty
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -251,10 +251,4 @@ class ExaltedCharacter():
 
 
 if __name__ == "__main__":
-    c = ExaltedCharacter('Willow.ecg')
-    print c.name
-    usefulStats = ['Charisma', 'Presence', 'Survival', 'Computers']
-
-    for stat in usefulStats:
-        print stat, ":", int(c.getStat(stat) or 0)
-    print "For 'Perception', 'Awareness' Roll", c.sumDicePool('Perception', 'Awareness'), "dice"
+    print "ExaltedCharacter loaded"
