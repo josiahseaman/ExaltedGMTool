@@ -95,7 +95,11 @@ class ExaltedCharacter():
         # if self.name == "Caedris":
         #     print "Hi Caedris!"
         for itemName in gearList:
-            fileName = re.sub(r'[\W_]', '_', itemName) + '.item'
+            fileName = 'equipment/' + re.sub(r'[\W_]', '_', itemName) + '.item'
+            try:
+                with open(fileName): pass
+            except IOError:
+                print "Help! File name does not exist.", fileName
             try:
                 self.armorStats = self.parseArmor(fileName)
                 print "Parsed", fileName, "as armor"
@@ -103,7 +107,7 @@ class ExaltedCharacter():
                 try:
                     self.weaponStats = self.parseWeapon(fileName)
                     print "Parsed", fileName, "as weapon"
-                except:  pass
+                except: pass
             if self.armorStats and self.weaponStats:
                 return
         if not self.armorStats:
@@ -132,7 +136,7 @@ class ExaltedCharacter():
         if filename is None:
             return {'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
         stats = {}
-        raw = json.load(open('equipment/' + filename))
+        raw = json.load(open(filename))
         statBlock = raw["statsByRuleSet"]["SecondEdition"]
         stats['lethalSoak'] = statBlock[0]["soakByHealthType"]['Lethal']
         stats['bashingSoak'] = statBlock[0]["soakByHealthType"]['Bashing']
@@ -147,7 +151,7 @@ class ExaltedCharacter():
         if filename is None:
             return {"accuracy": 0, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 2, "speed": 5,
                     "defence": 0, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Base", "type": "Natural"}
-        raw = json.load(open('equipment/' + filename))
+        raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
         stats["damage"] = raw["statsByRuleSet"]["SecondEdition"][0]["damage"]  # this is so it fails if it's armor
         stats["attuneCost"] = raw["statsByRuleSet"]["SecondEdition"][-1]["attuneCost"]

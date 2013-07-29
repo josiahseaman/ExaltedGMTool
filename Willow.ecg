@@ -20,7 +20,7 @@
       <Caste type="Twilight"/>
     </CharacterConcept>
     <Essence creationValue="3" experiencedValue="4"/>
-    <Willpower creationValue="5"/>
+    <Willpower creationValue="5" experiencedValue="6"/>
     <Virtues>
       <Compassion creationValue="2"/>
       <Conviction creationValue="3"/>
@@ -108,6 +108,10 @@
     <Charms>
       <CharmGroup name="Occult" type="Solar">
         <Charm name="Solar.TerrestrialCircleSorcery" experienceLearned="false"/>
+        <Charm name="Solar.CelestialCircleSorcery" experienceLearned="true"/>
+        <Charm name="Solar.Spirit-CuttingAttack" experienceLearned="true"/>
+        <Charm name="Solar.All-EncompassingSorcerer'sSight" experienceLearned="true"/>
+        <Charm name="Solar.Spirit-DetectingGlance" experienceLearned="true"/>
       </CharmGroup>
       <CharmGroup name="Survival" type="Solar">
         <Charm name="Solar.Eye-DeceivingCamouflage" experienceLearned="false"/>
@@ -153,12 +157,16 @@
       </CharmFilters>
     </Charms>
     <Spells>
-      <Spell name="Terrestrial.BecomingWoodFriend" experienceLearned="false"/>
+      <Spell name="Terrestrial.RitualElementalEmpowerment" experienceLearned="false"/>
       <Spell name="Terrestrial.CommandingBeasts" experienceLearned="false"/>
       <Spell name="Terrestrial.FlightSeparation" experienceLearned="false"/>
       <Spell name="Terrestrial.WoodDragon'sClaw" experienceLearned="false"/>
       <Spell name="Terrestrial.SummonElemental" experienceLearned="false"/>
       <Spell name="Terrestrial.SummoningHarvest" experienceLearned="false"/>
+      <Spell name="Terrestrial.EmeraldCircleBanishment" experienceLearned="true"/>
+      <Spell name="Terrestrial.VirtuousGuardianFlame" experienceLearned="true"/>
+      <Spell name="Terrestrial.FlightBrilliantRaptor" experienceLearned="true"/>
+      <Spell name="Celestial.MagmaKraken" experienceLearned="true"/>
     </Spells>
     <Experience>
       <Entry points="11">
@@ -179,12 +187,25 @@
       <Entry points="4">
         <Description><![CDATA[5 - A New Friend]]></Description>
       </Entry>
+      <Entry points="9">
+        <Description><![CDATA[6 - Hand of Fire pt1]]></Description>
+      </Entry>
+      <Entry points="9">
+        <Description><![CDATA[7 - Hand of Fire pt 2]]></Description>
+      </Entry>
+      <Entry points="13">
+        <Description><![CDATA[8 - The Laenia Accord]]></Description>
+      </Entry>
+      <Entry points="13"/>
+      <Entry points="5"/>
+      <Entry points="11"/>
+      <Entry points="20">
+        <Description><![CDATA[11 - Mission of Mercy]]></Description>
+      </Entry>
     </Experience>
     <AdditionalModels>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
+      <Model templateId="Craft">
+        <Content/>
       </Model>
       <Model templateId="Equipment">
         <Content>
@@ -202,9 +223,6 @@
           </item>
         </Content>
       </Model>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
       <Model templateId="Intimacies">
         <Content>
           <Intimacies>
@@ -214,14 +232,20 @@
           </Intimacies>
         </Content>
       </Model>
-      <Model templateId="Craft">
-        <Content/>
-      </Model>
       <Model templateId="Linguistics">
         <Content>
           <linguistics>
             <language><![CDATA[Foresttongue]]></language>
+            <language><![CDATA[OldRealm]]></language>
           </linguistics>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
         </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">

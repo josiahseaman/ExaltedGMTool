@@ -5,25 +5,25 @@
     <CharacterName><![CDATA[Warrick (Swift) Colson]]></CharacterName>
     <Player><![CDATA[Michael Oakland]]></Player>
     <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals.]]></Characterization>
-    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground. ]]></PhysicalDescription>
+    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></PhysicalDescription>
     <Concept><![CDATA[Wandering Diplomat]]></Concept>
     <Eyes><![CDATA[Green]]></Eyes>
     <Hair><![CDATA[Brown]]></Hair>
     <Sex><![CDATA[Male]]></Sex>
     <Skin><![CDATA[White]]></Skin>
-    <Anima><![CDATA[Large deep blue lion made from powerful speeches Swift has given.]]></Anima>
+    <Anima><![CDATA[Large silver lion made from powerful speeches Swift has given.]]></Anima>
   </Description>
   <Description>
     <CharacterName><![CDATA[Warrick (Swift) Colson]]></CharacterName>
     <Player><![CDATA[Michael Oakland]]></Player>
     <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals.]]></Characterization>
-    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground. ]]></PhysicalDescription>
+    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></PhysicalDescription>
     <Concept><![CDATA[Wandering Diplomat]]></Concept>
     <Eyes><![CDATA[Green]]></Eyes>
     <Hair><![CDATA[Brown]]></Hair>
     <Sex><![CDATA[Male]]></Sex>
     <Skin><![CDATA[White]]></Skin>
-    <Anima><![CDATA[Large deep blue lion made from powerful speeches Swift has given.]]></Anima>
+    <Anima><![CDATA[Large silver lion made from powerful speeches Swift has given.]]></Anima>
   </Description>
   <Statistics experienced="true">
     <Rules>
@@ -46,7 +46,7 @@
       <Physical>
         <Strength creationValue="1" experiencedValue="2"/>
         <Dexterity creationValue="5" experiencedValue="5"/>
-        <Stamina creationValue="1"/>
+        <Stamina creationValue="1" experiencedValue="2"/>
       </Physical>
       <Social>
         <Charisma creationValue="5" experiencedValue="5"/>
@@ -64,7 +64,7 @@
       <MartialArts creationValue="0"/>
       <Melee creationValue="0"/>
       <Thrown creationValue="5" experiencedValue="5" favored="true">
-        <Specialty creationValue="3" experiencedValue="1" name="Chakrams"/>
+        <Specialty creationValue="3" experiencedValue="3" name="Chakrams"/>
       </Thrown>
       <War creationValue="0"/>
       <Integrity creationValue="0"/>
@@ -73,7 +73,7 @@
         <Specialty creationValue="3" name="Negotiations"/>
       </Presence>
       <Resistance creationValue="0" experiencedValue="0"/>
-      <Survival creationValue="0" experiencedValue="4"/>
+      <Survival creationValue="0" experiencedValue="0"/>
       <Craft>
         <subTrait creationValue="0">
           <traitName><![CDATA[Air]]></traitName>
@@ -90,56 +90,73 @@
         <subTrait creationValue="0">
           <traitName><![CDATA[Wood]]></traitName>
         </subTrait>
-        <subTrait creationValue="0" experiencedValue="3">
+        <subTrait creationValue="0" experiencedValue="4">
           <traitName><![CDATA[Elemental]]></traitName>
         </subTrait>
       </Craft>
       <Investigation creationValue="0" experiencedValue="0"/>
-      <Lore creationValue="3" experiencedValue="4" favored="true"/>
+      <Lore creationValue="3" experiencedValue="4"/>
       <Medicine creationValue="0"/>
       <Occult creationValue="5" experiencedValue="5" favored="true">
         <Specialty creationValue="3" experiencedValue="3" name="Geomancy"/>
       </Occult>
       <Athletics creationValue="3" experiencedValue="3"/>
       <Awareness creationValue="2" experiencedValue="3"/>
-      <Dodge creationValue="0"/>
+      <Dodge creationValue="0" experiencedValue="4" favored="true"/>
       <Larceny creationValue="0"/>
       <Stealth creationValue="0"/>
       <Bureaucracy creationValue="0" experiencedValue="0"/>
-      <Linguistics creationValue="2" experiencedValue="3"/>
+      <Linguistics creationValue="2" experiencedValue="4"/>
       <Ride creationValue="0" experiencedValue="0"/>
       <Sail creationValue="0" experiencedValue="0"/>
-      <Socialize creationValue="3" experiencedValue="4"/>
+      <Socialize creationValue="3" experiencedValue="3"/>
     </Abilities>
     <Backgrounds>
-      <Background creationValue="2"><![CDATA[Manse]]></Background>
-      <Background creationValue="3"><![CDATA[Contacts]]>
+      <Background creationValue="2"><![CDATA[Manse]]>
+        <Description><![CDATA[Gem of Surface Thoughts]]></Description>
+      </Background>
+      <Background creationValue="3" experiencedValue="3"><![CDATA[Contacts]]>
         <Description><![CDATA[Meridian Isles]]></Description>
       </Background>
-      <Background creationValue="2"><![CDATA[Followers]]></Background>
-      <Background creationValue="0" experiencedValue="2"><![CDATA[Backing]]>
+      <Background creationValue="2" experiencedValue="3"><![CDATA[Followers]]></Background>
+      <Background creationValue="0" experiencedValue="0"><![CDATA[Backing]]>
         <Description><![CDATA[Forest Spirit Courts]]></Description>
+      </Background>
+      <Background creationValue="0" experiencedValue="4"><![CDATA[Artifact]]>
+        <Description><![CDATA[Sinnging Staff]]></Description>
       </Background>
     </Backgrounds>
     <Charms>
-      <CharmGroup name="Thrown" type="Solar">
-        <Charm name="Solar.CascadeCuttingTerror" experienceLearned="false"/>
-        <Charm name="Solar.InfiniteMastery.Thrown" experienceLearned="false"/>
-        <Charm name="Solar.Triple-DistanceAttackTechnique" experienceLearned="false"/>
-        <Charm name="Solar.1stExcellency.Thrown" experienceLearned="true"/>
+      <CharmGroup name="Craft" type="Solar">
+        <Charm name="Solar.1stExcellency.Craft" experienceLearned="true"/>
+      </CharmGroup>
+      <CharmGroup name="Presence" type="Solar">
+        <Charm name="Solar.HypnoticTongueTechnique" experienceLearned="false"/>
+        <Charm name="Solar.1stExcellency.Presence" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Linguistics" type="Solar">
         <Charm name="Solar.PoeticExpressionStyle" experienceLearned="false"/>
         <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Dodge" type="Solar">
+        <Charm name="Solar.ShadowOverWater" experienceLearned="true"/>
+        <Charm name="Solar.SevenShadowEvasion" experienceLearned="true"/>
+      </CharmGroup>
+      <CharmGroup name="Occult" type="Solar">
+        <Charm name="Solar.3rdExcellency.Occult" experienceLearned="true"/>
       </CharmGroup>
       <CharmGroup name="Performance" type="Solar">
         <Charm name="Solar.Heart-CompellingMethod" experienceLearned="false"/>
         <Charm name="Solar.Husband-SeducingDemonDance" experienceLearned="false"/>
         <Charm name="Solar.1stExcellency.Performance" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="Presence" type="Solar">
-        <Charm name="Solar.HypnoticTongueTechnique" experienceLearned="false"/>
-        <Charm name="Solar.1stExcellency.Presence" experienceLearned="false"/>
+      <CharmGroup name="Thrown" type="Solar">
+        <Charm name="Solar.CascadeCuttingTerror" experienceLearned="false"/>
+        <Charm name="Solar.InfiniteMastery.Thrown" experienceLearned="false"/>
+        <Charm name="Solar.Triple-DistanceAttackTechnique" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Thrown" experienceLearned="true"/>
+        <Charm name="Solar.Observer-DeceivingAttack" experienceLearned="true"/>
+        <Charm name="Solar.FallingIcicleStrike" experienceLearned="true"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -194,8 +211,29 @@
       <Entry points="9">
         <Description><![CDATA[6 - Hand Of Fire]]></Description>
       </Entry>
+      <Entry points="8">
+        <Description><![CDATA[7 - Hand Of Fire Part 2]]></Description>
+      </Entry>
+      <Entry points="14">
+        <Description><![CDATA[8 - Hot Springs Episode]]></Description>
+      </Entry>
+      <Entry points="13">
+        <Description><![CDATA[9 - A Woman Scorned]]></Description>
+      </Entry>
+      <Entry points="5">
+        <Description><![CDATA[9.5 - 6 Months of a Whole Lot of Nothing]]></Description>
+      </Entry>
+      <Entry points="11">
+        <Description><![CDATA[10 - The Full Extent]]></Description>
+      </Entry>
+      <Entry points="20">
+        <Description><![CDATA[11 - SEASON FINALE]]></Description>
+      </Entry>
     </Experience>
     <AdditionalModels>
+      <Model templateId="Craft">
+        <Content/>
+      </Model>
       <Model templateId="Equipment">
         <Content>
           <item>
@@ -205,12 +243,6 @@
             <printedStats><![CDATA[Clinch]]></printedStats>
           </item>
           <item>
-            <templateId><![CDATA[Chakram]]></templateId>
-            <printedStats><![CDATA[Ranged]]>
-              <specialty name="Chakrams" type="Thrown"/>
-            </printedStats>
-          </item>
-          <item>
             <templateId><![CDATA[Sky-Cutter]]></templateId>
             <material><![CDATA[Orichalcum]]></material>
             <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
@@ -218,27 +250,35 @@
               <specialty name="Chakrams" type="Thrown"/>
             </printedStats>
           </item>
+          <item>
+            <templateId><![CDATA[War Boomerang]]></templateId>
+            <printedStats><![CDATA[Ranged]]>
+              <specialty name="Chakrams" type="Thrown"/>
+            </printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Singing Staff]]></templateId>
+          </item>
+          <item>
+            <templateId><![CDATA[Chain Shirt (Artifact)]]></templateId>
+            <material><![CDATA[Orichalcum]]></material>
+            <printedStats><![CDATA[Armour]]></printedStats>
+            <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Silken Armor]]></templateId>
+            <printedStats><![CDATA[Armour]]></printedStats>
+            <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Chakram]]></templateId>
+            <printedStats><![CDATA[Ranged]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Chakram]]></templateId>
+            <printedStats><![CDATA[Ranged]]></printedStats>
+          </item>
         </Content>
-      </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics>
-            <language><![CDATA[Riverspeak]]></language>
-            <language><![CDATA[Foresttongue]]></language>
-            <language><![CDATA[LowRealm]]></language>
-            <language><![CDATA[OldRealm]]></language>
-            <language><![CDATA[Flametongue]]></language>
-            <language><![CDATA[HighHolySpeech]]></language>
-          </linguistics>
-        </Content>
-      </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
       </Model>
       <Model templateId="Intimacies">
         <Content>
@@ -249,11 +289,45 @@
             <Intimacy name="Wyld Hunt (Fear and Awe)" complete="false">
               <Trait creationValue="0" experiencedValue="2"/>
             </Intimacy>
+            <Intimacy name="The Circle (Blix, Skogur, Kaedris, Willow, Gin, Zaela)" complete="false">
+              <Trait creationValue="0" experiencedValue="1"/>
+            </Intimacy>
+            <Intimacy name="Deepsoul" complete="false">
+              <Trait creationValue="0" experiencedValue="2"/>
+            </Intimacy>
+            <Intimacy name="Queen Inat (Positive)" complete="false">
+              <Trait creationValue="0" experiencedValue="2"/>
+            </Intimacy>
+            <Intimacy name="Laenia" complete="false">
+              <Trait creationValue="0" experiencedValue="2"/>
+            </Intimacy>
+            <Intimacy name="Meridian Isles" complete="false">
+              <Trait creationValue="0" experiencedValue="1"/>
+            </Intimacy>
+            <Intimacy name="Diplomacy (over war)" complete="false">
+              <Trait creationValue="0" experiencedValue="1"/>
+            </Intimacy>
           </Intimacies>
         </Content>
       </Model>
-      <Model templateId="Craft">
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics>
+            <language><![CDATA[Riverspeak]]></language>
+            <language><![CDATA[Foresttongue]]></language>
+            <language><![CDATA[LowRealm]]></language>
+            <language><![CDATA[OldRealm]]></language>
+            <language><![CDATA[Flametongue]]></language>
+          </linguistics>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
         <Content/>
+      </Model>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">
         <Content>
