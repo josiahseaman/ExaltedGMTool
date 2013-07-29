@@ -153,8 +153,17 @@ class ExaltedCharacter():
                     "defence": 0, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Base", "type": "Natural"}
         raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
-        stats["damage"] = raw["statsByRuleSet"]["SecondEdition"][0]["damage"]  # this is so it fails if it's armor
-        stats["attuneCost"] = raw["statsByRuleSet"]["SecondEdition"][-1]["attuneCost"]
+
+        #Damage and attunement blocks are not strictly ordered.  Check for both in either side.
+        if 'Daiklave' in filename:
+            print "THISIS IT!!!"
+        for block in raw["statsByRuleSet"]["SecondEdition"]:
+            if block.get("damage", -1) != -1:
+                stats["damage"] = block["damage"]
+            stats["attuneCost"] = max(stats.get("attuneCost", 0), block.get("attuneCost", 0))
+        if stats["damage"] == -1:
+            print "              ", filename, "is not a weapon"
+            raise ValueError # this is so it fails if it's armor
         return stats
 
     def accuracy(self):
