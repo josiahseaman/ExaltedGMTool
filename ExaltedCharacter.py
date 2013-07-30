@@ -90,8 +90,8 @@ class ExaltedCharacter():
     """Items Stats"""
     def populateGearStats(self):
         gearList = self.gearList()
-        self.armorStats = {}
-        self.weaponStats = {}
+        self.armorStats = None
+        self.weaponStats = None
         # if self.name == "Caedris":
         #     print "Hi Caedris!"
         for itemName in gearList:
@@ -101,15 +101,18 @@ class ExaltedCharacter():
             except IOError:
                 print "Help! File name does not exist.", fileName
             try:
-                self.armorStats = self.parseArmor(fileName)
-                print "Parsed", fileName, "as armor"
+                candidate = self.parseArmor(fileName)
+                if self.armorStats is None or self.armorStats['lethalSoak'] < candidate['lethalSoak']:
+                    print candidate['name'], "wins over", self.armorStats['name'] if self.armorStats else None
+                    self.armorStats = candidate
             except:
                 try:
-                    self.weaponStats = self.parseWeapon(fileName)
-                    print "Parsed", fileName, "as weapon"
+                    candidate = self.parseWeapon(fileName)
+                    if self.weaponStats is None or self.weaponStats["damage"] < candidate["damage"]:
+                        print candidate['name'], "wins over", self.weaponStats['name'] if self.weaponStats else None
+                        self.weaponStats = candidate
                 except: pass
-            if self.armorStats and self.weaponStats:
-                return
+
         if not self.armorStats:
             print self.name, "is missing Armor"
             self.armorStats = self.parseArmor(None)
@@ -145,6 +148,7 @@ class ExaltedCharacter():
         stats["fatigue"] = statBlock[0]["fatigue"]
         stats["mobilityPenalty"] = statBlock[0]["mobilityPenalty"]
         stats["attuneCost"] = statBlock[1]["attuneCost"]
+        stats['name'] = raw['name']
         return stats
 
     def parseWeapon(self, filename):
@@ -153,16 +157,16 @@ class ExaltedCharacter():
                     "defence": 0, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Base", "type": "Natural"}
         raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
+        stats['name'] = raw['name']
 
-        #Damage and attunement blocks are not strictly ordered.  Check for both in either side.
-        if 'Daiklave' in filename:
-            print "THISIS IT!!!"
+        if 'xmaul' in filename:
+            print 'yau'
+        #Damage and attunement blocks are not strictly ordered.  Check for both in a list.
         for block in raw["statsByRuleSet"]["SecondEdition"]:
-            if block.get("damage", -1) != -1:
+            if "damage" in block.keys():
                 stats["damage"] = block["damage"]
             stats["attuneCost"] = max(stats.get("attuneCost", 0), block.get("attuneCost", 0))
-        if stats["damage"] == -1:
-            print "              ", filename, "is not a weapon"
+        if "damage" not in stats.keys():
             raise ValueError # this is so it fails if it's armor
         return stats
 
