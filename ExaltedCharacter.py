@@ -90,10 +90,8 @@ class ExaltedCharacter():
     """Items Stats"""
     def populateGearStats(self):
         gearList = self.gearList()
-        self.armorStats = None
-        self.weaponStats = None
-        # if self.name == "Caedris":
-        #     print "Hi Caedris!"
+        self.armorStats = self.parseArmor(None)
+        self.weaponStats = self.parseWeapon(None)
         for itemName in gearList:
             fileName = 'equipment/' + re.sub(r'[\W_]', '_', itemName) + '.item'
             try:
@@ -101,16 +99,16 @@ class ExaltedCharacter():
             except IOError:
                 print "Help! File name does not exist.", fileName
             try:
-                candidate = self.parseArmor(fileName)
-                if self.armorStats is None or self.armorStats['lethalSoak'] < candidate['lethalSoak']:
-                    print candidate['name'], "wins over", self.armorStats['name'] if self.armorStats else None
-                    self.armorStats = candidate
+                candidateA = self.parseArmor(fileName)
+                if self.armorStats['lethalSoak'] < candidateA['lethalSoak']:
+                    print candidateA['name'], "wins over", self.armorStats['name'], '\n'
+                    self.armorStats = candidateA
             except:
                 try:
-                    candidate = self.parseWeapon(fileName)
-                    if self.weaponStats is None or self.weaponStats["damage"] < candidate["damage"]:
-                        print candidate['name'], "wins over", self.weaponStats['name'] if self.weaponStats else None
-                        self.weaponStats = candidate
+                    candidateW = self.parseWeapon(fileName)
+                    if self.weaponStats['name'] == 'Punch' or self.weaponStats["damage"] < candidateW["damage"]:
+                        print candidateW['name'], "wins over", self.weaponStats['name'], '\n'
+                        self.weaponStats = candidateW
                 except: pass
 
         if not self.armorStats:
@@ -137,7 +135,7 @@ class ExaltedCharacter():
 
     def parseArmor(self, filename):
         if filename is None:
-            return {'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
+            return {'name':'Unarmored', 'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
         stats = {}
         raw = json.load(open(filename))
         statBlock = raw["statsByRuleSet"]["SecondEdition"]
@@ -153,8 +151,8 @@ class ExaltedCharacter():
 
     def parseWeapon(self, filename):
         if filename is None:
-            return {"accuracy": 0, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 2, "speed": 5,
-                    "defence": 0, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Base", "type": "Natural"}
+            return {"accuracy": 1, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 3, "speed": 5,
+                    "defense": 2, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Punch", "type": "Martial Arts"}
         raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
         stats['name'] = raw['name']
@@ -171,7 +169,7 @@ class ExaltedCharacter():
         return stats
 
     def accuracy(self):
-        return self.weaponStats['accuracy'] + self.sumDicePool('Dexterity', "Melee")
+        return self.sumDicePool('Dexterity', "Melee") + self.weaponStats['accuracy']
 
     def damageCode(self):
         return self.weaponStats['damage'] + self.sumDicePool('Strength', )
