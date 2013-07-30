@@ -15,7 +15,6 @@ class SceneTest(unittest.TestCase):
         import ExaltedCharacter as e
         c = e.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
         self.assertEqual(c.damageCode(), 7)
-        print c.sumDicePool('Essence')
 
     def testMembership(self):
         scene = Scene.CombatScene(False)
@@ -61,6 +60,8 @@ class CharacterTest(unittest.TestCase):
     def chooseWeaponTest(self):
         import ExaltedCharacter
         gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
+        self.assertEqual(gin.armorStats['name'], 'Superheavy Plate (Artifact)')
+        self.assertEqual(gin.weaponStats['name'], 'Grand Goremaul')
 
 
 if __name__ == '__main__':

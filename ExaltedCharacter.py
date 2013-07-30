@@ -157,19 +157,22 @@ class ExaltedCharacter():
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
         stats['name'] = raw['name']
 
-        if 'xmaul' in filename:
-            print 'yau'
         #Damage and attunement blocks are not strictly ordered.  Check for both in a list.
         for block in raw["statsByRuleSet"]["SecondEdition"]:
             if "damage" in block.keys():
-                stats["damage"] = block["damage"]
+                for key in block.keys():
+                    stats[key] = block[key] #copies over all new keys
             stats["attuneCost"] = max(stats.get("attuneCost", 0), block.get("attuneCost", 0))
         if "damage" not in stats.keys():
             raise ValueError # this is so it fails if it's armor
         return stats
 
     def accuracy(self):
-        return self.sumDicePool('Dexterity', "Melee") + self.weaponStats['accuracy']
+        try:
+            total = self.sumDicePool('Dexterity', "Melee") + self.weaponStats['accuracy']
+            return total
+        except:
+            return self.sumDicePool('Dexterity', "Melee")
 
     def damageCode(self):
         return self.weaponStats['damage'] + self.sumDicePool('Strength', )
