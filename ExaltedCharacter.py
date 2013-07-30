@@ -155,7 +155,6 @@ class ExaltedCharacter():
                     "defense": 2, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Punch", "type": "Martial Arts"}
         raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
-        stats['name'] = raw['name']
 
         #Damage and attunement blocks are not strictly ordered.  Check for both in a list.
         for block in raw["statsByRuleSet"]["SecondEdition"]:
@@ -165,6 +164,7 @@ class ExaltedCharacter():
             stats["attuneCost"] = max(stats.get("attuneCost", 0), block.get("attuneCost", 0))
         if "damage" not in stats.keys():
             raise ValueError # this is so it fails if it's armor
+        stats['name'] = raw['name']
         return stats
 
     def accuracy(self):
@@ -246,19 +246,30 @@ class ExaltedCharacter():
         self.__dict__[attribName] -= 1
         return self[virtue]
 
+
+    """Each parameter is the name of a attribute, ability, or virtue.  It will automatically channel virtues.
+    Any numbers that are placed will be counted as bonus dice.  Doesn't currently support auto-success beyond willpower.
+    """
     def roll(self, *stats):
+        stats = list(stats)#so that .remove() will work correctly (tuple is immutable)
         autoSuccesses = 0
         bonusDice = 0
-        if (stats[0].lower() == 'willpower' or stats[0] in self.virtues) and len(stats) > 1:
-            self.temporaryWillpower -= 1 #even if this is a virtue channel it still takes 1wp
-            if stats[0].lower() == 'willpower':
-                autoSuccesses += 1
-            else: #This is a virtue
-                bonusDice += self.channelVirtue(stats[0])#mark off virtue channel
-            stats = stats[1:]#remove from list
+        for trait in stats:
+            if isinstance(trait, int):
+                bonusDice += trait
+                stats.remove(trait)
+                continue
+            if len(stats) > 1:
+                if (trait.lower() == 'willpower'):
+                    self.temporaryWillpower -= 1
+                    autoSuccesses += 1
+                    stats.remove(trait)#remove from list
+                if trait in self.virtues:
+                    self.temporaryWillpower -= 1#even if this is a virtue channel it still takes 1wp
+                    self.channelVirtue(trait)#mark off virtue channel
 
-        rolledDice = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
-        return rolledDice + autoSuccesses
+        rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
+        return rolledSuccesses + autoSuccesses
 
     def flurryAttack(self, nAttacks, defendingChar):
         return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
