@@ -168,11 +168,15 @@ class ExaltedCharacter():
         return stats
 
     def accuracy(self):
-        try:
-            total = self.sumDicePool('Dexterity', "Melee") + self.weaponStats['accuracy']
-            return total
-        except:
-            return self.sumDicePool('Dexterity', "Melee")
+        weaponSkill = "Melee"
+        mapping = {"Thrown":"Thrown", "BowType":"Archery", "MartialArts":"MartialArts"}
+        for tag in self.weaponStats['tags']:
+            if tag in mapping.keys():
+                weaponSkill = mapping[tag]
+
+        print "Using", weaponSkill
+        total = self.sumDicePool('Dexterity', weaponSkill) + self.weaponStats['accuracy']
+        return total
 
     def damageCode(self):
         return self.weaponStats['damage'] + self.sumDicePool('Strength', )
@@ -247,10 +251,10 @@ class ExaltedCharacter():
         return self[virtue]
 
 
-    """Each parameter is the name of a attribute, ability, or virtue.  It will automatically channel virtues.
-    Any numbers that are placed will be counted as bonus dice.  Doesn't currently support auto-success beyond willpower.
-    """
     def roll(self, *stats):
+        """Each parameter is the name of a attribute, ability, or virtue.  It will automatically channel virtues.
+        Any numbers that are placed will be counted as bonus dice.  Doesn't currently support auto-success beyond willpower.
+        """
         stats = list(stats)#so that .remove() will work correctly (tuple is immutable)
         autoSuccesses = 0
         bonusDice = 0
