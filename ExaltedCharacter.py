@@ -216,11 +216,16 @@ class ExaltedCharacter():
 
     def getStat(self, statName):
         statName = statName.lower().capitalize() #proper capitalization
+        if statName == 'Martialarts': statName = 'MartialArts'
         try:
             element = self.characterSheet.getiterator(statName).next()
         except:
             return 0
-        result = self.getStatNumber(element)
+        if statName == 'Craft':
+            branches = element.getiterator('subTrait')
+            result = max(map(self.getStatNumber, branches))
+        else:
+            result = self.getStatNumber(element)
         #check for specialties, assumes they are applicable to this roll
         try:
             specialtyElem = element.iter('Specialty').next()

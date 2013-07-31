@@ -57,11 +57,24 @@ class CharacterTest(unittest.TestCase):
         self.c.roll('Compassion', 'Dexterity')
         self.assertRaises(ValueError, self.c.roll, 'Compassion', 'Dexterity' )
 
-    def chooseWeaponTest(self):
+    def testChooseWeapon(self):
         import ExaltedCharacter
         gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
         self.assertEqual(gin.armorStats['name'], 'Superheavy Plate (Artifact)')
         self.assertEqual(gin.weaponStats['name'], 'Grand Goremaul')
+
+    def testChooseAttackSkill(self):
+        import ExaltedCharacter
+        blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
+        self.assertEqual(blix.accuracy(), 13)
+        blix.weaponStats = blix.parseWeapon('equipment/War_Boomerang.item')
+        self.assertEqual(blix.accuracy(), 4) #this should be using Thrown, because of the thrown tag stat block under knife
+
+    def testCraftSkillRoll(self):
+        import ExaltedCharacter
+        swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
+        self.assertEqual(swift.getStat('Craft'),4)
+
 
 
 if __name__ == '__main__':
