@@ -70,10 +70,13 @@ class CharacterTest(unittest.TestCase):
         blix.weaponStats = blix.parseWeapon('equipment/War_Boomerang.item')
         self.assertEqual(blix.accuracy(), 4) #this should be using Thrown, because of the thrown tag stat block under knife
 
-    def testCraftSkillRoll(self):
+    def testCraftSkillAndSoakStacking(self):
         import ExaltedCharacter
         swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
         self.assertEqual(swift.getStat('Craft'),4)
+        self.assertEqual(swift.soak(), 11)
+        self.assertEqual(swift.armorStats, swift.parseArmor('equipment/Chain_Shirt__Artifact_With_Silken_Armor.item'))
+
 
 
 

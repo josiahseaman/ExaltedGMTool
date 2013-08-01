@@ -92,6 +92,7 @@ class ExaltedCharacter():
         gearList = self.gearList()
         self.armorStats = self.parseArmor(None)
         self.weaponStats = self.parseWeapon(None)
+        gearList = self.handleSilkenArmor(gearList)
         for itemName in gearList:
             fileName = 'equipment/' + re.sub(r'[\W_]', '_', itemName) + '.item'
             try:
@@ -101,22 +102,20 @@ class ExaltedCharacter():
             try:
                 candidateA = self.parseArmor(fileName)
                 if self.armorStats['lethalSoak'] < candidateA['lethalSoak']:
-                    print candidateA['name'], "wins over", self.armorStats['name'], '\n'
+                    # print candidateA['name'], "wins over", self.armorStats['name'], '\n'
                     self.armorStats = candidateA
             except:
                 try:
                     candidateW = self.parseWeapon(fileName)
                     if self.weaponStats['name'] == 'Punch' or self.weaponStats["damage"] < candidateW["damage"]:
-                        print candidateW['name'], "wins over", self.weaponStats['name'], '\n'
+                        # print candidateW['name'], "wins over", self.weaponStats['name'], '\n'
                         self.weaponStats = candidateW
                 except: pass
-
-        if not self.armorStats:
+        self.stackSilkenArmor()
+        if self.armorStats['name'] == 'Unarmored':
             print self.name, "is missing Armor"
-            self.armorStats = self.parseArmor(None)
-        if not self.weaponStats:
+        if not self.weaponStats['name'] == 'punch':
             print self.name, "is missing Weapon"
-            self.weaponStats = self.parseWeapon(None)
 
     def gearList(self):
         models = self.additionalModels()
@@ -286,6 +285,24 @@ class ExaltedCharacter():
 
     def joinBattle(self):
         return self.roll('Wits', 'Awareness')
+
+    def stackSilkenArmor(self):
+        #TODO: check for "Unarmored" and remove armorStats
+        if self.isWearingSilkenArmor:
+            properties = ['lethalSoak', 'bashingSoak', "fatigue", "mobilityPenalty", "attuneCost"] #hardness does not stack
+            silkArmor = self.parseArmor('equipment/Silken_Armor.item')
+            for p in properties:
+                self.armorStats[p] += silkArmor[p]
+            self.armorStats['name'] += ' With Silken Armor'
+
+    def handleSilkenArmor(self, gearList):
+        assert isinstance(gearList, list)
+        itemName = "Silken Armor"
+        self.isWearingSilkenArmor = itemName in gearList
+        if self.isWearingSilkenArmor:
+            gearList.remove(itemName)
+        return gearList
+
 
 
 if __name__ == "__main__":
