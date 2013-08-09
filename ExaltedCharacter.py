@@ -34,24 +34,30 @@ class TemporaryStat():
 
 class VirtueChannel(TemporaryStat):
     def __isub__(self, other):
-        super.__isub__(self, other)
-        return self.permanent
+        TemporaryStat.__isub__(self, other)
+        return self
 
     def __iadd__(self, other):
-        super.__iadd__(self, other)
-        return self.permanent
+        TemporaryStat.__iadd__(self, other)
+        return self
 
 class HealthLevel(TemporaryStat):
     #TODO: this will need to eventually have 3 states: bashing, lethal, aggravated.  Apply Damage Push down rules
     """Characters have a list of health levels.  Once they run to the end of the list they are at least incapacitated.
     Along side this is a list of associated wound penalties.  Also damage stacking."""
 
-    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4]):
+    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4,-10]): #TODO: Handle incap being a string and dice penalty.
         TemporaryStat.__init__(self, name, perm, temp)
         self.penalties = penalties
-    pass
 
+    def __isub__(self, other):
+        TemporaryStat.__isub__(self, other)
+        if self.temporary <= 0:
+            raise ValueError()
+        return self
 
+    def empty(self):
+        self.temporary = 0
 
 
 
@@ -69,7 +75,9 @@ class ExaltedCharacter():
         self.temporaryWillpower = self.newStat('Willpower')
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
-        self.health = HealthLevel('Health Levels', 6)
+        self.health = HealthLevel('Health Levels', 7)
+        self.isDying = False
+        self.dyingHealthLevels = HealthLevel('Dying Health Levels', self.getStat("Stamina"))
         self.limit = self.newStat('Limit', 0, 10)
         self.CompassionChannel = self.newStat('Compassion')
         self.ConvictionChannel = self.newStat('Conviction')
@@ -306,7 +314,9 @@ class ExaltedCharacter():
         try:
             self.health -= damageDealt
         except:
-            print self.name, "has died"
+            self.health.empty()
+            print self.name, "is dying"
+            self.isDying = True
 
     def heal(self, healthGained):
         self.health += healthGained
@@ -331,7 +341,16 @@ class ExaltedCharacter():
             gearList.remove(itemName)
         return gearList
 
-
+    def refreshDV(self):
+        # remove dv penalties,
+        # maintain grapple,
+        if self.isDying: # progress dying health levels,
+            try:
+                self.dyingHealthLevels -= 1
+            except:
+                print self.name, "is dead"
+                raise ValueError, "Remove character from scene"
+        # regain motes (5 motes for meridians)
 
 if __name__ == "__main__":
     print "ExaltedCharacter loaded"

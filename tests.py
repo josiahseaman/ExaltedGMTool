@@ -28,10 +28,11 @@ class SceneTest(unittest.TestCase):
         self.assertEqual(len(scene.battleWheel.activeCharacters), 0)
         self.assertFalse(any([c in tick for tick in scene.battleWheel.tickLayout.values()]))
 
-    def testBeginScenario(nAttacks=3):
-        scene = Scene.CombatScene()
-        scene.beginScenario()
-        print 'Done'
+    # def testBeginScenario(nAttacks=3):
+    #     scene = Scene.CombatScene()
+    #     scene.beginScenario()
+    #     print 'Done'
+
 
 
 class CharacterTest(unittest.TestCase):
@@ -77,7 +78,17 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(swift.soak(), 11)
         self.assertEqual(swift.armorStats, swift.parseArmor('equipment/Chain_Shirt__Artifact_With_Silken_Armor.item'))
 
-
+    def testDying(self):
+        import ExaltedCharacter
+        gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
+        zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
+        self.assertEqual(gin.dyingHealthLevels.permanent, 4)
+        gin.attack(zaela) # We are assuming this kills Zaela
+        gin.attack(zaela) # We are assuming this kills Zaela
+        self.assertTrue(zaela.isDying)
+        for turn in range(zaela.dyingHealthLevels.permanent-1):
+            zaela.refreshDV()
+        self.assertRaises(ValueError, zaela.refreshDV)
 
 
 if __name__ == '__main__':
