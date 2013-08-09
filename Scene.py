@@ -1,5 +1,4 @@
 from ExaltedCharacter import ExaltedCharacter
-from Glossary import *
 
 '''Features:==
 
@@ -7,9 +6,6 @@ from Glossary import *
 
 '''
 
-
-# PlayerCharacters = ['Blixorthodon', 'CaedrisEmissaryofTenThousandWinds', 'GintheFearlessRadianceofAwesomeHonor',
-#                     'WanderingVengefulLink', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
 
 class BattleWheel():
     def __init__(self, allCharacters):
@@ -70,13 +66,11 @@ class BattleWheel():
 
 
 class CombatScene():
-    def __init__(self, includePCs=True):
+    def __init__(self, PlayerCharacters):
         self.characters = {}
         self.battleWheel = None
-        if includePCs:
-            for character in PlayerCharacters:
-                # ExChar = ExaltedCharacter(character)
-                self.addCharacter(character)
+        for character in PlayerCharacters:
+            self.addCharacter(character)
 
     def addCharacter(self, character):
         self.characters[character.name] = character #TODO: get first word of character name
@@ -85,8 +79,3 @@ class CombatScene():
         self.battleWheel = BattleWheel(self.characters.values())
         print self.battleWheel.tickLayout
 
-
-if __name__ == '__main__':
-    print "==Exalted GM Assistant Activated=="
-    combatScene = CombatScene()
-    print "New combat scene created containing: ", combatScene.characters.values()

@@ -18,7 +18,7 @@ def d(nDice):
    return rollDamage(nDice)
 
 def skillCheckByNumber(nDice, label=None):
-   if not label: label = "Skill:"
+   if not label: label = "Skill"
    rolls = roll(nDice, label)
    hits = filter(lambda x: x >= 7, rolls)
    tens = rolls.count(10)

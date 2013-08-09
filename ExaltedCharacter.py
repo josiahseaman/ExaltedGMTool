@@ -289,15 +289,15 @@ class ExaltedCharacter():
                 stats.remove(trait)
                 continue
             if len(stats) > 1:
-                if (trait.lower() == 'willpower'):
+                if trait.lower() == 'willpower':
                     self.temporaryWillpower -= 1
                     autoSuccesses += 1
                     stats.remove(trait)#remove from list
                 if trait in self.virtues:
-                    self.temporaryWillpower -= 1#even if this is a virtue channel it still takes 1wp
-                    self.channelVirtue(trait)#mark off virtue channel
-
-        rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice)
+                    self.temporaryWillpower -= 1 # even if this is a virtue channel it still takes 1wp
+                    self.channelVirtue(trait) # mark off virtue channel
+        label = reduce(lambda x,y: x+str(y)+" ", stats, '')
+        rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice, label)
         return rolledSuccesses + autoSuccesses
 
     def flurryAttack(self, nAttacks, defendingChar):

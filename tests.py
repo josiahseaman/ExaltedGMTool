@@ -17,7 +17,7 @@ class SceneTest(unittest.TestCase):
         self.assertEqual(c.damageCode(), 7)
 
     def testMembership(self):
-        scene = Scene.CombatScene(False)
+        scene = Scene.CombatScene([])
         self.assertEqual(len(scene.characters), 0)
         import ExaltedCharacter
         c = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
