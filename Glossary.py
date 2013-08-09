@@ -8,6 +8,7 @@ skogur = ExaltedCharacter.ExaltedCharacter('WanderingVengefulLink.ecg')
 willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
 mook = ExaltedCharacter.ExaltedCharacter('Arczeckhi.ecg')
 
+PlayerCharacters = [swift, gin, caedris, zaela, blix, skogur, willow]
 
 essence = 'Essence'
 willpower = 'Willpower'

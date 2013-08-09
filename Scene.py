@@ -1,5 +1,5 @@
 from ExaltedCharacter import ExaltedCharacter
-
+from Glossary import *
 
 '''Features:==
 
@@ -8,8 +8,8 @@ from ExaltedCharacter import ExaltedCharacter
 '''
 
 
-PlayerCharacters = ['Blixorthodon', 'CaedrisEmissaryofTenThousandWinds', 'GintheFearlessRadianceofAwesomeHonor',
-                    'WanderingVengefulLink', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
+# PlayerCharacters = ['Blixorthodon', 'CaedrisEmissaryofTenThousandWinds', 'GintheFearlessRadianceofAwesomeHonor',
+#                     'WanderingVengefulLink', 'WarrickSwiftColson', 'Willow', 'ZaelaPrismaticUnfoldingLotus']
 
 class BattleWheel():
     def __init__(self, allCharacters):
@@ -36,6 +36,7 @@ class BattleWheel():
             current = self.tickLayout.get(self.currentTick,[])[:1]
             try: current = current[0]
             except: self.currentTick += 1
+        current.refreshDV()
         return current
 
     def removeCharacter(self, character):
@@ -74,22 +75,15 @@ class CombatScene():
         self.battleWheel = None
         if includePCs:
             for character in PlayerCharacters:
-                ExChar = ExaltedCharacter(character)
-                self.addCharacter(ExChar)
+                # ExChar = ExaltedCharacter(character)
+                self.addCharacter(character)
 
     def addCharacter(self, character):
-        self.characters[character.name] = character
+        self.characters[character.name] = character #TODO: get first word of character name
 
     def beginBattle(self):
         self.battleWheel = BattleWheel(self.characters.values())
         print self.battleWheel.tickLayout
-
-    def beginScenario(self):
-        self.beginBattle()
-        for i in range(5):
-            actor = self.battleWheel.nextAction()
-            actor.flurryAttack(1, actor)#do stuff
-            self.battleWheel.resolveAction(speed=5)
 
 
 if __name__ == '__main__':
