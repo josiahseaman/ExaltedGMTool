@@ -6,6 +6,7 @@ zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
 blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
 skogur = ExaltedCharacter.ExaltedCharacter('WanderingVengefulLink.ecg')
 willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
+mook = ExaltedCharacter.ExaltedCharacter('Arczeckhi.ecg')
 
 
 essence = 'Essence'

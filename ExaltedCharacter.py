@@ -14,18 +14,18 @@ class TemporaryStat():
     def __repr__(self):
         return self.name + ": " + str(self.temporary) + " of " + str(self.permanent)
 
-    def __isub__(self, amount):
+    def __isub__(self, amount): # operator -=
         if self.temporary < amount:
             raise ValueError("You don't have enough " + self.name + " to do that.")
         self.temporary = self.temporary - amount
         print self.name, str(self.temporary), "remaining of", str(self.permanent)
         return self
 
-    def __iadd__(self, amount):
+    def __iadd__(self, amount):# operator +=
         self.temporary = min(self.temporary + amount, self.permanent)
-        return self
+        return self #TODO Add overflow check for Limit
 
-    def __eq__(self, other):
+    def __eq__(self, other):# operator ==
         try:
             return self.temporary == other.temporary
         except:
@@ -40,6 +40,19 @@ class VirtueChannel(TemporaryStat):
     def __iadd__(self, other):
         super.__iadd__(self, other)
         return self.permanent
+
+class HealthLevel(TemporaryStat):
+    #TODO: this will need to eventually have 3 states: bashing, lethal, aggravated.  Apply Damage Push down rules
+    """Characters have a list of health levels.  Once they run to the end of the list they are at least incapacitated.
+    Along side this is a list of associated wound penalties.  Also damage stacking."""
+
+    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4]):
+        TemporaryStat.__init__(self, name, perm, temp)
+        self.penalties = penalties
+    pass
+
+
+
 
 
 class ExaltedCharacter():
@@ -56,7 +69,7 @@ class ExaltedCharacter():
         self.temporaryWillpower = self.newStat('Willpower')
         self.personalEssence = self.newStat('Personal Essence', self.calcPersonalEssence())
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
-        self.wounds = self.newStat('Wounds', 0, 7)
+        self.health = HealthLevel('Health Levels', 6)
         self.limit = self.newStat('Limit', 0, 10)
         self.CompassionChannel = self.newStat('Compassion')
         self.ConvictionChannel = self.newStat('Conviction')
@@ -114,7 +127,7 @@ class ExaltedCharacter():
         self.stackSilkenArmor()
         if self.armorStats['name'] == 'Unarmored':
             print self.name, "is missing Armor"
-        if not self.weaponStats['name'] == 'punch':
+        if self.weaponStats['name'] == 'Punch':
             print self.name, "is missing Weapon"
 
     def gearList(self):
@@ -282,6 +295,21 @@ class ExaltedCharacter():
     def flurryAttack(self, nAttacks, defendingChar):
         return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
                       defendingChar.hardness())
+
+    def attack(self, defendingChar):
+        damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
+                                 defendingChar.hardness())
+        defendingChar.takeDamage(damageDealt)
+        return damageDealt
+
+    def takeDamage(self, damageDealt):
+        try:
+            self.health -= damageDealt
+        except:
+            print self.name, "has died"
+
+    def heal(self, healthGained):
+        self.health += healthGained
 
     def joinBattle(self):
         return self.roll('Wits', 'Awareness')
