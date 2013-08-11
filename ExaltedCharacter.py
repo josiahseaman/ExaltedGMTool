@@ -301,8 +301,10 @@ class ExaltedCharacter():
         return rolledSuccesses + autoSuccesses
 
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
-        return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
-                      defendingChar.hardness(), hasPenalty)
+        damageDealt = flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
+                             defendingChar.hardness(), hasPenalty)
+        defendingChar.takeDamage(damageDealt)
+        return damageDealt
 
     def attack(self, defendingChar):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
