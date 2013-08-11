@@ -83,14 +83,13 @@ class ExaltedCharacter():
         self.ConvictionChannel = self.newStat('Conviction')
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
-        # self.virtueChannel =
 
     def __repr__(self):
-        return "Character: " + self.name
+        return "<" + self.name + ">"
 
-    '''Temporary State'''
 
     def newStat(self, name, valueOverride=None, maximum=None):
+        '''Temporary State'''
         if valueOverride is None:
             return TemporaryStat(name, self.getStat(name))
         else:
@@ -172,7 +171,8 @@ class ExaltedCharacter():
     def parseWeapon(self, filename):
         if filename is None:
             return {"accuracy": 1, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 3, "speed": 5,
-                    "defense": 2, "inflictsNoDamage": False, "tags": [], "minimumDamage": 1, "name": "Punch", "type": "Martial Arts"}
+                    "defense": 2, "inflictsNoDamage": False, "tags": ['MartialArts'], "minimumDamage": 1,
+                    "name": "Punch", "type": "Martial Arts"}
         raw = json.load(open(filename))
         stats = raw["statsByRuleSet"]["SecondEdition"][0]
 
@@ -226,7 +226,7 @@ class ExaltedCharacter():
         return root
 
     def getName(self):
-        return self.characterSheet.attrib['repositoryPrintName']
+        return self.characterSheet.attrib['repositoryPrintName'].split()[0]
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
@@ -300,9 +300,9 @@ class ExaltedCharacter():
         rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice, label)
         return rolledSuccesses + autoSuccesses
 
-    def flurryAttack(self, nAttacks, defendingChar):
+    def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
         return flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
-                      defendingChar.hardness())
+                      defendingChar.hardness(), hasPenalty)
 
     def attack(self, defendingChar):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),

@@ -45,8 +45,8 @@ def attackRoll(accuracy, damageCode, DV, soak, hardness=0):
    print "Take", damageDone, "out of", damageDice, "damage dice."
    return damageDone
 
-def flurry(nAttacks, accuracy, damageCode, DV, soak, hardness=0):
-   penalties = range( nAttacks-1, (nAttacks-1)+nAttacks)
+def flurry(nAttacks, accuracy, damageCode, DV, soak, hardness=0, hasPenalty=True):
+   penalties = range( nAttacks-1, (nAttacks-1)+nAttacks) if hasPenalty else [0]*nAttacks
    damageDone = []
    for penalty in penalties:
       damageDone.append(attackRoll(accuracy-penalty, damageCode, DV, soak, hardness))

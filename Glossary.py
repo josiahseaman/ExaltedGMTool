@@ -1,14 +1,21 @@
 import ExaltedCharacter
+import Scene
+
 swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
 gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
-caedris = ExaltedCharacter.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
+# caedris = ExaltedCharacter.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
+caedin = ExaltedCharacter.ExaltedCharacter('CaidenUnionofWanderedStars.ecg')
 zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
 blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
 skogur = ExaltedCharacter.ExaltedCharacter('WanderingVengefulLink.ecg')
 willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
-mook = ExaltedCharacter.ExaltedCharacter('Arczeckhi.ecg')
 
-PlayerCharacters = [swift, gin, caedris, zaela, blix, skogur, willow]
+arc = ExaltedCharacter.ExaltedCharacter('Arczeckhi.ecg')
+neph = ExaltedCharacter.ExaltedCharacter('Nephwrack.ecg')
+zombie = ExaltedCharacter.ExaltedCharacter('Zombie.ecg')
+
+PlayerCharacters = [swift, gin, caedin, zaela, blix, skogur, willow]
+sc = Scene.CombatScene(PlayerCharacters)
 
 essence = 'Essence'
 willpower = 'Willpower'

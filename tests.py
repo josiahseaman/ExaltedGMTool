@@ -28,6 +28,12 @@ class SceneTest(unittest.TestCase):
         self.assertEqual(len(scene.battleWheel.activeCharacters), 0)
         self.assertFalse(any([c in tick for tick in scene.battleWheel.tickLayout.values()]))
 
+
+    def testBattleWheel(self):
+        import ExaltedCharacter as e
+        caedris = e.ExaltedCharacter('Caedris.ecg')
+        self.addCharacterToTick(caedris, 4)
+        print self.tickLayout
     # def testBeginScenario(nAttacks=3):
     #     scene = Scene.CombatScene()
     #     scene.beginScenario()

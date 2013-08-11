@@ -51,9 +51,7 @@
       <Dodge creationValue="2"/>
       <Integrity creationValue="0"/>
       <MartialArts creationValue="3"/>
-      <Melee creationValue="2">
-        <Specialty creationValue="1" name="Spear"/>
-      </Melee>
+      <Melee creationValue="3"/>
       <Resistance creationValue="2"/>
       <Thrown creationValue="0"/>
       <War creationValue="0"/>
@@ -97,36 +95,13 @@
     <Spells/>
     <Experience/>
     <AdditionalModels>
-      <Model templateId="Equipment">
-        <Content>
-          <item>
-            <templateId><![CDATA[Natural]]></templateId>
-            <printedStats><![CDATA[Punch]]></printedStats>
-            <printedStats><![CDATA[Clinch]]></printedStats>
-          </item>
-          <item>
-            <templateId><![CDATA[Spear]]></templateId>
-            <printedStats><![CDATA[Bracing / Mounted Charge]]>
-              <specialty name="Spear" type="Melee"/>
-            </printedStats>
-          </item>
-        </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
-      <Model templateId="Craft">
-        <Content/>
-      </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics/>
-        </Content>
-      </Model>
       <Model templateId="Intimacies">
         <Content>
           <Intimacies/>
         </Content>
+      </Model>
+      <Model templateId="Craft">
+        <Content/>
       </Model>
       <Model templateId="Mutations">
         <Content>
@@ -147,6 +122,27 @@
               <categorization type="Deficiency"/>
             </Mutation>
           </Mutations>
+        </Content>
+      </Model>
+      <Model templateId="Equipment">
+        <Content>
+          <item>
+            <templateId><![CDATA[Natural]]></templateId>
+            <printedStats><![CDATA[Punch]]></printedStats>
+            <printedStats><![CDATA[Clinch]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Spear]]></templateId>
+            <printedStats><![CDATA[Bracing / Mounted Charge]]></printedStats>
+          </item>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics/>
         </Content>
       </Model>
     </AdditionalModels>
