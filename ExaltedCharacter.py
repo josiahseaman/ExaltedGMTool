@@ -308,7 +308,7 @@ class ExaltedCharacter():
 
     def attack(self, defendingChar):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
-                                 defendingChar.hardness())
+                                 defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
         defendingChar.takeDamage(damageDealt)
         return damageDealt
 
