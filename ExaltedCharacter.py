@@ -46,8 +46,9 @@ class HealthLevel(TemporaryStat):
     """Characters have a list of health levels.  Once they run to the end of the list they are at least incapacitated.
     Along side this is a list of associated wound penalties.  Also damage stacking."""
 
-    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4,-10]): #TODO: Handle incap being a string and dice penalty.
+    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4,-20]): #TODO: Handle incap being a string and dice penalty.
         TemporaryStat.__init__(self, name, perm, temp)
+        self.penalties = []
         self.penalties = penalties
 
     def __isub__(self, other):
@@ -59,7 +60,16 @@ class HealthLevel(TemporaryStat):
     def empty(self):
         self.temporary = 0
 
+    def woundPenalty(self):
+        return self.penalties[self.permanent - self.temporary]
 
+    def oxBody(self, purchases=1):
+        for p in purchases:
+            self.permanent += 3
+            self.temporary += 3
+            self.penalties.insert(self.penalties.index(-1), -1)
+            self.penalties.insert(self.penalties.index(-2), -2)
+            self.penalties.insert(self.penalties.index(-2), -2)
 
 class ExaltedCharacter():
     def __init__(self, filename=None):
@@ -77,12 +87,13 @@ class ExaltedCharacter():
         self.peripheralEssence = self.newStat('Peripheral Essence', self.calcPeripheralEssence())
         self.health = HealthLevel('Health Levels', 7)
         self.isDying = False
-        self.dyingHealthLevels = HealthLevel('Dying Health Levels', self.getStat("Stamina"))
+        self.dyingHealthLevels = HealthLevel('Dying Health Levels', self["Stamina"])
         self.limit = self.newStat('Limit', 0, 10)
         self.CompassionChannel = self.newStat('Compassion')
         self.ConvictionChannel = self.newStat('Conviction')
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
+        self.dvPenalty = 0
 
     def __repr__(self):
         return "<" + self.name + ">"
@@ -91,7 +102,7 @@ class ExaltedCharacter():
     def newStat(self, name, valueOverride=None, maximum=None):
         '''Temporary State'''
         if valueOverride is None:
-            return TemporaryStat(name, self.getStat(name))
+            return TemporaryStat(name, self[name])
         else:
             if maximum is None:
                 return TemporaryStat(name, perm=valueOverride, temp=valueOverride)
@@ -108,25 +119,31 @@ class ExaltedCharacter():
 
 
     """Items Stats"""
+
+    def createItemPath(self, itemName):
+        if itemName is None:
+            return None
+        fileName = 'equipment/' + re.sub(r'[\W_]', '_', itemName) + '.item'
+        try:
+            with open(fileName): pass
+        except IOError:
+            print "Help! File name does not exist.", fileName
+        return fileName
+
     def populateGearStats(self):
         gearList = self.gearList()
         self.armorStats = self.parseArmor(None)
         self.weaponStats = self.parseWeapon(None)
         gearList = self.handleSilkenArmor(gearList)
         for itemName in gearList:
-            fileName = 'equipment/' + re.sub(r'[\W_]', '_', itemName) + '.item'
             try:
-                with open(fileName): pass
-            except IOError:
-                print "Help! File name does not exist.", fileName
-            try:
-                candidateA = self.parseArmor(fileName)
+                candidateA = self.parseArmor(itemName)
                 if self.armorStats['lethalSoak'] < candidateA['lethalSoak']:
                     # print candidateA['name'], "wins over", self.armorStats['name'], '\n'
                     self.armorStats = candidateA
             except:
                 try:
-                    candidateW = self.parseWeapon(fileName)
+                    candidateW = self.parseWeapon(itemName)
                     if self.weaponStats['name'] == 'Punch' or self.weaponStats["damage"] < candidateW["damage"]:
                         # print candidateW['name'], "wins over", self.weaponStats['name'], '\n'
                         self.weaponStats = candidateW
@@ -152,7 +169,8 @@ class ExaltedCharacter():
         availableModels = {x.get('templateId'): x for x in e.getchildren()}
         return availableModels
 
-    def parseArmor(self, filename):
+    def parseArmor(self, itemName):
+        filename = self.createItemPath(itemName)
         if filename is None:
             return {'name':'Unarmored', 'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
         stats = {}
@@ -168,7 +186,8 @@ class ExaltedCharacter():
         stats['name'] = raw['name']
         return stats
 
-    def parseWeapon(self, filename):
+    def parseWeapon(self, itemName):
+        filename = self.createItemPath(itemName)
         if filename is None:
             return {"accuracy": 1, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 3, "speed": 5,
                     "defense": 2, "inflictsNoDamage": False, "tags": ['MartialArts'], "minimumDamage": 1,
@@ -208,7 +227,7 @@ class ExaltedCharacter():
         return (self.sumDicePool('Dexterity', 'Dodge', 'Essence') - self.armorStats.get('mobilityPenalty',0)) / 2
 
     def DV(self):
-        return max(self.parryDV(), self.dodgeDV())
+        return max(0, max(self.parryDV(), self.dodgeDV()) - self.dvPenalty)
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
@@ -249,8 +268,8 @@ class ExaltedCharacter():
         #check for specialties, assumes they are applicable to this roll
         try:
             specialtyElem = element.iter('Specialty').next()
-            print "Specialty:", specialtyElem.attrib[
-                'name'], #currently I'm print this out to remind people of the assumption
+            print "Specialty:", specialtyElem.attrib['name'],
+                 #currently I'm print this out to remind people of the assumption
             specialty = self.getStatNumber(specialtyElem)
         except:
             specialty = 0
@@ -268,7 +287,7 @@ class ExaltedCharacter():
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
             dicePool += self[stat]
-        return dicePool #- self.woundPenalty
+        return max(0, dicePool - self.health.woundPenalty)
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -343,16 +362,36 @@ class ExaltedCharacter():
             gearList.remove(itemName)
         return gearList
 
+    def spend(self, amount):
+        if self.peripheralEssence.temporary >= amount:
+            self.peripheralEssence -= amount
+        else:
+            remainder = amount - self.peripheralEssence.temporary
+            self.peripheralEssence -= self.peripheralEssence.temporary
+            self.personalEssence -= remainder
+
+    def regain(self, amount):
+        room = self.personalEssence.permanent - self.personalEssence.temporary
+        if room >= amount:
+            self.peripheralEssence += amount
+        else:
+            remainder = amount - room
+            self.personalEssence += room
+            self.peripheralEssence += remainder
+
     def refreshDV(self):
-        # remove dv penalties,
-        # maintain grapple,
         if self.isDying: # progress dying health levels,
             try:
                 self.dyingHealthLevels -= 1
             except:
                 print self.name, "is dead"
                 raise ValueError, "Remove character from scene"
-        # regain motes (5 motes for meridians)
+        else:
+            self.dvPenalty = 0 # remove dv penalties
+            # maintain grapple,
+            self.regain(5) #TODO: regain motes (5 motes for meridians)
+
+
 
 if __name__ == "__main__":
     print "ExaltedCharacter loaded"
