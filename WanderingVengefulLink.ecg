@@ -167,6 +167,7 @@ And every day, I watch and listen, learning new ways of bringing down House Cyni
         </Charm>
         <Charm name="Solar.FlashingVengeanceDraw" experienceLearned="false"/>
         <Charm name="Solar.PhantomArrowTechnique" experienceLearned="true"/>
+        <Charm name="Solar.RainFeatheredDeath" experienceLearned="true"/>
         <Charm name="Solar.TranceUnhesitatingSpeed" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Athletics" type="Solar">
@@ -289,6 +290,9 @@ And every day, I watch and listen, learning new ways of bringing down House Cyni
       </Entry>
       <Entry points="13">
         <Description><![CDATA[2 - First Scene (12)]]></Description>
+      </Entry>
+      <Entry points="9">
+        <Description><![CDATA[13th Scene]]></Description>
       </Entry>
     </Experience>
     <AdditionalModels>

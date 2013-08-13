@@ -20,7 +20,7 @@
       <Caste type="Twilight"/>
     </CharacterConcept>
     <Essence creationValue="3" experiencedValue="4"/>
-    <Willpower creationValue="5" experiencedValue="6"/>
+    <Willpower creationValue="5" experiencedValue="7"/>
     <Virtues>
       <Compassion creationValue="2"/>
       <Conviction creationValue="3"/>
@@ -75,7 +75,7 @@
         </subTrait>
       </Craft>
       <Investigation creationValue="0"/>
-      <Lore creationValue="2"/>
+      <Lore creationValue="2" experiencedValue="2"/>
       <Medicine creationValue="0"/>
       <Occult creationValue="5">
         <Specialty creationValue="3" name="Forest"/>
@@ -167,6 +167,8 @@
       <Spell name="Terrestrial.VirtuousGuardianFlame" experienceLearned="true"/>
       <Spell name="Terrestrial.FlightBrilliantRaptor" experienceLearned="true"/>
       <Spell name="Celestial.MagmaKraken" experienceLearned="true"/>
+      <Spell name="Celestial.HiddenJudgesSecretFlame" experienceLearned="true"/>
+      <Spell name="Celestial.IvoryOrchidPavilion" experienceLearned="true"/>
     </Spells>
     <Experience>
       <Entry points="11">
@@ -202,24 +204,27 @@
       <Entry points="20">
         <Description><![CDATA[11 - Mission of Mercy]]></Description>
       </Entry>
+      <Entry points="5">
+        <Description><![CDATA[12 - A Better World]]></Description>
+      </Entry>
+      <Entry points="8">
+        <Description><![CDATA[12.1]]></Description>
+      </Entry>
+      <Entry points="9">
+        <Description><![CDATA[13 - Dark Eyes of the Jungle]]></Description>
+      </Entry>
     </Experience>
     <AdditionalModels>
-      <Model templateId="Intimacies">
+      <Model templateId="Mutations">
         <Content>
-          <Intimacies>
-            <Intimacy name="Nautre" complete="true">
-              <Trait creationValue="3"/>
-            </Intimacy>
-          </Intimacies>
+          <Mutations/>
         </Content>
       </Model>
       <Model templateId="Craft">
         <Content/>
       </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
+      <Model templateId="Specialties">
+        <Content/>
       </Model>
       <Model templateId="Equipment">
         <Content>
@@ -243,15 +248,21 @@
           </item>
         </Content>
       </Model>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
       <Model templateId="Linguistics">
         <Content>
           <linguistics>
             <language><![CDATA[Foresttongue]]></language>
             <language><![CDATA[OldRealm]]></language>
           </linguistics>
+        </Content>
+      </Model>
+      <Model templateId="Intimacies">
+        <Content>
+          <Intimacies>
+            <Intimacy name="Nautre" complete="true">
+              <Trait creationValue="3"/>
+            </Intimacy>
+          </Intimacies>
         </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">

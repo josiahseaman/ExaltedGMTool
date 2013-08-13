@@ -120,28 +120,25 @@ Familiar is a peacock-plumaged magpie jay: http://goo.gl/jF1Ig]]></Notes>
       </Background>
     </Backgrounds>
     <Charms>
-      <CharmGroup name="Occult" type="Solar">
-        <Charm name="Solar.TerrestrialCircleThaumaturgy" experienceLearned="true"/>
-        <Charm name="Solar.CelestialCircleThaumaturgy" experienceLearned="true"/>
-        <Charm name="Solar.Spirit-DetectingGlance" experienceLearned="true"/>
+      <CharmGroup name="Lore" type="Solar">
+        <Charm name="Solar.Soul-EnlighteningBeneficence" experienceLearned="true"/>
+        <Charm name="Solar.2ndExcellency.Lore" experienceLearned="true"/>
+        <Charm name="Solar.Essence-LendingMethod" experienceLearned="true"/>
       </CharmGroup>
       <CharmGroup name="Linguistics" type="Solar">
         <Charm name="Solar.1stExcellency.Linguistics" experienceLearned="false"/>
         <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
         <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="Performance" type="Solar">
-        <Charm name="Solar.2ndExcellency.Performance" experienceLearned="false"/>
-      </CharmGroup>
       <CharmGroup name="Craft" type="Solar">
         <Charm name="Solar.Crack-MendingTechnique" experienceLearned="false"/>
         <Charm name="Solar.CraftsmanNeedsNoTools" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Craft" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="Lore" type="Solar">
-        <Charm name="Solar.Soul-EnlighteningBeneficence" experienceLearned="true"/>
-        <Charm name="Solar.2ndExcellency.Lore" experienceLearned="true"/>
-        <Charm name="Solar.Essence-LendingMethod" experienceLearned="true"/>
+      <CharmGroup name="Occult" type="Solar">
+        <Charm name="Solar.TerrestrialCircleThaumaturgy" experienceLearned="true"/>
+        <Charm name="Solar.CelestialCircleThaumaturgy" experienceLearned="true"/>
+        <Charm name="Solar.Spirit-DetectingGlance" experienceLearned="true"/>
       </CharmGroup>
       <CharmGroup name="Bureaucracy" type="Solar">
         <Charm name="Solar.1stExcellency.Bureaucracy" experienceLearned="false"/>
@@ -149,6 +146,9 @@ Familiar is a peacock-plumaged magpie jay: http://goo.gl/jF1Ig]]></Notes>
       <CharmGroup name="Socialize" type="Solar">
         <Charm name="Solar.TabooInflictingDiatribe" experienceLearned="false"/>
         <Charm name="Solar.Wise-EyedCourtierMethod" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Performance" type="Solar">
+        <Charm name="Solar.2ndExcellency.Performance" experienceLearned="false"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -223,22 +223,14 @@ Familiar is a peacock-plumaged magpie jay: http://goo.gl/jF1Ig]]></Notes>
       <Entry points="5">
         <Description><![CDATA[Scenario 12 (A Better World Prologue)]]></Description>
       </Entry>
+      <Entry points="8">
+        <Description><![CDATA[Scenario 12.1]]></Description>
+      </Entry>
+      <Entry points="9">
+        <Description><![CDATA[Scenario 13 (Dark Eyes of the Jungle)]]></Description>
+      </Entry>
     </Experience>
     <AdditionalModels>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics>
-            <language><![CDATA[LowRealm]]></language>
-            <language><![CDATA[Foresttongue]]></language>
-            <language><![CDATA[Riverspeak]]></language>
-            <language><![CDATA[HighHolySpeech]]></language>
-            <language><![CDATA[OldRealm]]></language>
-          </linguistics>
-        </Content>
-      </Model>
       <Model templateId="Intimacies">
         <Content>
           <Intimacies>
@@ -266,7 +258,26 @@ Familiar is a peacock-plumaged magpie jay: http://goo.gl/jF1Ig]]></Notes>
           </Intimacies>
         </Content>
       </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics>
+            <language><![CDATA[LowRealm]]></language>
+            <language><![CDATA[Foresttongue]]></language>
+            <language><![CDATA[Riverspeak]]></language>
+            <language><![CDATA[HighHolySpeech]]></language>
+            <language><![CDATA[OldRealm]]></language>
+          </linguistics>
+        </Content>
+      </Model>
       <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
         <Content/>
       </Model>
       <Model templateId="Equipment">
@@ -296,11 +307,11 @@ Familiar is a peacock-plumaged magpie jay: http://goo.gl/jF1Ig]]></Notes>
           <item>
             <templateId><![CDATA[Meridian Wireless Transcievers ]]></templateId>
           </item>
-        </Content>
-      </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
+          <item>
+            <templateId><![CDATA[Silken Armor]]></templateId>
+            <printedStats><![CDATA[Armour]]></printedStats>
+            <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
+          </item>
         </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">

@@ -35,7 +35,7 @@
     <Essence creationValue="3" experiencedValue="4"/>
     <Willpower creationValue="8"/>
     <Virtues>
-      <Compassion creationValue="3"/>
+      <Compassion creationValue="3" experiencedValue="3"/>
       <Conviction creationValue="2"/>
       <Temperance creationValue="2"/>
       <Valor creationValue="2"/>
@@ -152,6 +152,7 @@
         <Charm name="Sidereal.SmoothTransition" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Resistance" type="Sidereal">
+        <Charm name="Sidereal.2ndExcellency.Resistance" experienceLearned="true"/>
         <Charm name="Sidereal.OptimisticSecurityPractice" experienceLearned="false"/>
         <Charm name="Sidereal.ShieldOfDestiny" experienceLearned="false"/>
         <Charm name="Sidereal.SomeoneElsesDestiny" experienceLearned="false"/>
@@ -179,6 +180,7 @@
     <Spells/>
     <Experience>
       <Entry points="147"/>
+      <Entry points="9"/>
     </Experience>
     <AdditionalModels>
       <Model templateId="Craft">

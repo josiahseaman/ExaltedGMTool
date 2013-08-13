@@ -271,15 +271,15 @@
             <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
           </item>
           <item>
-            <templateId><![CDATA[Wavecleaver Daiklave]]></templateId>
-            <material><![CDATA[Orichalcum]]></material>
-            <printedStats><![CDATA[Close]]></printedStats>
-          </item>
-          <item>
             <templateId><![CDATA[Grand Goremaul]]></templateId>
             <material><![CDATA[Orichalcum]]></material>
             <printedStats><![CDATA[Close]]></printedStats>
             <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Wavecleaver Daiklave]]></templateId>
+            <material><![CDATA[Orichalcum]]></material>
+            <printedStats><![CDATA[Close]]></printedStats>
           </item>
         </Content>
       </Model>

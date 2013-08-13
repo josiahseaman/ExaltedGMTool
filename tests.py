@@ -48,10 +48,9 @@ class CharacterTest(unittest.TestCase):
         print "For 'Perception', 'Awareness' Roll", self.c.sumDicePool('Perception', 'Awareness'), "dice"
 
     def testDerivedStats(self):
-        print "Stat test"
         self.assertEqual(self.c['Essence'], 4)
-        self.assertEqual(self.c.peripheralEssence, 43)
-        self.assertEqual(self.c.personalEssence, 18)
+        self.assertEqual(self.c.peripheralEssence, 44)
+        self.assertEqual(self.c.personalEssence, 19)
 
     def testRunningOut(self):
         self.c.roll('Compassion', 'Dexterity')
@@ -77,8 +76,7 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(self.swift.armorStats, self.swift.parseArmor('Chain_Shirt__Artifact_With_Silken_Armor'))
 
     def testDying(self):
-        self.gin.attack(self.zaela) # We are assuming this kills Zaela
-        self.gin.attack(self.zaela) # We are assuming this kills Zaela
+        self.gin.flurryAttack(6, self.zaela, False) # We are assuming this kills Zaela
         self.assertTrue(self.zaela.isDying)
         for turn in range(self.zaela.dyingHealthLevels.permanent-1):
             self.zaela.refreshDV()

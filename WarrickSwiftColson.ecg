@@ -4,8 +4,8 @@
   <Description>
     <CharacterName><![CDATA[Warrick (Swift) Colson]]></CharacterName>
     <Player><![CDATA[Michael Oakland]]></Player>
-    <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals.]]></Characterization>
-    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></PhysicalDescription>
+    <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></Characterization>
+    <PhysicalDescription><![CDATA[Swift is thin and extremely dextrous. He is of average height and just above average beauty. He has regal, serious features. Dispite that fact, you can usually catch him smiling.]]></PhysicalDescription>
     <Concept><![CDATA[Wandering Diplomat]]></Concept>
     <Eyes><![CDATA[Green]]></Eyes>
     <Hair><![CDATA[Brown]]></Hair>
@@ -16,8 +16,8 @@
   <Description>
     <CharacterName><![CDATA[Warrick (Swift) Colson]]></CharacterName>
     <Player><![CDATA[Michael Oakland]]></Player>
-    <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals.]]></Characterization>
-    <PhysicalDescription><![CDATA[Swift is thin yet extremely dextrous. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></PhysicalDescription>
+    <Characterization><![CDATA[Swift grew up in Laenia as a ghost in Suten Inat's palace. He learned to hunt for his food and use his quick mind to stay out of sight of the guards. He was fascinated with Inat's diplomatic skills and as such learned much from watching diplomatic meetings. Time waned his survival skill after Inat realized he existed and saw him as an asset with his ambitious goals. Many people of Laenia believe he was blessed by the Unconquered Sun in order to be everywhere at all times. Some say he would make an excellent thief for Laenia's underground.]]></Characterization>
+    <PhysicalDescription><![CDATA[Swift is thin and extremely dextrous. He is of average height and just above average beauty. He has regal, serious features. Dispite that fact, you can usually catch him smiling.]]></PhysicalDescription>
     <Concept><![CDATA[Wandering Diplomat]]></Concept>
     <Eyes><![CDATA[Green]]></Eyes>
     <Hair><![CDATA[Brown]]></Hair>
@@ -50,7 +50,7 @@
       </Physical>
       <Social>
         <Charisma creationValue="5" experiencedValue="5"/>
-        <Manipulation creationValue="1" experiencedValue="2"/>
+        <Manipulation creationValue="1" experiencedValue="4"/>
         <Appearance creationValue="3" experiencedValue="3"/>
       </Social>
       <Mental>
@@ -68,7 +68,9 @@
       </Thrown>
       <War creationValue="0"/>
       <Integrity creationValue="0"/>
-      <Performance creationValue="5" experiencedValue="5" favored="true"/>
+      <Performance creationValue="5" experiencedValue="5" favored="true">
+        <Specialty creationValue="0" experiencedValue="2" name="Lying"/>
+      </Performance>
       <Presence creationValue="4" experiencedValue="4" favored="true">
         <Specialty creationValue="3" name="Negotiations"/>
       </Presence>
@@ -112,7 +114,7 @@
       <Socialize creationValue="3" experiencedValue="3"/>
     </Abilities>
     <Backgrounds>
-      <Background creationValue="2"><![CDATA[Manse]]>
+      <Background creationValue="2" experiencedValue="2"><![CDATA[Manse]]>
         <Description><![CDATA[Gem of Surface Thoughts]]></Description>
       </Background>
       <Background creationValue="3" experiencedValue="3"><![CDATA[Contacts]]>
@@ -123,32 +125,16 @@
         <Description><![CDATA[Forest Spirit Courts]]></Description>
       </Background>
       <Background creationValue="0" experiencedValue="4"><![CDATA[Artifact]]>
-        <Description><![CDATA[Sinnging Staff]]></Description>
+        <Description><![CDATA[Singing Staff]]></Description>
+      </Background>
+      <Background creationValue="0"><![CDATA[Manse]]>
+        <Description><![CDATA[Stone of Air Walking]]></Description>
       </Background>
     </Backgrounds>
     <Charms>
-      <CharmGroup name="Craft" type="Solar">
-        <Charm name="Solar.1stExcellency.Craft" experienceLearned="true"/>
-      </CharmGroup>
-      <CharmGroup name="Presence" type="Solar">
-        <Charm name="Solar.HypnoticTongueTechnique" experienceLearned="false"/>
-        <Charm name="Solar.1stExcellency.Presence" experienceLearned="false"/>
-      </CharmGroup>
       <CharmGroup name="Linguistics" type="Solar">
         <Charm name="Solar.PoeticExpressionStyle" experienceLearned="false"/>
         <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Dodge" type="Solar">
-        <Charm name="Solar.ShadowOverWater" experienceLearned="true"/>
-        <Charm name="Solar.SevenShadowEvasion" experienceLearned="true"/>
-      </CharmGroup>
-      <CharmGroup name="Occult" type="Solar">
-        <Charm name="Solar.3rdExcellency.Occult" experienceLearned="true"/>
-      </CharmGroup>
-      <CharmGroup name="Performance" type="Solar">
-        <Charm name="Solar.Heart-CompellingMethod" experienceLearned="false"/>
-        <Charm name="Solar.Husband-SeducingDemonDance" experienceLearned="false"/>
-        <Charm name="Solar.1stExcellency.Performance" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Thrown" type="Solar">
         <Charm name="Solar.CascadeCuttingTerror" experienceLearned="false"/>
@@ -157,6 +143,25 @@
         <Charm name="Solar.2ndExcellency.Thrown" experienceLearned="true"/>
         <Charm name="Solar.Observer-DeceivingAttack" experienceLearned="true"/>
         <Charm name="Solar.FallingIcicleStrike" experienceLearned="true"/>
+      </CharmGroup>
+      <CharmGroup name="Presence" type="Solar">
+        <Charm name="Solar.HypnoticTongueTechnique" experienceLearned="false"/>
+        <Charm name="Solar.1stExcellency.Presence" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Craft" type="Solar">
+        <Charm name="Solar.1stExcellency.Craft" experienceLearned="true"/>
+      </CharmGroup>
+      <CharmGroup name="Dodge" type="Solar">
+        <Charm name="Solar.ShadowOverWater" experienceLearned="true"/>
+        <Charm name="Solar.SevenShadowEvasion" experienceLearned="true"/>
+      </CharmGroup>
+      <CharmGroup name="Performance" type="Solar">
+        <Charm name="Solar.Heart-CompellingMethod" experienceLearned="false"/>
+        <Charm name="Solar.Husband-SeducingDemonDance" experienceLearned="false"/>
+        <Charm name="Solar.1stExcellency.Performance" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Occult" type="Solar">
+        <Charm name="Solar.3rdExcellency.Occult" experienceLearned="true"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -194,45 +199,65 @@
     <Spells/>
     <Experience>
       <Entry points="24">
-        <Description><![CDATA[Starting]]></Description>
+        <Description><![CDATA[1.1-3 - Starting]]></Description>
       </Entry>
       <Entry points="12">
-        <Description><![CDATA[4- Shindig]]></Description>
+        <Description><![CDATA[1.4- Shindig]]></Description>
       </Entry>
       <Entry points="6">
-        <Description><![CDATA[Backing (Spirits Courts)]]></Description>
+        <Description><![CDATA[1.4 - Backing (Spirits Courts)]]></Description>
       </Entry>
       <Entry points="8">
-        <Description><![CDATA[3 - xp mistake]]></Description>
+        <Description><![CDATA[1.3 - xp mistake]]></Description>
       </Entry>
       <Entry points="4">
-        <Description><![CDATA[5 - A New Friend]]></Description>
+        <Description><![CDATA[1.5 - A New Friend]]></Description>
       </Entry>
       <Entry points="9">
-        <Description><![CDATA[6 - Hand Of Fire]]></Description>
+        <Description><![CDATA[1.6 - Hand Of Fire]]></Description>
       </Entry>
       <Entry points="8">
-        <Description><![CDATA[7 - Hand Of Fire Part 2]]></Description>
+        <Description><![CDATA[1.7 - Hand Of Fire Part 2]]></Description>
       </Entry>
       <Entry points="14">
-        <Description><![CDATA[8 - Hot Springs Episode]]></Description>
+        <Description><![CDATA[1.8 - Hot Springs Episode]]></Description>
       </Entry>
       <Entry points="13">
-        <Description><![CDATA[9 - A Woman Scorned]]></Description>
+        <Description><![CDATA[1.9 - A Woman Scorned]]></Description>
       </Entry>
       <Entry points="5">
-        <Description><![CDATA[9.5 - 6 Months of a Whole Lot of Nothing]]></Description>
+        <Description><![CDATA[1.9 - 6 Months of a Whole Lot of Nothing]]></Description>
       </Entry>
       <Entry points="11">
-        <Description><![CDATA[10 - The Full Extent]]></Description>
+        <Description><![CDATA[1.10 - The Full Extent]]></Description>
       </Entry>
       <Entry points="20">
-        <Description><![CDATA[11 - SEASON FINALE]]></Description>
+        <Description><![CDATA[1.11 - SEASON FINALE]]></Description>
+      </Entry>
+      <Entry points="5">
+        <Description><![CDATA[2.1 - A Better World Prologue]]></Description>
+      </Entry>
+      <Entry points="8">
+        <Description><![CDATA[2.2 - A Better World Prologue]]></Description>
+      </Entry>
+      <Entry points="9">
+        <Description><![CDATA[2.3 - Dark Eyes of The Jungle]]></Description>
       </Entry>
     </Experience>
     <AdditionalModels>
-      <Model templateId="Craft">
+      <Model templateId="Specialties">
         <Content/>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics>
+            <language><![CDATA[Riverspeak]]></language>
+            <language><![CDATA[Foresttongue]]></language>
+            <language><![CDATA[LowRealm]]></language>
+            <language><![CDATA[OldRealm]]></language>
+            <language><![CDATA[Flametongue]]></language>
+          </linguistics>
+        </Content>
       </Model>
       <Model templateId="Equipment">
         <Content>
@@ -289,9 +314,6 @@
             <Intimacy name="Wyld Hunt (Fear and Awe)" complete="false">
               <Trait creationValue="0" experiencedValue="2"/>
             </Intimacy>
-            <Intimacy name="The Circle (Blix, Skogur, Kaedris, Willow, Gin, Zaela)" complete="false">
-              <Trait creationValue="0" experiencedValue="1"/>
-            </Intimacy>
             <Intimacy name="Deepsoul" complete="false">
               <Trait creationValue="0" experiencedValue="2"/>
             </Intimacy>
@@ -304,24 +326,13 @@
             <Intimacy name="Meridian Isles" complete="false">
               <Trait creationValue="0" experiencedValue="1"/>
             </Intimacy>
-            <Intimacy name="Diplomacy (over war)" complete="false">
-              <Trait creationValue="0" experiencedValue="1"/>
+            <Intimacy name="The Circle" complete="false">
+              <Trait creationValue="0" experiencedValue="2"/>
             </Intimacy>
           </Intimacies>
         </Content>
       </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics>
-            <language><![CDATA[Riverspeak]]></language>
-            <language><![CDATA[Foresttongue]]></language>
-            <language><![CDATA[LowRealm]]></language>
-            <language><![CDATA[OldRealm]]></language>
-            <language><![CDATA[Flametongue]]></language>
-          </linguistics>
-        </Content>
-      </Model>
-      <Model templateId="Specialties">
+      <Model templateId="Craft">
         <Content/>
       </Model>
       <Model templateId="Mutations">
