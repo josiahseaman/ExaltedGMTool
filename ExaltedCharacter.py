@@ -338,12 +338,14 @@ class ExaltedCharacter():
                 return False
             damageDone = attackRoll(self.accuracy()-penalty, self.damageCode(), max(0, defendingChar.DV()-onslaught),
                                     defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
+            self.addDvPenalty(1)
             defendingChar.takeDamage(damageDone)
         return True
 
     def attack(self, defendingChar):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
                                  defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
+        self.addDvPenalty(1)
         defendingChar.takeDamage(damageDealt)
         return damageDealt
 
