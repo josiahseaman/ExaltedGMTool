@@ -59,3 +59,13 @@ def flurry(nAttacks, accuracy, damageCode, DV, soak, hardness=0, minimumDamage=1
         damageDone.append(attackRoll(accuracy-penalty, damageCode, max(0, DV-onslaught), soak, hardness, minimumDamage))
     print "Total damage done:", sum(damageDone)
     return sum(damageDone)
+
+
+def outcomePlot(nDice):
+    record = {}
+    for i in range(1000):
+        score = s(nDice)
+        record[score] = 1 + record.get(score, 0)
+
+    for score, height in record.iteritems():
+        print score, '.' * height

@@ -61,7 +61,8 @@ class HealthLevel(TemporaryStat):
         self.temporary = 0
 
     def woundPenalty(self):
-        return self.penalties[self.permanent - self.temporary]
+        if self.temporary == self.permanent: return 0 # undamaged state
+        return self.penalties[self.permanent - self.temporary - 1] # minus one because penalties[0] is for 1 damage
 
     def oxBody(self, purchases=1):
         for p in purchases:
