@@ -184,7 +184,8 @@ class ExaltedCharacter():
         stats['bashingHardness'] = statBlock[0]["hardnessByHealthType"]['Bashing']
         stats["fatigue"] = statBlock[0]["fatigue"]
         stats["mobilityPenalty"] = statBlock[0]["mobilityPenalty"]
-        stats["attuneCost"] = statBlock[1]["attuneCost"]
+        try: stats["attuneCost"] = statBlock[1]["attuneCost"] # second statBlock only exists if it's an artifact
+        except: pass
         stats['name'] = raw['name']
         return stats
 

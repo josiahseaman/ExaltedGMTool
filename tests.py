@@ -68,8 +68,8 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(self.blix.accuracy(), 4) #this should be using Thrown, because of the thrown tag stat block under knife
 
     def testCustomArmor(self):
-        # self.assertEqual(self.skogur.armorStats['name'], 'Moon-Face Breastplate')
-        pass
+        self.skogur.armorStats = self.skogur.parseArmor('Moon-Face Breastplate')
+        self.assertEqual(self.skogur.armorStats['name'], 'Moon-Face Breastplate')
 
     def testCraftSkillAndSoakStacking(self):
         self.assertEqual(self.swift.getStat('Craft'),4)
