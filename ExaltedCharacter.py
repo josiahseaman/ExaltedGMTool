@@ -94,6 +94,7 @@ class ExaltedCharacter():
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
         self.dvPenalty = 0
+        self.overrides = {}
 
     def __repr__(self):
         return "<" + self.name + ">"
@@ -224,10 +225,10 @@ class ExaltedCharacter():
         return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
 
     def dodgeDV(self):
-        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence') - self.armorStats.get('mobilityPenalty',0)) / 2
+        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence') + self.armorStats.get('mobilityPenalty',0) + self.health.woundPenalty()) / 2
 
     def DV(self):
-        return max(0, max(self.parryDV(), self.dodgeDV()) - self.dvPenalty)
+        return max(0, max(self.parryDV(), self.dodgeDV()) + self.dvPenalty)
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
@@ -255,11 +256,13 @@ class ExaltedCharacter():
 
     def getStat(self, statName):
         statName = statName.lower().capitalize() #proper capitalization
+        # try: return self.overrides[statName]
+        # except: pass
         if statName == 'Martialarts': statName = 'MartialArts'
         try:
             element = self.characterSheet.getiterator(statName).next()
         except:
-            return 0
+            return 0 #TODO: make this more clean than a silent failure
         if statName == 'Craft':
             branches = element.getiterator('subTrait')
             result = max(map(self.getStatNumber, branches))
@@ -286,8 +289,11 @@ class ExaltedCharacter():
     def sumDicePool(self, *stats):
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
-            dicePool += self[stat]
-        return max(0, dicePool - self.health.woundPenalty)
+            try:
+                dicePool += self[stat]
+            except AttributeError:
+                dicePool += stat #this is probably a number
+        return max(0, dicePool - self.health.woundPenalty())
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -320,10 +326,15 @@ class ExaltedCharacter():
         return rolledSuccesses + autoSuccesses
 
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
-        damageDealt = flurry(nAttacks, self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
-                             defendingChar.hardness(), hasPenalty)
-        defendingChar.takeDamage(damageDealt)
-        return damageDealt
+        penalties = range( nAttacks-1, (nAttacks-1)+nAttacks) if hasPenalty else [0]*nAttacks
+        for onslaught, penalty in enumerate(penalties):
+            if defendingChar.isDying:
+                print "Select a new target!", nAttacks-onslaught, "attacks left."
+                return False
+            damageDone = attackRoll(self.accuracy()-penalty, self.damageCode(), max(0, defendingChar.DV()-onslaught),
+                                    defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
+            defendingChar.takeDamage(damageDone)
+        return True
 
     def attack(self, defendingChar):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
@@ -349,7 +360,7 @@ class ExaltedCharacter():
         #TODO: check for "Unarmored" and remove armorStats
         if self.isWearingSilkenArmor:
             properties = ['lethalSoak', 'bashingSoak', "fatigue", "mobilityPenalty", "attuneCost"] #hardness does not stack
-            silkArmor = self.parseArmor('equipment/Silken_Armor.item')
+            silkArmor = self.parseArmor('Silken Armor')
             for p in properties:
                 self.armorStats[p] += silkArmor[p]
             self.armorStats['name'] += ' With Silken Armor'
