@@ -94,8 +94,11 @@ class ExaltedCharacter():
         self.ConvictionChannel = self.newStat('Conviction')
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
-        self.dvPenalty = 0
         self.overrides = {}
+
+        self.dvPenalty = 0
+        self.longestActionSpeed = 3
+        self.clinchCharacter = None
 
     def __repr__(self):
         return "<" + self.name + ">"
@@ -401,10 +404,15 @@ class ExaltedCharacter():
                 raise ValueError, "Remove character from scene"
         else:
             self.dvPenalty = 0 # remove dv penalties
-            # maintain grapple,
+            self.longestActionSpeed = 3
+            # maintain clinch
             self.regain(5) #TODO: regain motes (5 motes for meridians)
 
+    def addDvPenalty(self, amount):
+        self.dvPenalty += amount
 
+    def addActionSpeed(self, speed):
+        self.longestActionSpeed = max(self.longestActionSpeed, speed)
 
 if __name__ == "__main__":
     print "ExaltedCharacter loaded"
