@@ -74,6 +74,7 @@ class BattleWheel():
 class CombatScene():
     def __init__(self, PlayerCharacters):
         self.characters = {}
+        self.current = None
         self.battleWheel = None
         for character in PlayerCharacters:
             self.addCharacter(character)
@@ -94,6 +95,7 @@ class CombatScene():
 
     def beginBattle(self):
         self.battleWheel = BattleWheel(self.characters.values())
+        self.current = self.battleWheel.fetchCurrentCharacter()
         print self.battleWheel.tickLayout
         return self.next()
 
@@ -101,8 +103,11 @@ class CombatScene():
         return self.battleWheel.nextAction()
 
     def resolve(self, speed=5, DvPenalty=1):
+        if self.current:
+            self.current.refreshDV()
         self.battleWheel.resolveAction(speed)
-        return self.next()
+        self.current = self.next()
+        return self.current
 
 #c = sc.beginBattle()
 #c = sc.resolve()
