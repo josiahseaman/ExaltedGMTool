@@ -11,6 +11,8 @@ import copy
 
 class BattleWheel():
     def rollInitiative(self, newCharacters):
+        if not newCharacters:
+            return
         initiatives = {}
         for character in newCharacters:
             initiatives[character] = character.joinBattle()
@@ -27,11 +29,15 @@ class BattleWheel():
         self.rollInitiative(allCharacters)
 
     def addCharacterToTick(self, character, tick):
+        if isinstance(tick, ExaltedCharacter): # swap confused arguments, my bad
+            tmp = tick
+            tick = character
+            character = tmp
         lineup = self.tickLayout.get(tick,[])
         lineup.append(character)
         self.tickLayout[tick] = lineup
 
-    def fetchCurrentCharacter(self):
+    def getCurrentCharacter(self):
         current = None
         while not current:
             current = self.tickLayout.get(self.currentTick,[])[:1]
@@ -43,7 +49,6 @@ class BattleWheel():
                     current = None
             except:
                 self.currentTick += 1
-        current.refreshDV()
         return current
 
     def removeCharacter(self, character):
@@ -57,15 +62,8 @@ class BattleWheel():
             print "I didn't find the character"
             return False
 
-    def nextAction(self):
-        if len(self.activeCharacters) <= 1:
-            raise StopIteration
-        current = self.fetchCurrentCharacter()
-        print "It is", current, " turn to act."
-        return current
-
-    def resolveAction(self, speed=5):
-        ch = self.fetchCurrentCharacter()
+    def moveCurrentCharacterForward(self, speed=5):
+        ch = self.getCurrentCharacter()
         self.addCharacterToTick(ch, self.currentTick + speed)
         self.tickLayout[self.currentTick].remove(ch) #remove from the old position
         print "Done with", ch
@@ -95,18 +93,15 @@ class CombatScene():
 
     def beginBattle(self):
         self.battleWheel = BattleWheel(self.characters.values())
-        self.current = self.battleWheel.fetchCurrentCharacter()
+        self.current = self.battleWheel.getCurrentCharacter()
         print self.battleWheel.tickLayout
-        return self.next()
+        return self.battleWheel.getCurrentCharacter()
 
-    def next(self):
-        return self.battleWheel.nextAction()
-
-    def resolve(self, speed=5, DvPenalty=1):
-        if self.current:
-            self.current.refreshDV()
-        self.battleWheel.resolveAction(speed)
-        self.current = self.next()
+    def resolve(self, speed=5):
+        self.battleWheel.moveCurrentCharacterForward(speed)
+        self.current = self.battleWheel.getCurrentCharacter()
+        self.current.refreshDV()
+        print "It is", str(self.current) + "'s turn to act."
         return self.current
 
 #c = sc.beginBattle()

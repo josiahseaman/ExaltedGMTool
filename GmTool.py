@@ -10,10 +10,10 @@ class UI():
 
     def start(self):
         while True:
-            actor = self.scene.battleWheel.nextAction()
+            actor = self.scene.battleWheel.getCurrentCharacter()
             # speed = self.promptUser(actor) #do stuff
 
-            self.scene.battleWheel.resolveAction(speed)
+            self.scene.battleWheel.moveCurrentCharacterForward(speed)
 
     def walkUserThroughParameters(self, actor, func):
         try:

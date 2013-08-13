@@ -5,45 +5,39 @@ import unittest
 
 import Scene
 class SceneTest(unittest.TestCase):
+    import ExaltedCharacter as e
+    caedris = e.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
 
     def testAccuracy(self):
-        import ExaltedCharacter as e
-        c = e.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
-        self.assertEqual(c.accuracy(), 9)
+        self.assertEqual(self.caedris.accuracy(), 9)
 
     def testDamage(self):
-        import ExaltedCharacter as e
-        c = e.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
-        self.assertEqual(c.damageCode(), 7)
+        self.assertEqual(self.caedris.damageCode(), 7)
 
     def testMembership(self):
         scene = Scene.CombatScene([])
         self.assertEqual(len(scene.characters), 0)
-        import ExaltedCharacter
-        c = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
-        scene.addCharacter(c)
+        scene.addCharacter(self.caedris)
         scene.beginBattle()
         self.assertEqual(len(scene.battleWheel.activeCharacters), 1)
-        scene.battleWheel.removeCharacter(c)
+        scene.battleWheel.removeCharacter(self.caedris)
         self.assertEqual(len(scene.battleWheel.activeCharacters), 0)
-        self.assertFalse(any([c in tick for tick in scene.battleWheel.tickLayout.values()]))
-
+        self.assertFalse(any([self.caedris in tick for tick in scene.battleWheel.tickLayout.values()]))
 
     def testBattleWheel(self):
-        import ExaltedCharacter as e
-        caedris = e.ExaltedCharacter('Caedris.ecg')
-        self.addCharacterToTick(caedris, 4)
-        print self.tickLayout
-    # def testBeginScenario(nAttacks=3):
-    #     scene = Scene.CombatScene()
-    #     scene.beginScenario()
-    #     print 'Done'
-
+        bw = Scene.BattleWheel([])
+        bw.addCharacterToTick(self.caedris, 4)
+        self.assertTrue(self.caedris in bw.tickLayout[4])
 
 
 class CharacterTest(unittest.TestCase):
     import ExaltedCharacter
     c = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
+    skogur = ExaltedCharacter.ExaltedCharacter('WanderingVengefulLink.ecg')
+    blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
+    gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
+    swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
+    zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
 
     def testPrintAttributes(self):
         print self.c.name
@@ -65,36 +59,30 @@ class CharacterTest(unittest.TestCase):
         self.assertRaises(ValueError, self.c.roll, 'Compassion', 'Dexterity' )
 
     def testChooseWeapon(self):
-        import ExaltedCharacter
-        gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
-        self.assertEqual(gin.armorStats['name'], 'Superheavy Plate (Artifact)')
-        self.assertEqual(gin.weaponStats['name'], 'Grand Goremaul')
+        self.assertEqual(self.gin.armorStats['name'], 'Superheavy Plate (Artifact)')
+        self.assertEqual(self.gin.weaponStats['name'], 'Grand Goremaul')
 
     def testChooseAttackSkill(self):
-        import ExaltedCharacter
-        blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
-        self.assertEqual(blix.accuracy(), 13)
-        blix.weaponStats = blix.parseWeapon('equipment/War_Boomerang.item')
-        self.assertEqual(blix.accuracy(), 4) #this should be using Thrown, because of the thrown tag stat block under knife
+        self.assertEqual(self.blix.accuracy(), 13)
+        self.blix.weaponStats = self.blix.parseWeapon('War_Boomerang')
+        self.assertEqual(self.blix.accuracy(), 4) #this should be using Thrown, because of the thrown tag stat block under knife
+
+    def testCustomArmor(self):
+        # self.assertEqual(self.skogur.armorStats['name'], 'Moon-Face Breastplate')
+        pass
 
     def testCraftSkillAndSoakStacking(self):
-        import ExaltedCharacter
-        swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
-        self.assertEqual(swift.getStat('Craft'),4)
-        self.assertEqual(swift.soak(), 11)
-        self.assertEqual(swift.armorStats, swift.parseArmor('equipment/Chain_Shirt__Artifact_With_Silken_Armor.item'))
+        self.assertEqual(self.swift.getStat('Craft'),4)
+        self.assertEqual(self.swift.soak(), 11)
+        self.assertEqual(self.swift.armorStats, self.swift.parseArmor('Chain_Shirt__Artifact_With_Silken_Armor'))
 
     def testDying(self):
-        import ExaltedCharacter
-        gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
-        zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
-        self.assertEqual(gin.dyingHealthLevels.permanent, 4)
-        gin.attack(zaela) # We are assuming this kills Zaela
-        gin.attack(zaela) # We are assuming this kills Zaela
-        self.assertTrue(zaela.isDying)
-        for turn in range(zaela.dyingHealthLevels.permanent-1):
-            zaela.refreshDV()
-        self.assertRaises(ValueError, zaela.refreshDV)
+        self.gin.attack(self.zaela) # We are assuming this kills Zaela
+        self.gin.attack(self.zaela) # We are assuming this kills Zaela
+        self.assertTrue(self.zaela.isDying)
+        for turn in range(self.zaela.dyingHealthLevels.permanent-1):
+            self.zaela.refreshDV()
+        self.assertRaises(ValueError, self.zaela.refreshDV)
 
 
 if __name__ == '__main__':
