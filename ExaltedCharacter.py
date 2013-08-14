@@ -4,10 +4,32 @@ import re
 from ElementTree import *
 from DiceRoller import *
 from TemporaryStat import TemporaryStat, HealthLevel
+from collections import namedtuple
 
 
 def halfRoundUp(raw):
     return int(raw / 2.0 + .5)
+
+
+Action = namedtuple('Action', ['name', 'speed', 'dv'])
+spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV penalty
+        ("Flurry", None, None),
+        ("Guard", 3, 0),
+        ("Aim", 1, -1),
+        ("Ready Weapon", 5, 0),
+        ("Performance", 6, -2),
+        ("Presence", 5, -2),
+        ("Investigation", 5, -2),
+        ("Coordinate Attack", 5, 0),
+        ("Simple Charm", 6, -1),
+        ("Defend Other", 5, 0),
+        ("Dash", 3, -2),
+        ("Jump", 5, -1),
+        ("Rise from Prone", 5, -1),
+        ("Miscellaneous", 5, -1),
+        ("Inactive", 5, -20)
+]
+actions = [Action(*x) for x in spec]
 
 
 class ExaltedCharacter():
@@ -58,7 +80,6 @@ class ExaltedCharacter():
 
 
     """Items Stats"""
-
     def createItemPath(self, itemName):
         if itemName is None:
             return None
@@ -375,10 +396,8 @@ class ExaltedCharacter():
         factors = [isIntimacyFavorable, isVirtueFavorable, isMotivationFavorable]  # arranged in order of increasing importance
         factors = map(lambda x: mapping[x], factors)
         factors = [x*(i+1) for i,x in enumerate(factors)]  # factors are arranged in increasing importance = 1,2,3
-        print factors
         negatives = min(filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
         positives = max(filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
-        print "Positives:", positives, "Negatives:", negatives
 
         effectiveMDV = defendingChar.MDV() + negatives + positives
         successes = skillCheckByNumber(attribute + ability, "Social Attack")

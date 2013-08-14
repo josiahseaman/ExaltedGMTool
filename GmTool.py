@@ -3,6 +3,7 @@ import Scene
 
 __author__ = 'Josiah'
 
+
 class UI():
     def __init__(self):
         self.scene = Scene.CombatScene(PlayerCharacters)
@@ -24,24 +25,6 @@ class UI():
         return actionSpeed
 
     def promptUser(self, actor):
-        actions = [("Attack", ExaltedCharacter.ExaltedCharacter.attack, None, -1) ,
-                   ("Flurry", ExaltedCharacter.ExaltedCharacter.flurryAttack, None, None),
-                   ("Hold Action", None, 3),
-                   # ("Aim", ExaltedCharacter.ExaltedCharacter.aim, 3)
-                   #  Join Battle
-                   #  Ready Weapon
-                   #  Physical Attack
-                   #  Social Attack
-                   #  Coordinate Attack
-                   #  Simple Charm
-                   #  Guard
-                   #  Move
-                   #  Dash
-                   #  Jump
-                   #  Rise from Prone
-                   #  Miscellaneous
-                   #  Inactive
-        ]
         for index, action in enumerate(actions):
             print str(index+1) + ")", action
         print actor.name, "is ready"
