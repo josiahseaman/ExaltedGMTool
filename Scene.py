@@ -1,6 +1,6 @@
 from ExaltedCharacter import ExaltedCharacter
-from ExaltedCharacter import HealthLevel
 import copy
+from TemporaryStat import HealthLevel
 
 '''Features:==
 

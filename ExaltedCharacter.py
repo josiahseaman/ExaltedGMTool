@@ -1,76 +1,10 @@
-from django.contrib.localflavor import us
-from ElementTree import *
-from DiceRoller import *
 import json
 import re
 
+from ElementTree import *
+from DiceRoller import *
+from TemporaryStat import TemporaryStat, HealthLevel
 
-class TemporaryStat():
-    def __init__(self, name, perm, temp=None):
-        self.name = name
-        self.permanent = perm
-        self.temporary = self.permanent if temp is None else temp
-
-    def __repr__(self):
-        return self.name + ": " + str(self.temporary) + " of " + str(self.permanent)
-
-    def __isub__(self, amount): # operator -=
-        if self.temporary < amount:
-            raise ValueError("You don't have enough " + self.name + " to do that.")
-        self.temporary = self.temporary - amount
-        print self.name, str(self.temporary), "remaining of", str(self.permanent)
-        return self
-
-    def __iadd__(self, amount):# operator +=
-        self.temporary = min(self.temporary + amount, self.permanent)
-        return self #TODO Add overflow check for Limit
-
-    def __eq__(self, other):# operator ==
-        try:
-            return self.temporary == other.temporary
-        except:
-            return self.temporary == other
-
-
-class VirtueChannel(TemporaryStat):
-    def __isub__(self, other):
-        TemporaryStat.__isub__(self, other)
-        return self
-
-    def __iadd__(self, other):
-        TemporaryStat.__iadd__(self, other)
-        return self
-
-class HealthLevel(TemporaryStat):
-    #TODO: this will need to eventually have 3 states: bashing, lethal, aggravated.  Apply Damage Push down rules
-    """Characters have a list of health levels.  Once they run to the end of the list they are at least incapacitated.
-    Along side this is a list of associated wound penalties.  Also damage stacking."""
-
-    def __init__(self, name, perm, temp=None, penalties=[0,-1,-1,-2,-2,-4,-20]): #TODO: Handle incap being a string and dice penalty.
-        TemporaryStat.__init__(self, name, perm, temp)
-        self.penalties = []
-        self.penalties = penalties
-
-    def __isub__(self, other):
-        TemporaryStat.__isub__(self, other)
-        if self.temporary <= 0:
-            raise ValueError()
-        return self
-
-    def empty(self):
-        self.temporary = 0
-
-    def woundPenalty(self):
-        if self.temporary == self.permanent: return 0 # undamaged state
-        return self.penalties[self.permanent - self.temporary - 1] # minus one because penalties[0] is for 1 damage
-
-    def oxBody(self, purchases=1):
-        for p in purchases:
-            self.permanent += 3
-            self.temporary += 3
-            self.penalties.insert(self.penalties.index(-1), -1)
-            self.penalties.insert(self.penalties.index(-2), -2)
-            self.penalties.insert(self.penalties.index(-2), -2)
 
 class ExaltedCharacter():
     def __init__(self, filename=None):
@@ -89,7 +23,7 @@ class ExaltedCharacter():
         self.health = HealthLevel('Health Levels', 7)
         self.isDying = False
         self.dyingHealthLevels = HealthLevel('Dying Health Levels', self["Stamina"])
-        self.limit = self.newStat('Limit', 0, 10)
+        self.limit = self.newStat('Limit', 10, 0)
         self.CompassionChannel = self.newStat('Compassion')
         self.ConvictionChannel = self.newStat('Conviction')
         self.TemperanceChannel = self.newStat('Temperance')
@@ -103,18 +37,14 @@ class ExaltedCharacter():
     def __repr__(self):
         return "<" + self.name + ">"
 
-
-    def newStat(self, name, valueOverride=None, maximum=None):
-        '''Temporary State'''
-        if valueOverride is None:
-            return TemporaryStat(name, self[name])
+    def newStat(self, name, maximum=None, temporary=None):
+        """This is just a convenience function for grabbing the value from the character sheet"""
+        if maximum is None:
+            return TemporaryStat(name, self[name], temporary)
         else:
-            if maximum is None:
-                return TemporaryStat(name, perm=valueOverride, temp=valueOverride)
-            return TemporaryStat(name, perm=maximum, temp=valueOverride)
+            return TemporaryStat(name, maximum, temporary)
 
     '''Derived Stats'''
-
     def calcPersonalEssence(self): #This is only correct for Solars
         return self['Essence'] * 3 + self['Willpower']
 
