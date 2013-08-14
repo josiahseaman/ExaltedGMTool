@@ -6,6 +6,10 @@ from DiceRoller import *
 from TemporaryStat import TemporaryStat, HealthLevel
 
 
+def halfRoundUp(raw):
+    return int(raw / 2.0 + .5)
+
+
 class ExaltedCharacter():
     def __init__(self, filename=None):
         self.name = "Unnamed"
@@ -160,14 +164,14 @@ class ExaltedCharacter():
         return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
 
     def dodgeDV(self):
-        return (self.sumDicePool('Dexterity', 'Dodge', 'Essence') + self.armorStats.get('mobilityPenalty',0) + self.health.woundPenalty()) / 2
+        return halfRoundUp(self.sumDicePool('Dexterity', 'Dodge', 'Essence') + self.armorStats.get('mobilityPenalty',0))
 
     def DV(self):
         return max(0, max(self.parryDV(), self.dodgeDV()) + self.dvPenalty)
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
-        return self.sumDicePool('Stamina') / 2 + self.armorStats[soakType]
+        return halfRoundUp(self.sumDicePool('Stamina')) + self.armorStats[soakType]
 
     def hardness(self, damageType='lethal'):
         hardnessType = damageType + 'Hardness'
@@ -197,12 +201,13 @@ class ExaltedCharacter():
         try:
             element = self.characterSheet.getiterator(statName).next()
         except:
-            return 0 #TODO: make this more clean than a silent failure
+            raise KeyError(str(statName) + ": No such stat")
         if statName == 'Craft':
             branches = element.getiterator('subTrait')
             result = max(map(self.getStatNumber, branches))
         else:
             result = self.getStatNumber(element)
+
         #check for specialties, assumes they are applicable to this roll
         try:
             specialtyElem = element.iter('Specialty').next()
@@ -228,7 +233,7 @@ class ExaltedCharacter():
                 dicePool += self[stat]
             except AttributeError:
                 dicePool += stat #this is probably a number
-        return max(0, dicePool - self.health.woundPenalty())
+        return max(0, dicePool + self.health.woundPenalty())
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -345,6 +350,20 @@ class ExaltedCharacter():
 
     def addActionSpeed(self, speed):
         self.longestActionSpeed = max(self.longestActionSpeed, speed)
+
+    '''SOCIAL COMBAT'''
+    def parryMDV(self):
+        raw = max(self["Charisma"], self["Manipulation"]) + \
+              max(self["Investigation"], self["Performance"], self["Presence"], self["Socialize"]) + \
+              self.health.woundPenalty()  # Wound penalty here because we are not using sumDicePool
+        return halfRoundUp(raw) # Round Up
+
+    def dodgeMDV(self):  # Round down
+        return (self.sumDicePool('Willpower', 'Integrity', 'Essence') ) / 2
+
+    def MDV(self):
+        return max(self.dodgeMDV(), self.parryMDV())
+
 
 if __name__ == "__main__":
     print "ExaltedCharacter loaded"

@@ -65,7 +65,7 @@ class BattleWheel():
     def moveCurrentCharacterForward(self, speed=5):
         ch = self.getCurrentCharacter()
         self.addCharacterToTick(ch, self.currentTick + speed)
-        self.tickLayout[self.currentTick].remove(ch) #remove from the old position
+        self.tickLayout[self.currentTick].remove(ch)  #remove from the old position
         print "Done with", ch
 
 
@@ -87,7 +87,7 @@ class CombatScene():
         character.health = HealthLevel('Health Levels', 3)
         for n in range(nDuplicates):
             newChar = copy.deepcopy(character)
-            newChar.name += str(n+1) # adds a number to the mook
+            newChar.name += str(n+1)  # adds a number to the mook
 
             self.addCharacter(newChar)
 

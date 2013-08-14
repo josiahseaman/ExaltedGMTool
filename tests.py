@@ -41,10 +41,11 @@ class CharacterTest(unittest.TestCase):
 
     def testPrintAttributes(self):
         print self.c.name
-        usefulStats = ['Charisma', 'Presence', 'Survival', 'Computers']
+        usefulStats = ['Charisma', 'Presence', 'Survival']
 
         for stat in usefulStats:
             print stat, ":", int(self.c.getStat(stat) or 0)
+        self.assertRaises(KeyError, self.c.getStat, 'Computers')
         print "For 'Perception', 'Awareness' Roll", self.c.sumDicePool('Perception', 'Awareness'), "dice"
 
     def testDerivedStats(self):
