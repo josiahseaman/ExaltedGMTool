@@ -171,7 +171,7 @@ class ExaltedCharacter():
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
-        return halfRoundUp(self.sumDicePool('Stamina')) + self.armorStats[soakType]
+        return self.sumDicePool('Stamina') / 2 + self.armorStats[soakType]
 
     def hardness(self, damageType='lethal'):
         hardnessType = damageType + 'Hardness'
@@ -363,6 +363,33 @@ class ExaltedCharacter():
 
     def MDV(self):
         return max(self.dodgeMDV(), self.parryMDV())
+
+    def socialAttack(self, defendingChar, ability=None, isMotivationFavorable=None, isVirtueFavorable=None, isIntimacyFavorable=None):
+        if ability is None:
+            ability = max(self["Investigation"], self["Performance"], self["Presence"])
+        else:
+            ability = self[ability]  # turn this name string into a number off your character sheet
+        #Pick either charisma or manipulation
+        attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation
+        mapping = {True:-1, False:1, None: 0} # Giving numerical values for our True/False answers
+        factors = [isIntimacyFavorable, isVirtueFavorable, isMotivationFavorable]  # arranged in order of increasing importance
+        factors = map(lambda x: mapping[x], factors)
+        factors = [x*(i+1) for i,x in enumerate(factors)]  # factors are arranged in increasing importance = 1,2,3
+        print factors
+        negatives = min(filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+        positives = max(filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+        print "Positives:", positives, "Negatives:", negatives
+
+        effectiveMDV = defendingChar.MDV() + negatives + positives
+        successes = skillCheckByNumber(attribute + ability, "Social Attack")
+        threshold = successes - effectiveMDV
+        if successes >= effectiveMDV:
+            print "Beat MDV of", effectiveMDV, "with", threshold, "threshold successes"
+            if threshold >= 3:  # per errata: "Threshold Successes on Social Attacks"
+                print "+" + str(threshold/3), "Willpower to resist"
+        else:
+            print "You are not convincing! ", successes, "successes vs. their", effectiveMDV, "MDV."
+        return 1 + threshold / 3  # Willpower cost to resist this (no charms)
 
 
 if __name__ == "__main__":

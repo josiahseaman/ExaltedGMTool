@@ -83,6 +83,9 @@ class CharacterTest(unittest.TestCase):
             self.zaela.refreshDV()
         self.assertRaises(ValueError, self.zaela.refreshDV)
 
+    def testSocialAttack(self):
+        wp = [self.swift.socialAttack(self.gin, None, True, True, True) for i in range(4)]
+        self.assertGreater(max(wp), 0)
 
 if __name__ == '__main__':
     unittest.main()
