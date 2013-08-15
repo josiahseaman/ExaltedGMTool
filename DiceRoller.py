@@ -36,19 +36,32 @@ def s(nDice):
     return skillCheckByNumber(nDice)
 
 
-def attackRoll(accuracy, damageCode, DV, soak, hardness=0, minimumDamage=1):
+def toHit(accuracy, DV):
     hits = skillCheckByNumber(accuracy, "Attack")
+    threshold = -1
     if hits < DV:
         print "You missed"
-        return 0
-    threshold = hits - DV
-    print threshold, "successes over a DV of", DV
-    if damageCode + threshold <= hardness:
+    else:
+        threshold = hits - DV
+        print threshold, "successes over a DV of", DV
+    return threshold
+
+
+def toDamage(damageCode, hardness, minimumDamage, soak, thresholdToHit):
+    if damageCode + thresholdToHit <= hardness:
         print "Didn't beat hardness", hardness
-        return 0
-    damageDice = max(damageCode + threshold - soak, minimumDamage)
-    damageDone = rollDamage(damageDice) or 0
-    print "Take", damageDone, "out of", damageDice, "damage dice."
+    else:
+        damageDice = max(damageCode + thresholdToHit - soak, minimumDamage)
+        damageDone = rollDamage(damageDice) or 0
+        print "Take", damageDone, "out of", damageDice, "damage dice."
+    return damageDone
+
+
+def attackRoll(accuracy, damageCode, DV, soak, hardness=0, minimumDamage=1):
+    threshold = toHit(accuracy, DV)
+    damageDone = 0
+    if threshold > -1:
+        damageDone = toDamage(damageCode, hardness, minimumDamage, soak, threshold)
     return damageDone
 
 
