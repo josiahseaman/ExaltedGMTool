@@ -3,7 +3,7 @@ import re
 
 from ElementTree import *
 from DiceRoller import *
-from TemporaryStat import TemporaryStat, HealthLevel
+from TemporaryStat import TemporaryStat, HealthLevel, RulesError
 from collections import namedtuple
 
 
@@ -13,9 +13,10 @@ def halfRoundUp(raw):
 
 Action = namedtuple('Action', ['name', 'speed', 'dv'])
 spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV penalty
-        ("Flurry", None, None),
-        ("Guard", 3, 0),
-        ("Aim", 1, -1),
+        # ("Flurry", None, None),
+        ("Clinch", 6, -10),  # I think you lose your DV against others when you clinch someone
+        ("Guard", 3, 0),  # Holding Action
+        ("Aim", 3, -1),  # Holding Action
         ("Ready Weapon", 5, 0),
         ("Performance", 6, -2),
         ("Presence", 5, -2),
@@ -29,8 +30,7 @@ spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV 
         ("Miscellaneous", 5, -1),
         ("Inactive", 5, -20)
 ]
-actions = [Action(*x) for x in spec]
-
+actions = {x[0]: Action(*x) for x in spec}  # dict declaration by comprehension, storing Actions by their name
 
 class ExaltedCharacter():
     def __init__(self, filename=None):
@@ -59,6 +59,7 @@ class ExaltedCharacter():
         self.dvPenalty = 0
         self.longestActionSpeed = 3
         self.clinchCharacter = None
+        self.actionsRemaining = TemporaryStat("Actions Remaining", 1)
 
     def __repr__(self):
         return "<" + self.name + ">"
@@ -154,7 +155,7 @@ class ExaltedCharacter():
                     "defense": 2, "inflictsNoDamage": False, "tags": ['MartialArts'], "minimumDamage": 1,
                     "name": "Punch", "type": "Martial Arts"}
         raw = json.load(open(filename))
-        stats = raw["statsByRuleSet"]["SecondEdition"][0]
+        stats = raw["statsByRuleSet"]["SecondEdition"][0] #grabs the entire stat block
 
         #Damage and attunement blocks are not strictly ordered.  Check for both in a list.
         for block in raw["statsByRuleSet"]["SecondEdition"]:
@@ -286,15 +287,27 @@ class ExaltedCharacter():
         rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice, label)
         return rolledSuccesses + autoSuccesses
 
+    def flurry(self, nActions):
+        """ This simply declares that the player intends to take multiple actions in a single tick.
+            It is necessary to know how many actions they're taking beforehand in order to calculate dice penalties."""
+        self.actionsRemaining = TemporaryStat("Actions Remaining", nActions)
+
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
-        penalties = range( nAttacks-1, (nAttacks-1)+nAttacks) if hasPenalty else [0]*nAttacks
+        """This is a convenience function for the user to be able to declar a flurry containing nothing but attacks."""
+        # Make sure the action declaration is following the existing flurry rules
+        if self.actionsRemaining.temporary < nAttacks and self.actionsRemaining.permanent > 1:
+            raise RulesError("You have already declared a flurry and you don't have enough action remaining.")
+        elif self.actionsRemaining.permanent == 1:  # If you haven't called flurry yet, I'll do it for you
+            self.flurry(nAttacks)
+
+        penalties = range(nAttacks-1, (nAttacks-1)+nAttacks) if hasPenalty else [0]*nAttacks
         for onslaught, penalty in enumerate(penalties):
             if defendingChar.isDying:
-                print "Select a new target!", nAttacks-onslaught, "attacks left."
+                print "Select a new target! You have", self.actionsRemaining
                 return False
             damageDone = attackRoll(self.accuracy()-penalty, self.damageCode(), max(0, defendingChar.DV()-onslaught),
                                     defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
-            self.addDvPenalty(1)
+            self.handleAction('Attack', hasPenalty)
             defendingChar.takeDamage(damageDone)
         return True
 
@@ -361,16 +374,25 @@ class ExaltedCharacter():
                 print self.name, "is dead"
                 raise ValueError, "Remove character from scene"
         else:
+            self.actionsRemaining = TemporaryStat("Actions Remaining", 1)  # this can be raised by declaring a flurry
             self.dvPenalty = 0 # remove dv penalties
             self.longestActionSpeed = 3
-            # maintain clinch
+            self.maintainClinch()# maintain clinch
             self.regain(5) #TODO: regain motes (5 motes for meridians)
 
-    def addDvPenalty(self, amount):
-        self.dvPenalty += amount
+    def maintainClinch(self):
+        pass # TODO: add clinch roll off
 
-    def addActionSpeed(self, speed):
+    def handleAction(self, actionName, hasPenalty=True):
+        action = actions[actionName]
+        self.actionsRemaining -= 1  # TemporaryStat
+        if hasPenalty:
+            self.dvPenalty += action.dv
+        else:  # for extra action charms that only apply the highest DV penalty
+            self.dvPenalty = min(self.dvPenalty, action.dv)  # min because the "largest" penalty is negative
+        speed = action.speed if action.speed is not None else self.weaponStats["speed"]
         self.longestActionSpeed = max(self.longestActionSpeed, speed)
+
 
     '''SOCIAL COMBAT'''
     def parryMDV(self):

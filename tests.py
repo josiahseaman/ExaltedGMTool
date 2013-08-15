@@ -38,6 +38,7 @@ class CharacterTest(unittest.TestCase):
     gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
     swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
     zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
+    caedris = ExaltedCharacter.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
 
     def testPrintAttributes(self):
         print self.c.name
@@ -86,6 +87,24 @@ class CharacterTest(unittest.TestCase):
     def testSocialAttack(self):
         wp = [self.swift.socialAttack(self.gin, None, True, True, True) for i in range(4)]
         self.assertGreater(max(wp), 0)
+
+    def testHandleAction(self):
+        self.caedris.refreshDV()
+        self.caedris.flurry(2)
+        self.caedris.handleAction('Jump')
+        self.caedris.handleAction('Dash')
+        self.assertEqual(self.caedris.dvPenalty, -3)
+        self.assertEqual(self.caedris.longestActionSpeed, 5)
+        self.assertEqual(self.caedris.actionsRemaining.temporary, 0)
+
+        self.caedris.refreshDV()
+        self.caedris.flurry(3)
+        self.caedris.handleAction('Jump', False)
+        self.caedris.handleAction('Dash', False)
+        self.assertEqual(self.caedris.dvPenalty, -2)
+        self.assertEqual(self.caedris.longestActionSpeed, 5)
+        self.assertEqual(self.caedris.actionsRemaining.temporary, 1)
+
 
 if __name__ == '__main__':
     unittest.main()

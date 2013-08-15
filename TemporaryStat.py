@@ -1,3 +1,7 @@
+class RulesError(AssertionError):
+    pass
+
+
 class TemporaryStat():
     def __init__(self, name, permanent, tempLevel=None):
         self.name = name
