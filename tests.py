@@ -105,6 +105,9 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(self.caedris.longestActionSpeed, 5)
         self.assertEqual(self.caedris.actionsRemaining.temporary, 1)
 
+    def testClinch(self):
+        # scary char + huge DV penalty
+        pass
 
 if __name__ == '__main__':
     unittest.main()

@@ -58,7 +58,7 @@ class ExaltedCharacter():
 
         self.dvPenalty = 0
         self.longestActionSpeed = 3
-        self.clinchCharacter = None
+        self.clinchedCharacter = None
         self.actionsRemaining = TemporaryStat("Actions Remaining", 1)
 
     def __repr__(self):
@@ -221,7 +221,7 @@ class ExaltedCharacter():
         # except: pass
         if statName == 'Martialarts': statName = 'MartialArts'
         try:
-            element = self.characterSheet.getiterator(statName).next()
+            element = self.characterSheet.iter(statName).next()
         except:
             raise KeyError(str(statName) + ": No such stat")
         if statName == 'Craft':
@@ -292,6 +292,13 @@ class ExaltedCharacter():
             It is necessary to know how many actions they're taking beforehand in order to calculate dice penalties."""
         self.actionsRemaining = TemporaryStat("Actions Remaining", nActions)
 
+    def attack(self, defendingChar):
+        damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
+                                 defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
+        self.addDvPenalty(1)
+        defendingChar.takeDamage(damageDealt)
+        return damageDealt
+
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
         """This is a convenience function for the user to be able to declar a flurry containing nothing but attacks."""
         # Make sure the action declaration is following the existing flurry rules
@@ -311,12 +318,39 @@ class ExaltedCharacter():
             defendingChar.takeDamage(damageDone)
         return True
 
-    def attack(self, defendingChar):
-        damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
-                                 defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
-        self.addDvPenalty(1)
-        defendingChar.takeDamage(damageDealt)
-        return damageDealt
+    def clinch(self, defendingChar):
+        dice = self.clinchPool()
+        threshold = toHit(dice, defendingChar.DV())
+        if threshold > -1:
+            self.clinchedCharacter = defendingChar
+            defendingChar.handleAction('Inactive')
+        #TODO: Add options: Throw, Crush, Hold
+        # if "Throw":
+        #     #damage
+        #     self.clinchedCharacter = None
+        # if "Crush":
+        #     damage = threshold + self['Strength']
+        self.handleAction('Clinch')
+        return threshold
+
+    def clinchPool(self):
+        return max(self.sumDicePool('Strength', 'MartialArts'), self.sumDicePool('Dexterity', 'MartialArts'))
+
+    def maintainClinch(self):
+        if self.clinchedCharacter is not None:
+            aggressor = skillCheckByNumber("Maintain Grapple", self.clinchPool())
+            self.clinchedCharacter.dvPenalty = 0
+            defense = skillCheckByNumber("Break Grapple", self.clinchedCharacter.clinchPool())
+            if aggressor >= defense:
+                print "You maintain the clinch"
+                self.handleAction('Clinch')
+                return True
+            else:
+                print "Your victim has become your master!  Prepare to die."
+                self.clinchedCharacter.clinchedCharacter = self
+                self.clinchedCharacter = None
+                self.handleAction('Inactive')
+                return False
 
     def takeDamage(self, damageDealt):
         try:
@@ -378,12 +412,12 @@ class ExaltedCharacter():
             self.dvPenalty = 0 # remove dv penalties
             self.longestActionSpeed = 3
             self.maintainClinch()# maintain clinch
-            self.regain(5) #TODO: regain motes (5 motes for meridians)
-
-    def maintainClinch(self):
-        pass # TODO: add clinch roll off
+            # if self['Player'] != 'NPC':
+            self.regain(5)  # TODO: only regen for Player Characters
 
     def handleAction(self, actionName, hasPenalty=True):
+        """handleAction() now takes the name of an action and applies dvPenalty and speed (can be weapon) to the
+        character.  hasPenalty=False acts like an extra action charm."""
         action = actions[actionName]
         self.actionsRemaining -= 1  # TemporaryStat
         if hasPenalty:
