@@ -1,5 +1,6 @@
 from Glossary import *
 import Scene
+from ExaltedCharacter import actions
 
 __author__ = 'Josiah'
 

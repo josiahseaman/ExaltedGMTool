@@ -347,8 +347,8 @@ class ExaltedCharacter():
                 return True
             else:
                 print "Your victim has become your master!  Prepare to die."
-                self.clinchedCharacter.clinchedCharacter = self
-                self.clinchedCharacter = None
+                self.clinchedCharacter.clinchedCharacter = self  # they are now clinching you
+                self.clinchedCharacter = None  # and you aren't clinching them
                 self.handleAction('Inactive')
                 return False
 
