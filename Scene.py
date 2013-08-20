@@ -1,4 +1,4 @@
-from ExaltedCharacter import ExaltedCharacter
+from ExaltedCharacter import ExaltedCharacter, actions
 import copy
 from TemporaryStat import HealthLevel
 
@@ -97,12 +97,20 @@ class CombatScene():
         print self.battleWheel.tickLayout
         return self.battleWheel.getCurrentCharacter()
 
-    def resolve(self, speed=5):
-        self.battleWheel.moveCurrentCharacterForward(speed)
+    def resolve(self, actionName=None):
+        if actionName:
+            self.current.handleAction(actionName)
+        self.battleWheel.moveCurrentCharacterForward(self.current.longestActionSpeed)
         self.current = self.battleWheel.getCurrentCharacter()
         self.current.refreshDV()
         print "It is", str(self.current) + "'s turn to act."
         return self.current
 
+    def resolveManual(self, speed=5):
+        self.battleWheel.moveCurrentCharacterForward(speed)
+        self.current = self.battleWheel.getCurrentCharacter()
+        self.current.refreshDV()
+        print "It is", str(self.current) + "'s turn to act."
+        return self.current
 #c = sc.beginBattle()
 #c = sc.resolve()

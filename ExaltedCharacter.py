@@ -13,17 +13,17 @@ def halfRoundUp(raw):
 
 Action = namedtuple('Action', ['name', 'speed', 'dv'])
 spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV penalty
-        # ("Flurry", None, None),
         ("Clinch", 6, -10),  # I think you lose your DV against others when you clinch someone
         ("Guard", 3, 0),  # Holding Action
         ("Aim", 3, -1),  # Holding Action
         ("Ready Weapon", 5, 0),
         ("Performance", 6, -2),
-        ("Presence", 5, -2),
+        ("Presence", 4, -2),
         ("Investigation", 5, -2),
         ("Coordinate Attack", 5, 0),
         ("Simple Charm", 6, -1),
-        ("Defend Other", 5, 0),
+        ("Blockade Movement", 5, -1),  # TODO: add a method for the [Str,Dex] + Athletics roll off
+        ("Defend Other", 5, -1),  # TODO: self.defendedByChar and self.defendOtherWard that's complicated...
         ("Dash", 3, -2),
         ("Jump", 5, -1),
         ("Rise from Prone", 5, -1),
@@ -307,16 +307,19 @@ class ExaltedCharacter():
         rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice, label)
         return rolledSuccesses + autoSuccesses
 
-    def flurry(self, nActions):
+    def flurry(self, nActions, totalReset=False):
         """ This simply declares that the player intends to take multiple actions in a single tick.
             It is necessary to know how many actions they're taking beforehand in order to calculate dice penalties."""
+        preemptiveActions = self.actionsRemaining.amountSpent()
         self.actionsRemaining = TemporaryStat("Actions Remaining", nActions)
+        if not totalReset:
+            self.actionsRemaining -= preemptiveActions
 
-    def attack(self, defendingChar):
+    def attack(self, defendingChar, hasPenalty=True):
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
                                  defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
-        self.addDvPenalty(1)
         defendingChar.takeDamage(damageDealt)
+        self.handleAction('Attack', hasPenalty)
         return damageDealt
 
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
@@ -333,8 +336,8 @@ class ExaltedCharacter():
                 return False
             damageDone = attackRoll(self.accuracy(), self.damageCode(), max(0, defendingChar.DV()-onslaught),
                                     defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
-            self.handleAction('Attack', hasPenalty)
             defendingChar.takeDamage(damageDone)
+            self.handleAction('Attack', hasPenalty)
         return True
 
     def clinch(self, defendingChar):
@@ -427,7 +430,7 @@ class ExaltedCharacter():
                 print self.name, "is dead"
                 raise ValueError, "Remove character from scene"
         else:
-            self.flurry(1)  # this can be raised by declaring a flurry
+            self.flurry(1, True)  # this can be raised by declaring a flurry
             self.dvPenalty = 0 # remove dv penalties
             self.longestActionSpeed = 3
             self.maintainClinch()# maintain clinch
@@ -483,14 +486,15 @@ class ExaltedCharacter():
 
     def socialAttack(self, defendingChar, ability=None, isMotivationFavorable=None, isVirtueFavorable=None, isIntimacyFavorable=None):
         if ability is None:
-            ability = max(self["Investigation"], self["Performance"], self["Presence"])
-        else:
-            ability = self[ability]  # turn this name string into a number off your character sheet
+            prospects = {abilityName:self[abilityName] for abilityName in ["Investigation", "Performance", "Presence"]}
+            ability = max(prospects, key=prospects.get)
+            print "Using", ability
+        abilityDice = self[ability]  # turn this name string into a number off your character sheet
         #Pick either charisma or manipulation
         attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation
 
         theirEffectiveMDV = defendingChar.adjustedMDV(self, isMotivationFavorable, isVirtueFavorable, isIntimacyFavorable)
-        successes = self.rollWithPenalties(attribute + ability, "Social Attack")
+        successes = self.rollWithPenalties(attribute + abilityDice, "Social Attack")
         threshold = successes - theirEffectiveMDV
         if successes >= theirEffectiveMDV:
             print "Beat MDV of", theirEffectiveMDV, "with", threshold, "threshold successes"
@@ -498,6 +502,7 @@ class ExaltedCharacter():
                 print "+" + str(threshold/3), "Willpower to resist"
         else:
             print "You are not convincing! ", successes, "successes vs. their", theirEffectiveMDV, "MDV."
+        self.handleAction(ability)
         return 1 + threshold / 3  # Willpower cost to resist this (no charms)
 
 

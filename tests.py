@@ -87,7 +87,10 @@ class CharacterTest(unittest.TestCase):
         self.assertRaises(ValueError, self.zaela.refreshDV)
 
     def testSocialAttack(self):
-        wp = [self.swift.socialAttack(self.gin, None, True, True, True) for i in range(4)]
+        wp = []
+        for i in range(4):
+            wp.append(self.swift.socialAttack(self.gin, None, True, True, True))
+            self.swift.refreshDV()
         self.assertGreater(max(wp), 0)
         self.assertEqual(self.blix.appearanceAdjustment(self.swift), -1)
         self.assertEqual(self.blix.adjustedMDV(self.swift, True, None, False), 6-1-3+1)#MDV - App -Motiv + Intimacy
