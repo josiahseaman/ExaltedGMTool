@@ -258,7 +258,7 @@ class ExaltedCharacter():
         penalties = range(-nAttacks, -nAttacks*2, -1) if hasPenalty else [0]*nAttacks
         return penalties[self.actionsRemaining.amountSpent()]
 
-    def sumDicePoolWithoutPenalties(self, stats):
+    def sumDicePoolWithoutPenalties(self, *stats):
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
             try:
@@ -268,7 +268,7 @@ class ExaltedCharacter():
         return dicePool
 
     def sumDicePool(self, *stats):
-        dicePool = self.sumDicePoolWithoutPenalties(stats)
+        dicePool = self.sumDicePoolWithoutPenalties(*stats)
         return max(0, dicePool + self.internalPenalties())
 
     def rollWithPenalties(self, dicePool, label=None):
