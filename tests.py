@@ -87,6 +87,8 @@ class CharacterTest(unittest.TestCase):
     def testSocialAttack(self):
         wp = [self.swift.socialAttack(self.gin, None, True, True, True) for i in range(4)]
         self.assertGreater(max(wp), 0)
+        self.assertEqual(self.blix.appearanceAdjustment(self.swift), -1)
+        self.assertEqual(self.blix.adjustedMDV(self.swift, True, None, False), 6-1-3+1)#MDV - App -Motiv + Intimacy
 
     def testHandleAction(self):
         self.caedris.refreshDV()

@@ -54,7 +54,7 @@ class ExaltedCharacter():
         self.ConvictionChannel = self.newStat('Conviction')
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
-        self.overrides = {}
+        self.magicalEffects = {}
 
         self.dvPenalty = 0
         self.longestActionSpeed = 3
@@ -217,7 +217,7 @@ class ExaltedCharacter():
 
     def getStat(self, statName):
         statName = statName.lower().capitalize() #proper capitalization
-        # try: return self.overrides[statName]
+        # try: return self.magicalEffects[statName]
         # except: pass
         if statName == 'Martialarts': statName = 'MartialArts'
         try:
@@ -249,7 +249,7 @@ class ExaltedCharacter():
         return ",".join(elem.itertext())
 
     def internalPenalties(self):
-        return self.health.woundPenalty()
+        return self.health.woundPenalty()  #TODO:  + self.flurryPenalty() + self.magicalEffects['internalPenalty']
 
     def sumDicePool(self, *stats):
         dicePool = 0
@@ -261,8 +261,10 @@ class ExaltedCharacter():
         return max(0, dicePool + self.internalPenalties())
 
     def rollWithPenalties(self, dicePool, label=None):
+        """Please use self.rollWithPenalties when you need to calculate dicepools by hand.
+        Example: roll highest of Manipulation/Charisma with Presence, Performance, or Investigation."""
         dicePool = max(0, dicePool + self.internalPenalties())
-        return skillCheckByNumber(dicePool, label)
+        return skillCheckByNumber(dicePool, label)  # TODO: + self.magicalEffects['externalPenalty']
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -448,14 +450,15 @@ class ExaltedCharacter():
     def MDV(self):
         return max(self.dodgeMDV(), self.parryMDV())
 
-    def appearanceAdjustment(self, defendingChar):
+    def appearanceAdjustment(self, attackingChar):
         #Adjust for Appearance
-        appearanceAdjustment = defendingChar['Appearance'] - self['Appearance']
+        appearanceAdjustment = self['Appearance'] - attackingChar['Appearance']
+        #TODO: Account for Appearance 0 being a bonus sometimes...
         appearanceAdjustment = max(-3, min(appearanceAdjustment, 3))
         return appearanceAdjustment
 
-    def adjustedMDV(self, defendingChar, isIntimacyFavorable, isMotivationFavorable, isVirtueFavorable):
-        #Adjust DV for motivation, virtue, and intimacy
+    def adjustedMDV(self, attackingChar, isMotivationFavorable, isVirtueFavorable, isIntimacyFavorable):
+        """Adjust DV for Appearance, motivation, virtue, and intimacy"""
         mapping = {True: -1, False: 1, None: 0} # Giving numerical values for our True/False answers
         factors = [isIntimacyFavorable, isVirtueFavorable,
                    isMotivationFavorable]  # arranged in order of increasing importance
@@ -465,7 +468,7 @@ class ExaltedCharacter():
             filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
         positives = max(
             filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
-        effectiveMDV = max(0, defendingChar.MDV() + negatives + positives + self.appearanceAdjustment(defendingChar))
+        effectiveMDV = max(0, self.MDV() + negatives + positives + self.appearanceAdjustment(attackingChar))
         return effectiveMDV
 
     def socialAttack(self, defendingChar, ability=None, isMotivationFavorable=None, isVirtueFavorable=None, isIntimacyFavorable=None):
@@ -476,15 +479,15 @@ class ExaltedCharacter():
         #Pick either charisma or manipulation
         attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation
 
-        effectiveMDV = self.adjustedMDV(defendingChar, isIntimacyFavorable, isMotivationFavorable, isVirtueFavorable)
+        theirEffectiveMDV = defendingChar.adjustedMDV(self, isMotivationFavorable, isVirtueFavorable, isIntimacyFavorable)
         successes = self.rollWithPenalties(attribute + ability, "Social Attack")
-        threshold = successes - effectiveMDV
-        if successes >= effectiveMDV:
-            print "Beat MDV of", effectiveMDV, "with", threshold, "threshold successes"
+        threshold = successes - theirEffectiveMDV
+        if successes >= theirEffectiveMDV:
+            print "Beat MDV of", theirEffectiveMDV, "with", threshold, "threshold successes"
             if threshold >= 3:  # per errata: "Threshold Successes on Social Attacks"
                 print "+" + str(threshold/3), "Willpower to resist"
         else:
-            print "You are not convincing! ", successes, "successes vs. their", effectiveMDV, "MDV."
+            print "You are not convincing! ", successes, "successes vs. their", theirEffectiveMDV, "MDV."
         return 1 + threshold / 3  # Willpower cost to resist this (no charms)
 
 
