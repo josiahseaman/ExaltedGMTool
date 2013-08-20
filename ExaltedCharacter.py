@@ -248,6 +248,9 @@ class ExaltedCharacter():
         print elem
         return ",".join(elem.itertext())
 
+    def internalPenalties(self):
+        return self.health.woundPenalty()
+
     def sumDicePool(self, *stats):
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
@@ -255,7 +258,11 @@ class ExaltedCharacter():
                 dicePool += self[stat]
             except AttributeError:
                 dicePool += stat #this is probably a number
-        return max(0, dicePool + self.health.woundPenalty())
+        return max(0, dicePool + self.internalPenalties())
+
+    def rollWithPenalties(self, dicePool, label=None):
+        dicePool = max(0, dicePool + self.internalPenalties())
+        return skillCheckByNumber(dicePool, label)
 
     def channelVirtue(self, virtue):
         attribName = virtue + 'Channel'
@@ -441,6 +448,26 @@ class ExaltedCharacter():
     def MDV(self):
         return max(self.dodgeMDV(), self.parryMDV())
 
+    def appearanceAdjustment(self, defendingChar):
+        #Adjust for Appearance
+        appearanceAdjustment = defendingChar['Appearance'] - self['Appearance']
+        appearanceAdjustment = max(-3, min(appearanceAdjustment, 3))
+        return appearanceAdjustment
+
+    def adjustedMDV(self, defendingChar, isIntimacyFavorable, isMotivationFavorable, isVirtueFavorable):
+        #Adjust DV for motivation, virtue, and intimacy
+        mapping = {True: -1, False: 1, None: 0} # Giving numerical values for our True/False answers
+        factors = [isIntimacyFavorable, isVirtueFavorable,
+                   isMotivationFavorable]  # arranged in order of increasing importance
+        factors = map(lambda x: mapping[x], factors)
+        factors = [x * (i + 1) for i, x in enumerate(factors)]  # factors are arranged in increasing importance = 1,2,3
+        negatives = min(
+            filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+        positives = max(
+            filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+        effectiveMDV = max(0, defendingChar.MDV() + negatives + positives + self.appearanceAdjustment(defendingChar))
+        return effectiveMDV
+
     def socialAttack(self, defendingChar, ability=None, isMotivationFavorable=None, isVirtueFavorable=None, isIntimacyFavorable=None):
         if ability is None:
             ability = max(self["Investigation"], self["Performance"], self["Presence"])
@@ -448,15 +475,9 @@ class ExaltedCharacter():
             ability = self[ability]  # turn this name string into a number off your character sheet
         #Pick either charisma or manipulation
         attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation
-        mapping = {True:-1, False:1, None: 0} # Giving numerical values for our True/False answers
-        factors = [isIntimacyFavorable, isVirtueFavorable, isMotivationFavorable]  # arranged in order of increasing importance
-        factors = map(lambda x: mapping[x], factors)
-        factors = [x*(i+1) for i,x in enumerate(factors)]  # factors are arranged in increasing importance = 1,2,3
-        negatives = min(filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
-        positives = max(filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
 
-        effectiveMDV = defendingChar.MDV() + negatives + positives
-        successes = skillCheckByNumber(attribute + ability, "Social Attack")
+        effectiveMDV = self.adjustedMDV(defendingChar, isIntimacyFavorable, isMotivationFavorable, isVirtueFavorable)
+        successes = self.rollWithPenalties(attribute + ability, "Social Attack")
         threshold = successes - effectiveMDV
         if successes >= effectiveMDV:
             print "Beat MDV of", effectiveMDV, "with", threshold, "threshold successes"
