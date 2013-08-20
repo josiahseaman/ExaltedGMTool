@@ -180,7 +180,7 @@ class ExaltedCharacter():
         return total
 
     def damageCode(self):
-        return self.weaponStats['damage'] + self.sumDicePool('Strength', )
+        return self.weaponStats['damage'] + self['Strength']
 
     def parryDV(self):  # Bows can lack the "defence" key
         return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
@@ -249,15 +249,26 @@ class ExaltedCharacter():
         return ",".join(elem.itertext())
 
     def internalPenalties(self):
-        return self.health.woundPenalty()  #TODO:  + self.flurryPenalty() + self.magicalEffects['internalPenalty']
+        return self.health.woundPenalty() + self.flurryPenalty() #TODO:  + self.magicalEffects['internalPenalty']
 
-    def sumDicePool(self, *stats):
+    def flurryPenalty(self, hasPenalty=True):
+        nAttacks = self.actionsRemaining.permanent
+        if nAttacks == 1:
+            return 0
+        penalties = range(-nAttacks, -nAttacks*2, -1) if hasPenalty else [0]*nAttacks
+        return penalties[self.actionsRemaining.amountSpent()]
+
+    def sumDicePoolWithoutPenalties(self, stats):
         dicePool = 0
         for stat in stats: #I can do this with reduce, but it's harder to read
             try:
                 dicePool += self[stat]
             except AttributeError:
                 dicePool += stat #this is probably a number
+        return dicePool
+
+    def sumDicePool(self, *stats):
+        dicePool = self.sumDicePoolWithoutPenalties(stats)
         return max(0, dicePool + self.internalPenalties())
 
     def rollWithPenalties(self, dicePool, label=None):
@@ -316,12 +327,11 @@ class ExaltedCharacter():
         elif self.actionsRemaining.permanent == 1:  # If you haven't called flurry yet, I'll do it for you
             self.flurry(nAttacks)
 
-        penalties = range(nAttacks-1, (nAttacks-1)+nAttacks) if hasPenalty else [0]*nAttacks
-        for onslaught, penalty in enumerate(penalties):
+        for onslaught in range(nAttacks):
             if defendingChar.isDying:
                 print "Select a new target! You have", self.actionsRemaining
                 return False
-            damageDone = attackRoll(self.accuracy()-penalty, self.damageCode(), max(0, defendingChar.DV()-onslaught),
+            damageDone = attackRoll(self.accuracy(), self.damageCode(), max(0, defendingChar.DV()-onslaught),
                                     defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
             self.handleAction('Attack', hasPenalty)
             defendingChar.takeDamage(damageDone)
@@ -401,7 +411,7 @@ class ExaltedCharacter():
             self.personalEssence -= remainder
 
     def regain(self, amount):
-        room = self.personalEssence.permanent - self.personalEssence.temporary
+        room = self.personalEssence.amountSpent()
         if room >= amount:
             self.peripheralEssence += amount
         else:
@@ -417,7 +427,7 @@ class ExaltedCharacter():
                 print self.name, "is dead"
                 raise ValueError, "Remove character from scene"
         else:
-            self.actionsRemaining = TemporaryStat("Actions Remaining", 1)  # this can be raised by declaring a flurry
+            self.flurry(1)  # this can be raised by declaring a flurry
             self.dvPenalty = 0 # remove dv penalties
             self.longestActionSpeed = 3
             self.maintainClinch()# maintain clinch
@@ -445,10 +455,10 @@ class ExaltedCharacter():
         return halfRoundUp(raw) # Round Up
 
     def dodgeMDV(self):  # Round down
-        return (self.sumDicePool('Willpower', 'Integrity', 'Essence') ) / 2
+        return (self.sumDicePoolWithoutPenalties('Willpower', 'Integrity', 'Essence') + self.health.woundPenalty()) / 2
 
     def MDV(self):
-        return max(self.dodgeMDV(), self.parryMDV())
+        return max(0, max(self.dodgeMDV(), self.parryMDV()) + self.dvPenalty)
 
     def appearanceAdjustment(self, attackingChar):
         #Adjust for Appearance

@@ -1,3 +1,5 @@
+from TemporaryStat import RulesError
+
 __author__ = 'seaman'
 
 import unittest
@@ -57,7 +59,7 @@ class CharacterTest(unittest.TestCase):
     def testRunningOut(self):
         self.c.roll('Compassion', 'Dexterity')
         self.c.roll('Compassion', 'Dexterity')
-        self.assertRaises(ValueError, self.c.roll, 'Compassion', 'Dexterity' )
+        self.assertRaises(RulesError, self.c.roll, 'Compassion', 'Dexterity' )
 
     def testChooseWeapon(self):
         self.assertEqual(self.gin.armorStats['name'], 'Superheavy Plate (Artifact)')
@@ -98,6 +100,7 @@ class CharacterTest(unittest.TestCase):
         self.assertEqual(self.caedris.dvPenalty, -3)
         self.assertEqual(self.caedris.longestActionSpeed, 5)
         self.assertEqual(self.caedris.actionsRemaining.temporary, 0)
+        self.assertRaises(RulesError, self.caedris.handleAction, 'Jump')
 
         self.caedris.refreshDV()
         self.caedris.flurry(3)

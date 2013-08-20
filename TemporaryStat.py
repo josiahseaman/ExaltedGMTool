@@ -13,7 +13,7 @@ class TemporaryStat():
 
     def __isub__(self, amount): # operator -=
         if self.temporary < amount:
-            raise ValueError("You don't have enough " + self.name + " to do that.")
+            raise RulesError("You don't have enough " + self.name + " to do that.")
         self.temporary = self.temporary - amount
         print self.name, str(self.temporary), "remaining of", str(self.permanent)
         return self
@@ -27,6 +27,9 @@ class TemporaryStat():
             return self.temporary == other.temporary
         except:
             return self.temporary == other
+
+    def amountSpent(self):
+        return self.permanent - self.temporary
 
 
 class HealthLevel(TemporaryStat):
