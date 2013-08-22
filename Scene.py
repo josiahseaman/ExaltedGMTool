@@ -74,6 +74,7 @@ class CombatScene():
         self.characters = {}
         self.current = None
         self.battleWheel = None
+        self.globalMookCount = 0
         for character in PlayerCharacters:
             self.addCharacter(character)
 
@@ -83,12 +84,16 @@ class CombatScene():
             self.battleWheel.rollInitiative([character])
 
     def addExtras(self, nDuplicates, character):
+        self.addDuplicates(nDuplicates, character, True)
+
+    def addDuplicates(self, nDuplicates, character, isExtra=False):
         assert isinstance(character, ExaltedCharacter)
-        character.health = HealthLevel('Health Levels', 3)
         for n in range(nDuplicates):
             newChar = copy.deepcopy(character)
-            newChar.name += str(n+1)  # adds a number to the mook
-
+            if isExtra:
+                character.health = HealthLevel('Health Levels', 3)  # Extras only have three health levels, instead of 7
+            self.globalMookCount += 1
+            newChar.name += str(self.globalMookCount)  # adds a number to the mook name
             self.addCharacter(newChar)
 
     def beginBattle(self):
@@ -98,13 +103,10 @@ class CombatScene():
         return self.battleWheel.getCurrentCharacter()
 
     def resolve(self, actionName=None):
+        """resolve() now takes actionName or None since character state can handle speed and DV penalty internally."""
         if actionName:
             self.current.handleAction(actionName)
-        self.battleWheel.moveCurrentCharacterForward(self.current.longestActionSpeed)
-        self.current = self.battleWheel.getCurrentCharacter()
-        self.current.refreshDV()
-        print "It is", str(self.current) + "'s turn to act."
-        return self.current
+        self.resolveManual(self.current.longestActionSpeed)
 
     def resolveManual(self, speed=5):
         self.battleWheel.moveCurrentCharacterForward(speed)

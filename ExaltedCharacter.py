@@ -309,7 +309,9 @@ class ExaltedCharacter():
 
     def flurry(self, nActions, totalReset=False):
         """ This simply declares that the player intends to take multiple actions in a single tick.
-            It is necessary to know how many actions they're taking beforehand in order to calculate dice penalties."""
+            It is necessary to know how many actions they're taking beforehand in order to calculate dice penalties.
+            flurry() accounts for the possibility of resolving one action (maintainClinch() and then declaring a
+            flurry after one action has already been used."""
         preemptiveActions = self.actionsRemaining.amountSpent()
         self.actionsRemaining = TemporaryStat("Actions Remaining", nActions)
         if not totalReset:

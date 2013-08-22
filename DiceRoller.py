@@ -47,7 +47,7 @@ def toHit(accuracy, DV):
     return threshold
 
 
-def toDamage(damageCode, hardness, minimumDamage, soak, thresholdToHit):
+def toDamage(damageCode, hardness, soak, thresholdToHit=0, minimumDamage=1):
     if damageCode + thresholdToHit <= hardness:
         print "Didn't beat hardness", hardness
     else:
@@ -61,7 +61,7 @@ def attackRoll(accuracy, damageCode, DV, soak, hardness=0, minimumDamage=1):
     threshold = toHit(accuracy, DV)
     damageDone = 0
     if threshold > -1:
-        damageDone = toDamage(damageCode, hardness, minimumDamage, soak, threshold)
+        damageDone = toDamage(damageCode, hardness, soak, threshold, minimumDamage)
     return damageDone
 
 
