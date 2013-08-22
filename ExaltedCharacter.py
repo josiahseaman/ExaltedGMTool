@@ -212,7 +212,7 @@ class ExaltedCharacter():
         return root
 
     def getName(self):
-        return self.characterSheet.attrib['repositoryPrintName'].split()[0]
+        return self.characterSheet.attrib['repositoryPrintName'].split()[0].split(',')[0]
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
