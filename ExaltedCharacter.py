@@ -28,7 +28,11 @@ spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV 
         ("Jump", 5, -1),
         ("Rise from Prone", 5, -1),
         ("Miscellaneous", 5, -1),
-        ("Inactive", 5, -20)
+        ("Shape Sorcery", 5, -1),
+        ("Terrestrial Sorcery", 5, -1),
+        ("Celestial Sorcery", 10, -1),
+        ("Cast Sorcery", 1, 0),
+        ("Inactive", 5, -20),
 ]
 actions = {x[0]: Action(*x) for x in spec}  # dict declaration by comprehension, storing Actions by their name
 
@@ -60,6 +64,7 @@ class ExaltedCharacter():
         self.longestActionSpeed = 3
         self.clinchedCharacter = None
         self.actionsRemaining = TemporaryStat("Actions Remaining", 1)
+        self.currentAction = None
 
     def __repr__(self):
         return "<" + self.name + ">"
@@ -362,12 +367,12 @@ class ExaltedCharacter():
 
     def maintainClinch(self):
         if self.clinchedCharacter is not None:
-            aggressor = skillCheckByNumber("Maintain Grapple", self.clinchPool())
-            self.clinchedCharacter.dvPenalty = 0
-            defense = skillCheckByNumber("Break Grapple", self.clinchedCharacter.clinchPool())
-            if aggressor >= defense:
+            defense = skillCheckByNumber(self.clinchedCharacter.clinchPool(), "Break Grapple")
+            threshold = skillCheckByNumber(self.clinchPool(), "Maintain Grapple", defense)
+            if threshold >= 0:
                 print "You maintain the clinch"
                 self.handleAction('Clinch')
+                self.clinchedCharacter.handleAction('Inactive')
                 return True
             else:
                 print "Your victim has become your master!  Prepare to die."
@@ -383,6 +388,10 @@ class ExaltedCharacter():
             self.health.empty()
             print self.name, "is dying"
             self.isDying = True
+        if self.currentAction is not None and "Sorcery" in self.currentAction:
+            fin = skillCheckByNumber(self.sumDicePool("Wits", "Occult"), "Maintain Concentration: Sorcery", damageDealt)
+            if fin < 0:
+                "Everyone within 2 yards takes", self['Essence'], "dice of lethal damage."  # TODO: Spell circle yards
 
     def heal(self, healthGained):
         self.health += healthGained
@@ -431,6 +440,9 @@ class ExaltedCharacter():
             except:
                 print self.name, "is dead"
                 raise ValueError, "Remove character from scene"
+        elif self.currentAction == "Inactive":
+            print self.name, "is still Inactive."
+            self.handleAction("Inactive")
         else:
             self.flurry(1, True)  # this can be raised by declaring a flurry
             self.dvPenalty = 0 # remove dv penalties
@@ -443,13 +455,16 @@ class ExaltedCharacter():
         """handleAction() now takes the name of an action and applies dvPenalty and speed (can be weapon) to the
         character.  hasPenalty=False acts like an extra action charm."""
         action = actions[actionName]
-        self.actionsRemaining -= 1  # TemporaryStat
+        nonPenalizedActions = ["Inactive", "Guard", "Aim"]
+        if action.name not in nonPenalizedActions:
+            self.actionsRemaining -= 1  # TemporaryStat
         if hasPenalty:
             self.dvPenalty += action.dv
         else:  # for extra action charms that only apply the highest DV penalty
             self.dvPenalty = min(self.dvPenalty, action.dv)  # min because the "largest" penalty is negative
         speed = action.speed if action.speed is not None else self.weaponStats["speed"]
         self.longestActionSpeed = max(self.longestActionSpeed, speed)
+        self.currentAction = action.name
 
 
     '''SOCIAL COMBAT'''

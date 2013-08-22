@@ -21,7 +21,7 @@ def d(nDice):
     return rollDamage(nDice)
 
 
-def skillCheckByNumber(nDice, label=None):
+def skillCheckByNumber(nDice, label=None, difficulty=0):
     if not label: label = "Skill"
     rolls = roll(nDice, label)
     hits = filter(lambda x: x >= 7, rolls)
@@ -29,6 +29,14 @@ def skillCheckByNumber(nDice, label=None):
     successes = len(hits) + tens
     if not successes and rolls.count(1):
         print "BOTCH!"
+        successes = -1
+    if difficulty:
+        threshold = successes - difficulty
+        if successes < difficulty:
+            "You fail at", label
+        else:
+            "You succeed at", label, "with", threshold, "threshold successes."
+        successes = threshold
     return successes
 
 
@@ -37,13 +45,7 @@ def s(nDice):
 
 
 def toHit(accuracy, DV):
-    hits = skillCheckByNumber(accuracy, "Attack")
-    threshold = -1
-    if hits < DV:
-        print "You missed"
-    else:
-        threshold = hits - DV
-        print threshold, "successes over a DV of", DV
+    threshold = skillCheckByNumber(accuracy, "Attack", DV)
     return threshold
 
 
