@@ -1,4 +1,4 @@
-from ExaltedCharacter import ExaltedCharacter, actions
+from ExaltedCharacter import ExaltedCharacter
 import copy
 from TemporaryStat import HealthLevel
 
@@ -70,12 +70,12 @@ class BattleWheel():
 
 
 class CombatScene():
-    def __init__(self, PlayerCharacters):
+    def __init__(self, activeCharacters):
         self.characters = {}
         self.current = None
         self.battleWheel = None
         self.globalMookCount = 0
-        for character in PlayerCharacters:
+        for character in activeCharacters:
             self.addCharacter(character)
 
     def addCharacter(self, character):
@@ -100,7 +100,7 @@ class CombatScene():
         self.battleWheel = BattleWheel(self.characters.values())
         self.current = self.battleWheel.getCurrentCharacter()
         print self.battleWheel.tickLayout
-        return self.battleWheel.getCurrentCharacter()
+        return self.current
 
     def resolve(self, actionName=None):
         """resolve() now takes actionName or None since character state can handle speed and DV penalty internally."""

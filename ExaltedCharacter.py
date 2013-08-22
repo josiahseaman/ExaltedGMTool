@@ -382,6 +382,7 @@ class ExaltedCharacter():
                 return False
 
     def takeDamage(self, damageDealt):
+        """takeDamage() checks if the person is casting sorcery and does a distraction check."""
         try:
             self.health -= damageDealt
         except:
@@ -481,7 +482,7 @@ class ExaltedCharacter():
         return max(0, max(self.dodgeMDV(), self.parryMDV()) + self.dvPenalty)
 
     def appearanceAdjustment(self, attackingChar):
-        #Adjust for Appearance
+        #Adjust MDV for Appearance
         appearanceAdjustment = self['Appearance'] - attackingChar['Appearance']
         #TODO: Account for Appearance 0 being a bonus sometimes...
         appearanceAdjustment = max(-3, min(appearanceAdjustment, 3))
@@ -508,7 +509,7 @@ class ExaltedCharacter():
             print "Using", ability
         abilityDice = self[ability]  # turn this name string into a number off your character sheet
         #Pick either charisma or manipulation
-        attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation
+        attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation by style
 
         theirEffectiveMDV = defendingChar.adjustedMDV(self, isMotivationFavorable, isVirtueFavorable, isIntimacyFavorable)
         successes = self.rollWithPenalties(attribute + abilityDice, "Social Attack")
