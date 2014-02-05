@@ -11,11 +11,12 @@ class TemporaryStat():
     def __repr__(self):
         return self.name + ": " + str(self.temporary) + " of " + str(self.permanent)
 
-    def __isub__(self, amount): # operator -=
+    def __isub__(self, amount):  # operator -=
         if self.temporary < amount:
             raise RulesError("You don't have enough " + self.name + " to do that.")
         self.temporary = self.temporary - amount
-        print self.name, str(self.temporary), "remaining of", str(self.permanent)
+        if self.permanent > 1:
+            print(self.name, str(self.temporary), "remaining of", str(self.permanent))
         return self
 
     def __iadd__(self, amount):# operator +=

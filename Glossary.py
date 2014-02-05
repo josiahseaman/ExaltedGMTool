@@ -17,6 +17,11 @@ zombie = ExaltedCharacter.ExaltedCharacter('Zombie.ecg')
 PlayerCharacters = [swift, gin, caedin, zaela, blix, skogur, willow]
 sc = Scene.CombatScene(PlayerCharacters)
 
+
+def c():
+    return sc.current
+
+
 essence = 'Essence'
 willpower = 'Willpower'
 compassion = 'Compassion'

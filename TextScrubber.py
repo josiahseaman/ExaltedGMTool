@@ -32,4 +32,4 @@ spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV 
         ("Inactive", 5, -20)]
 
 for action in spec:
-    print action[0].lower(), "= '" +action[0] +"'"
+    print(action[0].lower(), "= '" +action[0] +"'")

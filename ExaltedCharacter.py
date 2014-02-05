@@ -1,10 +1,11 @@
 import json
 import re
 
-from ElementTree import *
+from xml.etree.ElementTree import ElementTree
 from DiceRoller import *
 from TemporaryStat import TemporaryStat, HealthLevel, RulesError
 from collections import namedtuple
+from functools import reduce
 
 
 def halfRoundUp(raw):
@@ -93,7 +94,7 @@ class ExaltedCharacter():
         try:
             with open(fileName): pass
         except IOError:
-            print "Help! File name does not exist.", fileName
+            print("Help! File name does not exist.", fileName)
         return fileName
 
     def populateGearStats(self):
@@ -116,22 +117,22 @@ class ExaltedCharacter():
                 except: pass
         self.stackSilkenArmor()
         if self.armorStats['name'] == 'Unarmored':
-            print self.name, "is missing Armor"
+            print(self.name, "is missing Armor")
         if self.weaponStats['name'] == 'Punch':
-            print self.name, "is missing Weapon"
+            print(self.name, "is missing Weapon")
 
     def gearList(self):
         models = self.additionalModels()
         gearNames = []
         for i in range(1, 20):  # try grabbing a gear name
             try:
-                gearNames.append(models['Equipment'][0][i][0].itertext().next())
+                gearNames.append(next(models['Equipment'][0][i][0].itertext()))
             except:
                 pass
         return gearNames
 
     def additionalModels(self):
-        e = self.characterSheet.getiterator('AdditionalModels').next()
+        e = next(self.characterSheet.getiterator('AdditionalModels'))
         availableModels = {x.get('templateId'): x for x in e.getchildren()}
         return availableModels
 
@@ -164,11 +165,11 @@ class ExaltedCharacter():
 
         #Damage and attunement blocks are not strictly ordered.  Check for both in a list.
         for block in raw["statsByRuleSet"]["SecondEdition"]:
-            if "damage" in block.keys():
-                for key in block.keys():
+            if "damage" in list(block.keys()):
+                for key in list(block.keys()):
                     stats[key] = block[key] #copies over all new keys
             stats["attuneCost"] = max(stats.get("attuneCost", 0), block.get("attuneCost", 0))
-        if "damage" not in stats.keys():
+        if "damage" not in list(stats.keys()):
             raise ValueError # this is so it fails if it's armor
         stats['name'] = raw['name']
         return stats
@@ -177,10 +178,10 @@ class ExaltedCharacter():
         weaponSkill = "Melee"
         mapping = {"Thrown":"Thrown", "BowType":"Archery", "MartialArts":"MartialArts"}
         for tag in self.weaponStats['tags']:
-            if tag in mapping.keys():
+            if tag in list(mapping.keys()):
                 weaponSkill = mapping[tag]
 
-        print "Using", weaponSkill
+        print("Using", weaponSkill)
         total = self.sumDicePool('Dexterity', weaponSkill) + self.weaponStats['accuracy']
         return total
 
@@ -188,7 +189,7 @@ class ExaltedCharacter():
         return self.weaponStats['damage'] + self['Strength']
 
     def parryDV(self):  # Bows can lack the "defence" key
-        return (self.weaponStats.get('defence',0) + self.sumDicePool('Dexterity', "Melee")) / 2
+        return (self.weaponStats.get('defence', 0) + self.sumDicePool('Dexterity', "Melee")) // 2
 
     def dodgeDV(self):
         return halfRoundUp(self.sumDicePool('Dexterity', 'Dodge', 'Essence') + self.armorStats.get('mobilityPenalty',0))
@@ -198,7 +199,7 @@ class ExaltedCharacter():
 
     def soak(self, damageType='lethal'):
         soakType = damageType + 'Soak'
-        return self.sumDicePool('Stamina') / 2 + self.armorStats[soakType]
+        return self.sumDicePool('Stamina') + self.armorStats[soakType] #Lightbringer don't /2
 
     def hardness(self, damageType='lethal'):
         hardnessType = damageType + 'Hardness'
@@ -226,19 +227,19 @@ class ExaltedCharacter():
         # except: pass
         if statName == 'Martialarts': statName = 'MartialArts'
         try:
-            element = self.characterSheet.iter(statName).next()
+            element = next(self.characterSheet.iter(statName))
         except:
             raise KeyError(str(statName) + ": No such stat")
         if statName == 'Craft':
             branches = element.getiterator('subTrait')
-            result = max(map(self.getStatNumber, branches))
+            result = max(list(map(self.getStatNumber, branches)))
         else:
             result = self.getStatNumber(element)
 
         #check for specialties, assumes they are applicable to this roll
         try:
-            specialtyElem = element.iter('Specialty').next()
-            print "Specialty:", specialtyElem.attrib['name'],
+            specialtyElem = next(element.iter('Specialty'))
+            print("Specialty:", specialtyElem.attrib['name'], end=' ')
                  #currently I'm print this out to remind people of the assumption
             specialty = self.getStatNumber(specialtyElem)
         except:
@@ -250,17 +251,17 @@ class ExaltedCharacter():
         return self.getStat(item)
 
     def getText(self, elem):
-        print elem
+        print(elem)
         return ",".join(elem.itertext())
 
     def internalPenalties(self):
-        return self.health.woundPenalty() + self.flurryPenalty() #TODO:  + self.magicalEffects['internalPenalty']
+        return self.health.woundPenalty() + self.flurryPenalty()  # TODO: + self.magicalEffects['internalPenalty']
 
     def flurryPenalty(self, hasPenalty=True):
         nAttacks = self.actionsRemaining.permanent
-        if nAttacks == 1:
-            return 0
-        penalties = range(-nAttacks, -nAttacks*2, -1) if hasPenalty else [0]*nAttacks
+        if nAttacks == 1 or nAttacks == self.actionsRemaining.amountSpent():
+            return 0  # If we've already used our action, this must be a reflexive skill check = unpenalized
+        penalties = list(range(-nAttacks, -nAttacks*2, -1)) if hasPenalty else [0]*nAttacks
         return penalties[self.actionsRemaining.amountSpent()]
 
     def sumDicePoolWithoutPenalties(self, *stats):
@@ -282,17 +283,11 @@ class ExaltedCharacter():
         dicePool = max(0, dicePool + self.internalPenalties())
         return skillCheckByNumber(dicePool, label)  # TODO: + self.magicalEffects['externalPenalty']
 
-    def channelVirtue(self, virtue):
-        attribName = virtue + 'Channel'
-        self.__dict__[attribName] -= 1
-        return self[virtue]
-
-
     def roll(self, *stats):
         """Each parameter is the name of a attribute, ability, or virtue.  It will automatically channel virtues.
-        Any numbers that are placed will be counted as bonus dice.  Doesn't currently support auto-success beyond willpower.
-        """
-        stats = list(stats)#so that .remove() will work correctly (tuple is immutable)
+        Any numbers that are placed will be counted as bonus dice.
+        Doesn't currently support auto-success beyond willpower."""
+        stats = list(stats)  # so that .remove() will work correctly (tuple is immutable)
         autoSuccesses = 0
         bonusDice = 0
         for trait in stats:
@@ -308,9 +303,14 @@ class ExaltedCharacter():
                 if trait in self.virtues:
                     self.temporaryWillpower -= 1 # even if this is a virtue channel it still takes 1wp
                     self.channelVirtue(trait) # mark off virtue channel
-        label = reduce(lambda x,y: x+str(y)+" ", stats, '')
+        label = self.name + ': ' + reduce(lambda x,y: x+str(y) + " ", stats, '')
         rolledSuccesses = skillCheckByNumber(self.sumDicePool(*stats) + bonusDice, label)
         return rolledSuccesses + autoSuccesses
+
+    def channelVirtue(self, virtue):
+        attribName = virtue + 'Channel'
+        self.__dict__[attribName] -= 1
+        return self[virtue]
 
     def flurry(self, nActions, totalReset=False):
         """ This simply declares that the player intends to take multiple actions in a single tick.
@@ -323,10 +323,12 @@ class ExaltedCharacter():
             self.actionsRemaining -= preemptiveActions
 
     def attack(self, defendingChar, hasPenalty=True):
+        if defendingChar is self:
+            print("You're attacking yourself...")
         damageDealt = attackRoll(self.accuracy(), self.damageCode(), defendingChar.DV(), defendingChar.soak(),
                                  defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
-        defendingChar.takeDamage(damageDealt)
         self.handleAction('Attack', hasPenalty)
+        defendingChar.takeDamage(damageDealt)
         return damageDealt
 
     def flurryAttack(self, nAttacks, defendingChar, hasPenalty=True):
@@ -339,10 +341,11 @@ class ExaltedCharacter():
 
         for onslaught in range(nAttacks):
             if defendingChar.isDying:
-                print "Select a new target! You have", self.actionsRemaining
+                print("Select a new target! You have", self.actionsRemaining)
                 return False
             damageDone = attackRoll(self.accuracy(), self.damageCode(), max(0, defendingChar.DV()-onslaught),
-                                    defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1))
+                                    defendingChar.soak(), defendingChar.hardness(), self.weaponStats.get('minimumDamage', 1)
+            )
             defendingChar.takeDamage(damageDone)
             self.handleAction('Attack', hasPenalty)
         return True
@@ -370,12 +373,12 @@ class ExaltedCharacter():
             defense = skillCheckByNumber(self.clinchedCharacter.clinchPool(), "Break Grapple")
             threshold = skillCheckByNumber(self.clinchPool(), "Maintain Grapple", defense)
             if threshold >= 0:
-                print "You maintain the clinch"
+                print("You maintain the clinch")
                 self.handleAction('Clinch')
                 self.clinchedCharacter.handleAction('Inactive')
                 return True
             else:
-                print "Your victim has become your master!  Prepare to die."
+                print("Your victim has become your master!  Prepare to die.")
                 self.clinchedCharacter.clinchedCharacter = self  # they are now clinching you
                 self.clinchedCharacter = None  # and you aren't clinching them
                 self.handleAction('Inactive')
@@ -383,16 +386,17 @@ class ExaltedCharacter():
 
     def takeDamage(self, damageDealt):
         """takeDamage() checks if the person is casting sorcery and does a distraction check."""
-        try:
-            self.health -= damageDealt
-        except:
-            self.health.empty()
-            print self.name, "is dying"
-            self.isDying = True
-        if self.currentAction is not None and "Sorcery" in self.currentAction:
-            fin = skillCheckByNumber(self.sumDicePool("Wits", "Occult"), "Maintain Concentration: Sorcery", damageDealt)
-            if fin < 0:
-                "Everyone within 2 yards takes", self['Essence'], "dice of lethal damage."  # TODO: Spell circle yards
+        if damageDealt > 0:
+            try:
+                self.health -= damageDealt
+            except:
+                self.health.empty()
+                print(self.name, "is dying")
+                self.isDying = True
+            if self.currentAction is not None and "Sorcery" in self.currentAction:
+                fin = skillCheckByNumber(self.sumDicePool("Wits", "Occult"), "Maintain Concentration: Sorcery", damageDealt)
+                if fin < 0:
+                    "Everyone within 2 yards takes", self['Essence'], "dice of lethal damage."  # TODO: Spell circle yards
 
     def heal(self, healthGained):
         self.health += healthGained
@@ -439,10 +443,10 @@ class ExaltedCharacter():
             try:
                 self.dyingHealthLevels -= 1
             except:
-                print self.name, "is dead"
-                raise ValueError, "Remove character from scene"
+                print(self.name, "is dead")
+                raise ValueError("Remove character from scene")
         elif self.currentAction == "Inactive":
-            print self.name, "is still Inactive."
+            print(self.name, "is still Inactive.")
             self.handleAction("Inactive")
         else:
             self.flurry(1, True)  # this can be raised by declaring a flurry
@@ -493,12 +497,12 @@ class ExaltedCharacter():
         mapping = {True: -1, False: 1, None: 0} # Giving numerical values for our True/False answers
         factors = [isIntimacyFavorable, isVirtueFavorable,
                    isMotivationFavorable]  # arranged in order of increasing importance
-        factors = map(lambda x: mapping[x], factors)
+        factors = [mapping[x] for x in factors]
         factors = [x * (i + 1) for i, x in enumerate(factors)]  # factors are arranged in increasing importance = 1,2,3
         negatives = min(
-            filter(lambda x: x < 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+            [x for x in factors if x < 0] + [0])  # we are adding a zero to our list to avoid the empty list error
         positives = max(
-            filter(lambda x: x > 0, factors) + [0])  # we are adding a zero to our list to avoid the empty list error
+            [x for x in factors if x > 0] + [0])  # we are adding a zero to our list to avoid the empty list error
         effectiveMDV = max(0, self.MDV() + negatives + positives + self.appearanceAdjustment(attackingChar))
         return effectiveMDV
 
@@ -506,7 +510,7 @@ class ExaltedCharacter():
         if ability is None:
             prospects = {abilityName:self[abilityName] for abilityName in ["Investigation", "Performance", "Presence"]}
             ability = max(prospects, key=prospects.get)
-            print "Using", ability
+            print("Using", ability)
         abilityDice = self[ability]  # turn this name string into a number off your character sheet
         #Pick either charisma or manipulation
         attribute = max(self["Charisma"], self["Manipulation"])  # TODO: allow selecting Charisma/Manipulation by style
@@ -515,14 +519,14 @@ class ExaltedCharacter():
         successes = self.rollWithPenalties(attribute + abilityDice, "Social Attack")
         threshold = successes - theirEffectiveMDV
         if successes >= theirEffectiveMDV:
-            print "Beat MDV of", theirEffectiveMDV, "with", threshold, "threshold successes"
+            print("Beat MDV of", theirEffectiveMDV, "with", threshold, "threshold successes")
             if threshold >= 3:  # per errata: "Threshold Successes on Social Attacks"
-                print "+" + str(threshold/3), "Willpower to resist"
+                print("+" + str(threshold/3), "Willpower to resist")
         else:
-            print "You are not convincing! ", successes, "successes vs. their", theirEffectiveMDV, "MDV."
+            print("You are not convincing! ", successes, "successes vs. their", theirEffectiveMDV, "MDV.")
         self.handleAction(ability)
         return 1 + threshold / 3  # Willpower cost to resist this (no charms)
 
 
 if __name__ == "__main__":
-    print "ExaltedCharacter loaded"
+    print("ExaltedCharacter loaded")

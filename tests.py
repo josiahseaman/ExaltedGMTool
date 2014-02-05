@@ -24,7 +24,7 @@ class SceneTest(unittest.TestCase):
         self.assertEqual(len(scene.battleWheel.activeCharacters), 1)
         scene.battleWheel.removeCharacter(self.caedris)
         self.assertEqual(len(scene.battleWheel.activeCharacters), 0)
-        self.assertFalse(any([self.caedris in tick for tick in scene.battleWheel.tickLayout.values()]))
+        self.assertFalse(any([self.caedris in tick for tick in list(scene.battleWheel.tickLayout.values())]))
 
     def testBattleWheel(self):
         bw = Scene.BattleWheel([])
@@ -43,13 +43,13 @@ class CharacterTest(unittest.TestCase):
     caedris = ExaltedCharacter.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
 
     def testPrintAttributes(self):
-        print self.c.name
+        print(self.c.name)
         usefulStats = ['Charisma', 'Presence', 'Survival']
 
         for stat in usefulStats:
-            print stat, ":", int(self.c.getStat(stat) or 0)
+            print(stat, ":", int(self.c.getStat(stat) or 0))
         self.assertRaises(KeyError, self.c.getStat, 'Computers')
-        print "For 'Perception', 'Awareness' Roll", self.c.sumDicePool('Perception', 'Awareness'), "dice"
+        print("For 'Perception', 'Awareness' Roll", self.c.sumDicePool('Perception', 'Awareness'), "dice")
 
     def testDerivedStats(self):
         self.assertEqual(self.c['Essence'], 4)
@@ -76,7 +76,7 @@ class CharacterTest(unittest.TestCase):
 
     def testCraftSkillAndSoakStacking(self):
         self.assertEqual(self.swift.getStat('Craft'),4)
-        self.assertEqual(self.swift.soak(), 11)
+        self.assertEqual(self.swift.soak(), 12)
         self.assertEqual(self.swift.armorStats, self.swift.parseArmor('Chain_Shirt__Artifact_With_Silken_Armor'))
 
     def testDying(self):
