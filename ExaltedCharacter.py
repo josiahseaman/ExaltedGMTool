@@ -9,7 +9,7 @@ from functools import reduce
 
 
 def halfRoundUp(raw):
-    return int(raw / 2.0 + .5)
+    return int(raw / 2 + .5)
 
 
 Action = namedtuple('Action', ['name', 'speed', 'dv'])
@@ -480,7 +480,7 @@ class ExaltedCharacter():
         return halfRoundUp(raw) # Round Up
 
     def dodgeMDV(self):  # Round down
-        return (self.sumDicePoolWithoutPenalties('Willpower', 'Integrity', 'Essence') + self.health.woundPenalty()) / 2
+        return (self.sumDicePoolWithoutPenalties('Willpower', 'Integrity', 'Essence') + self.health.woundPenalty()) // 2
 
     def MDV(self):
         return max(0, max(self.dodgeMDV(), self.parryMDV()) + self.dvPenalty)
@@ -521,11 +521,11 @@ class ExaltedCharacter():
         if successes >= theirEffectiveMDV:
             print("Beat MDV of", theirEffectiveMDV, "with", threshold, "threshold successes")
             if threshold >= 3:  # per errata: "Threshold Successes on Social Attacks"
-                print("+" + str(threshold/3), "Willpower to resist")
+                print("+" + str(threshold//3), "Willpower to resist")
         else:
             print("You are not convincing! ", successes, "successes vs. their", theirEffectiveMDV, "MDV.")
         self.handleAction(ability)
-        return 1 + threshold / 3  # Willpower cost to resist this (no charms)
+        return 1 + threshold // 3  # Willpower cost to resist this (no charms)
 
 
 if __name__ == "__main__":
