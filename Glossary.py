@@ -1,20 +1,26 @@
-import ExaltedCharacter
+from ExaltedCharacter import ExaltedCharacter
 import Scene
 
-swift = ExaltedCharacter.ExaltedCharacter('WarrickSwiftColson.ecg')
-gin = ExaltedCharacter.ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
-# caedris = ExaltedCharacter.ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
-caedin = ExaltedCharacter.ExaltedCharacter('CaidenUnionofWanderedStars.ecg')
-zaela = ExaltedCharacter.ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
-blix = ExaltedCharacter.ExaltedCharacter('Blixorthodon.ecg')
-skogur = ExaltedCharacter.ExaltedCharacter('WanderingVengefulLink.ecg')
-willow = ExaltedCharacter.ExaltedCharacter('Willow.ecg')
+# swift = ExaltedCharacter('WarrickSwiftColson.ecg')
+# gin = ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
+# # caedris = ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
+# caedin = ExaltedCharacter('CaidenUnionofWanderedStars.ecg')
+# zaela = ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
+# blix = ExaltedCharacter('Blixorthodon.ecg')
+# skogur = ExaltedCharacter('WanderingVengefulLink.ecg')
+# willow = ExaltedCharacter('Willow.ecg')
+alatu = ExaltedCharacter('AlatutheForsaken.ecg')
+amod = ExaltedCharacter('Amod.ecg')
+quinn = ExaltedCharacter('QuinnLanus.ecg')
+qismet = ExaltedCharacter('Qismet.ecg')
+storm = ExaltedCharacter('BlindingStorm.ecg')
 
-arc = ExaltedCharacter.ExaltedCharacter('Arczeckhi.ecg')
-neph = ExaltedCharacter.ExaltedCharacter('Nephwrack.ecg')
-zombie = ExaltedCharacter.ExaltedCharacter('Zombie.ecg')
+arc = ExaltedCharacter('Arczeckhi.ecg')
+neph = ExaltedCharacter('Nephwrack.ecg')
+zombie = ExaltedCharacter('Zombie.ecg')
 
-PlayerCharacters = [swift, gin, caedin, zaela, blix, skogur, willow]
+PlayerCharacters = [alatu, amod, quinn, qismet, storm]
+    # [swift, gin, caedin, zaela, blix, skogur, willow]
 sc = Scene.CombatScene(PlayerCharacters)
 
 
