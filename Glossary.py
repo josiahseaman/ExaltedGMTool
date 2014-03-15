@@ -50,13 +50,19 @@ gray.masteries = {"Awareness":2,
 "Occult":2}
 
 PlayerCharacters = [alatu, amod, quinn, qismet, storm, gray]
-NPCs = []
-names = ['alatu', 'amod', 'quinn', 'qismet', 'storm', 'gray']
-for index, pc in enumerate(PlayerCharacters):
-    evil_pc = copy.deepcopy(pc)
-    evil_pc.name = "Evil " + evil_pc.name
-    locals()['evil_'+names[index]] = evil_pc
-    NPCs.append(evil_pc)
+
+jorah = ExaltedCharacter('JorahAdjunctoftheFinalSilence.ecg')
+NPCs = [jorah, ]
+
+def add_evil_clones(PlayerCharacters, NPCs):
+    names = ['alatu', 'amod', 'quinn', 'qismet', 'storm', 'gray']
+    for index, pc in enumerate(PlayerCharacters):
+        evil_pc = copy.deepcopy(pc)
+        evil_pc.name = "Evil " + evil_pc.name
+        locals()['evil_' + names[index]] = evil_pc
+        NPCs.append(evil_pc)
+
+# add_evil_clones(PlayerCharacters, NPCs)
 
 sc = Scene.CombatScene(PlayerCharacters + NPCs)
 
