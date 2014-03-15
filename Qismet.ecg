@@ -156,6 +156,7 @@
       </CharmGroup>
       <CharmGroup name="Investigation" type="Solar">
         <Charm name="Solar.2ndExcellency.Investigation" experienceLearned="false"/>
+        <Charm name="Solar.CraftyObservationMethod" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Melee" type="Solar">
         <Charm name="Solar.HungryTigerTechnique" experienceLearned="false"/>

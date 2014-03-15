@@ -58,7 +58,7 @@
       </Mental>
     </Attributes>
     <Abilities>
-      <Archery creationValue="0"/>
+      <Archery creationValue="5" favored="true"/>
       <MartialArts creationValue="5" favored="true">
         <Specialty creationValue="3" name="One on One"/>
       </MartialArts>
@@ -96,7 +96,7 @@
       <Investigation creationValue="5" favored="true">
         <Specialty creationValue="3" name="Deduction"/>
       </Investigation>
-      <Lore creationValue="5" favored="true">
+      <Lore creationValue="5">
         <Specialty creationValue="3" name="Wyld Shaping"/>
       </Lore>
       <Medicine creationValue="3"/>
@@ -116,7 +116,7 @@
       </Linguistics>
       <Ride creationValue="0"/>
       <Sail creationValue="0"/>
-      <Socialize creationValue="5">
+      <Socialize creationValue="2">
         <Specialty creationValue="3" name="Analysis"/>
       </Socialize>
     </Abilities>
@@ -150,24 +150,27 @@
       </CharmGroup>
       <CharmGroup name="Linguistics" type="Solar">
         <Charm name="Solar.TwistedWordsTechnique" experienceLearned="false"/>
-        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
         <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
+        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Linguistics" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="MartialArts" type="Solar">
         <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
         <Charm name="Solar.OrichalcumConditioning" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.MartialArts" experienceLearned="false"/>
-        <Charm name="Solar.SwallowingTheLotusRoot" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Lore" type="Solar">
         <Charm name="Solar.3rdExcellency.Lore" experienceLearned="false"/>
-        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
         <Charm name="Solar.Wyld-ShapingTechnique" experienceLearned="false"/>
+        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Lore" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Investigation" type="Sidereal">
         <Charm name="Sidereal.EfficientSecretaryTechnique" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="RighteousDevilStyle" type="Solar">
+        <Charm name="Celestial.KissOfTheSunConcentration" experienceLearned="false"/>
+        <Charm name="Celestial.BlossomOfInevitableDemiseTechnique" experienceLearned="false"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -177,6 +180,17 @@
     <Spells/>
     <Experience/>
     <AdditionalModels>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
+      </Model>
+      <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
       <Model templateId="Equipment">
         <Content>
           <item>
@@ -191,6 +205,20 @@
               <specialty name="One on One" type="MartialArts"/>
             </printedStats>
           </item>
+          <item>
+            <templateId><![CDATA[Flame Piece]]></templateId>
+            <printedStats><![CDATA[Ranged]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Flame Piece]]></templateId>
+            <printedStats><![CDATA[Ranged]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Reinforced Breastplate (Artifact)]]></templateId>
+            <material><![CDATA[Orichalcum]]></material>
+            <printedStats><![CDATA[Armour]]></printedStats>
+            <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
+          </item>
         </Content>
       </Model>
       <Model templateId="Linguistics">
@@ -203,14 +231,6 @@
             <language><![CDATA[Skytongue]]></language>
           </linguistics>
         </Content>
-      </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
       </Model>
       <Model templateId="Intimacies">
         <Content>
@@ -247,9 +267,6 @@
             </Intimacy>
           </Intimacies>
         </Content>
-      </Model>
-      <Model templateId="Craft">
-        <Content/>
       </Model>
       <Model templateId="SolarVirtueFlaw">
         <Content>
