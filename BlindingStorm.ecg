@@ -88,23 +88,23 @@
     </Abilities>
     <Backgrounds/>
     <Charms>
-      <CharmGroup name="Investigation" type="Solar">
-        <Charm name="Solar.1stExcellency.Investigation" experienceLearned="false"/>
-        <Charm name="Solar.IrresistibleQuestioningTechnique" experienceLearned="false"/>
-        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="MartialArts" type="Solar">
-        <Charm name="Solar.1stExcellency.MartialArts" experienceLearned="false"/>
-      </CharmGroup>
       <CharmGroup name="Occult" type="Solar">
         <Charm name="Solar.CelestialCircleSorcery" experienceLearned="false"/>
         <Charm name="Solar.TerrestrialCircleSorcery" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Resistance" type="Solar">
-        <Charm name="Solar.AdamantSkinTechnique" experienceLearned="false"/>
         <Charm name="Solar.DurabilityOakMeditation" experienceLearned="false"/>
-        <Charm name="Solar.IronSkinConcentration" experienceLearned="false"/>
         <Charm name="Solar.SpiritStrengthensSkin" experienceLearned="false"/>
+        <Charm name="Solar.IronSkinConcentration" experienceLearned="false"/>
+        <Charm name="Solar.AdamantSkinTechnique" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="MartialArts" type="Solar">
+        <Charm name="Solar.1stExcellency.MartialArts" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Investigation" type="Solar">
+        <Charm name="Solar.1stExcellency.Investigation" experienceLearned="false"/>
+        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
+        <Charm name="Solar.IrresistibleQuestioningTechnique" experienceLearned="false"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -122,7 +122,15 @@
     </Spells>
     <Experience/>
     <AdditionalModels>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
+      </Model>
       <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="Specialties">
         <Content/>
       </Model>
       <Model templateId="Equipment">
@@ -133,6 +141,15 @@
             <printedStats><![CDATA[Kick]]></printedStats>
             <printedStats><![CDATA[Clinch]]></printedStats>
           </item>
+          <item>
+            <templateId><![CDATA[Armor of Aquatic Puissance]]></templateId>
+            <printedStats><![CDATA[Armour]]></printedStats>
+          </item>
+        </Content>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics/>
         </Content>
       </Model>
       <Model templateId="Intimacies">
@@ -147,16 +164,6 @@
           </Intimacies>
         </Content>
       </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics/>
-        </Content>
-      </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
-      </Model>
       <Model templateId="SolarVirtueFlaw">
         <Content>
           <VirtueFlaw>
@@ -166,9 +173,6 @@
             <LimitBreak><![CDATA[People's Immaturity]]></LimitBreak>
           </VirtueFlaw>
         </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
       </Model>
     </AdditionalModels>
   </Statistics>
