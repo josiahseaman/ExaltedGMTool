@@ -37,6 +37,7 @@ spec = [("Attack", None, -1),  # None means that it varies, as opposed to -0 DV 
 ]
 actions = {x[0]: Action(*x) for x in spec}  # dict declaration by comprehension, storing Actions by their name
 
+
 class ExaltedCharacter():
     def __init__(self, filename=None):
         self.name = "Unnamed"
@@ -60,6 +61,7 @@ class ExaltedCharacter():
         self.TemperanceChannel = self.newStat('Temperance')
         self.ValorChannel = self.newStat('Valor')
         self.magicalEffects = {}
+        self.masteries = {}
 
         self.dvPenalty = 0
         self.longestActionSpeed = 3
@@ -288,7 +290,7 @@ class ExaltedCharacter():
         Any numbers that are placed will be counted as bonus dice.
         Doesn't currently support auto-success beyond willpower."""
         stats = list(stats)  # so that .remove() will work correctly (tuple is immutable)
-        autoSuccesses = 0
+        autoSuccesses = self.masteries.get(stats[1], 0)
         bonusDice = 0
         for trait in stats:
             if isinstance(trait, int):
