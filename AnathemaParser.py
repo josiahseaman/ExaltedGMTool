@@ -12,7 +12,7 @@ class AnathemaParser:
     def parse_to_dictionary(self):
         self.parse_text_fields()
         self.parse_numeric_fields()
-        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
+        self.parse_lists()
         return self.sheet
 
     def parse_text_fields(self):
@@ -32,6 +32,12 @@ class AnathemaParser:
                           bureaucracy, linguistics, ride, sail, socialize, limit, ]
         for x in numeric_fields:
             self.populate_numeric_field(x)
+
+    def parse_lists(self):
+        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
+        additional_models = ['Mutations', 'Equipment', 'Intimacies', 'SolarVirtueFlaw', ]
+        # TODO: 'Craft', 'Linguistics' needs special care to get the right one
+
 
     def populate_text_field(self, field_name, anathema_name = ''):
         if not anathema_name:
