@@ -9,6 +9,12 @@ class AnathemaParser:
         self.root = tree.getroot()
         self.sheet = {}
 
+    def parse_to_dictionary(self):
+        self.parse_text_fields()
+        self.parse_numeric_fields()
+        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
+        return self.sheet
+
     def parse_text_fields(self):
         text_fields = [('Name', 'CharacterName'), 'Player', 'Concept', ('Type', 'CharacterType'), ]
         for t in text_fields:
@@ -17,21 +23,15 @@ class AnathemaParser:
             else:
                 self.populate_text_field(t)
 
-    def parse_to_dictionary(self):
-        self.parse_text_fields()
-
+    def parse_numeric_fields(self):
         self.sheet['Specialties'] = {}
         numeric_fields = [essence, willpower, compassion, conviction, temperance, valor, strength, dexterity, dex,
                           stamina, charisma, manipulation, appearance, perception, intelligence, wits, craft, archery,
                           martialarts, melee, thrown, war, integrity, performance, presence, resistance, survival,
                           investigation, lore, medicine, occult, athletics, awareness, dodge, larceny, stealth,
-                          bureaucracy, linguistics, ride, sail, socialize, limit,]
+                          bureaucracy, linguistics, ride, sail, socialize, limit, ]
         for x in numeric_fields:
             self.populate_numeric_field(x)
-
-
-        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
-        return self.sheet
 
     def populate_text_field(self, field_name, anathema_name = ''):
         if not anathema_name:
@@ -41,13 +41,23 @@ class AnathemaParser:
 
     def populate_numeric_field(self, field_name):
         self.sheet[field_name] = self.getStat(field_name)
-        self.sheet['Specialties'][field_name] = self.getSpecialty()
+        if self.getSpecialty(field_name):
+            self.sheet['Specialties'][field_name] = self.getSpecialty(field_name)
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
         if not result:
             result = element.get('creationValue', None)
         return int(result or 0)
+
+    def getSpecialty(self, statName):
+        """Check for specialties, assumes they are applicable to this roll."""
+        try:
+            element = next(self.root.iter(statName))
+            specialtyElem = next(element.iter('Specialty'))  # TODO: assumes you only have one specialty per skill
+            return specialtyElem.attrib['name'], self.getStatNumber(specialtyElem)
+        except:
+            return None
 
     def getStat(self, statName):
         statName = statName.lower().capitalize()  #proper capitalization
@@ -56,7 +66,7 @@ class AnathemaParser:
         if statName == 'Martialarts':
             statName = 'MartialArts'
         try:
-            element = next(self.characterSheet.iter(statName))
+            element = next(self.root.iter(statName))
         except:
             raise KeyError(str(statName) + ": No such stat")
         if statName == 'Craft':
@@ -64,16 +74,6 @@ class AnathemaParser:
             result = max(list(map(self.getStatNumber, branches)))
         else:
             result = self.getStatNumber(element)
-
-        #check for specialties, assumes they are applicable to this roll
-        try:
-            specialtyElem = next(element.iter('Specialty'))
-            print("Specialty:", specialtyElem.attrib['name'], end=' ')
-            #currently I'm print this out to remind people of the assumption
-            specialty = self.getStatNumber(specialtyElem)
-        except:
-            specialty = 0
-        result += specialty
         return result
 
     def gearList(self):
@@ -87,7 +87,7 @@ class AnathemaParser:
         return gearNames
 
     def additionalModels(self):
-        e = next(self.characterSheet.getiterator('AdditionalModels'))
+        e = next(self.root.getiterator('AdditionalModels'))
         availableModels = {x.get('templateId'): x for x in e.getchildren()}
         return availableModels
 
