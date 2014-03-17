@@ -1,17 +1,47 @@
 __author__ = 'Josiah'
 from xml.etree.ElementTree import ElementTree
-
+from Glossary import *
 
 
 class AnathemaParser:
     def __init__(self, filename):
         tree = ElementTree(file=filename)
         self.root = tree.getroot()
+        self.sheet = {}
+
+    def parse_text_fields(self):
+        text_fields = [('Name', 'CharacterName'), 'Player', 'Concept', ('Type', 'CharacterType'), ]
+        for t in text_fields:
+            if isinstance(t, tuple):
+                self.populate_text_field(*t)
+            else:
+                self.populate_text_field(t)
 
     def parse_to_dictionary(self):
-        sheet = {}
-        sheet['Name'] = self.root.attrib['repositoryPrintName']
-        return sheet
+        self.parse_text_fields()
+
+        self.sheet['Specialties'] = {}
+        numeric_fields = [essence, willpower, compassion, conviction, temperance, valor, strength, dexterity, dex,
+                          stamina, charisma, manipulation, appearance, perception, intelligence, wits, craft, archery,
+                          martialarts, melee, thrown, war, integrity, performance, presence, resistance, survival,
+                          investigation, lore, medicine, occult, athletics, awareness, dodge, larceny, stealth,
+                          bureaucracy, linguistics, ride, sail, socialize, limit,]
+        for x in numeric_fields:
+            self.populate_numeric_field(x)
+
+
+        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
+        return self.sheet
+
+    def populate_text_field(self, field_name, anathema_name = ''):
+        if not anathema_name:
+            anathema_name = field_name
+        element = next(self.root.iter(anathema_name))
+        self.sheet[field_name] = self.getText(element)
+
+    def populate_numeric_field(self, field_name):
+        self.sheet[field_name] = self.getStat(field_name)
+        self.sheet['Specialties'][field_name] = self.getSpecialty()
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
@@ -60,3 +90,6 @@ class AnathemaParser:
         e = next(self.characterSheet.getiterator('AdditionalModels'))
         availableModels = {x.get('templateId'): x for x in e.getchildren()}
         return availableModels
+
+    def getText(self, elem):
+        return ",".join(elem.itertext())

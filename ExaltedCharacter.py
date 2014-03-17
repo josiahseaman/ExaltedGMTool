@@ -46,6 +46,8 @@ class ExaltedCharacter():
             parser = AnathemaParser(filename)
             self.characterSheet = parser.parse_to_dictionary()
             self.name = self.characterSheet['Name']
+        else:
+            print("I don't know how to parse this file.")
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
         self.populateGearStats()
         '''Temporary Stats'''
