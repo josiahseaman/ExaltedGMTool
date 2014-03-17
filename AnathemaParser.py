@@ -24,7 +24,7 @@ class AnathemaParser:
                 self.populate_text_field(t)
 
     def parse_numeric_fields(self):
-        self.sheet['Specialties'] = {}
+        self.sheet[specialties] = {}
         numeric_fields = [essence, willpower, compassion, conviction, temperance, valor, strength, dexterity, dex,
                           stamina, charisma, manipulation, appearance, perception, intelligence, wits, craft, archery,
                           martialarts, melee, thrown, war, integrity, performance, presence, resistance, survival,

@@ -3,6 +3,7 @@ import re
 from AnathemaParser import AnathemaParser
 
 from DiceRoller import *
+from Glossary import specialties
 from TemporaryStat import TemporaryStat, HealthLevel, RulesError
 from collections import namedtuple
 from functools import reduce
@@ -193,6 +194,14 @@ class ExaltedCharacter():
     def hardness(self, damageType='lethal'):
         hardnessType = damageType + 'Hardness'
         return self.armorStats[hardnessType]
+
+    def getStat(self, statName):
+        base = self.characterSheet[statName]
+        if statName in self.characterSheet[specialties]:
+            entry = self.characterSheet[specialties][statName]
+            print("Specialty: ", entry[0], end='')
+            return base + entry[1]
+        return base
 
     def __getitem__(self, item):
         return self.getStat(item)

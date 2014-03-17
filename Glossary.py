@@ -63,3 +63,5 @@ rise = 'Rise from Prone'
 blockade = 'Blockade Movement'
 shape = "Shape Sorcery"
 
+#Mechanics Misc.
+specialties = 'Specialties'
