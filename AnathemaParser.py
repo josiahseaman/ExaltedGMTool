@@ -35,15 +35,19 @@ class AnathemaParser:
 
     def parse_lists(self):
         lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
-        additional_models = ['Mutations', 'Equipment', 'Intimacies', 'SolarVirtueFlaw', ]
+        additional_models = ['Mutations', 'Intimacies', 'SolarVirtueFlaw', ]  # 'Equipment',
         # TODO: 'Craft', 'Linguistics' needs special care to get the right one
-
+        self.sheet['Equipment'] = self.gearList()
 
     def populate_text_field(self, field_name, anathema_name = ''):
         if not anathema_name:
             anathema_name = field_name
-        element = next(self.root.iter(anathema_name))
-        self.sheet[field_name] = self.getText(element)
+        text = ''
+        try:
+            element = next(self.root.iter(anathema_name))
+            text = self.getText(element)
+        except: pass
+        self.sheet[field_name] = text
 
     def populate_numeric_field(self, field_name):
         self.sheet[field_name] = self.getStat(field_name)

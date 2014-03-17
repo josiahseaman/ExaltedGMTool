@@ -103,9 +103,9 @@ class ExaltedCharacter():
         return fileName
 
     def populateGearStats(self):
-        gearList = self.gearList()
-        self.armorStats = self.parseArmor(None)
-        self.weaponStats = self.parseWeapon(None)
+        gearList = self.characterSheet['Equipment']
+        self.armorStats = self.parseArmor()
+        self.weaponStats = self.parseWeapon()
         gearList = self.handleSilkenArmor(gearList)
         for itemName in gearList:
             try:
@@ -126,7 +126,7 @@ class ExaltedCharacter():
         if self.weaponStats['name'] == 'Punch':
             print(self.name, "is missing Weapon")
 
-    def parseArmor(self, itemName):
+    def parseArmor(self, itemName=None):
         filename = self.createItemPath(itemName)
         if filename is None:
             return {'name':'Unarmored', 'lethalSoak':0, 'bashingSoak':0, 'lethalHardness':0, 'bashingHardness':0, "fatigue":0, "mobilityPenalty":0, "attuneCost":0}
@@ -144,7 +144,7 @@ class ExaltedCharacter():
         stats['name'] = raw['name']
         return stats
 
-    def parseWeapon(self, itemName):
+    def parseWeapon(self, itemName=None):
         filename = self.createItemPath(itemName)
         if filename is None:
             return {"accuracy": 1, "damage": 0, "damageTypeString": "Bashing", "range": 5, "rate": 3, "speed": 5,
