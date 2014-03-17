@@ -1,7 +1,7 @@
 import json
 import re
+from AnathemaParser import AnathemaParser
 
-from xml.etree.ElementTree import ElementTree
 from DiceRoller import *
 from TemporaryStat import TemporaryStat, HealthLevel, RulesError
 from collections import namedtuple
@@ -41,11 +41,11 @@ actions = {x[0]: Action(*x) for x in spec}  # dict declaration by comprehension,
 class ExaltedCharacter():
     def __init__(self, filename=None):
         self.name = "Unnamed"
-        self.characterSheet = None
-        if filename:
-            filename = filename if '.ecg' in filename else filename + '.ecg'
-            self.characterSheet = self.parseXML(filename)
-            self.name = self.getName()
+        self.characterSheet = {}
+        if '.ecg' in filename:
+            parser = AnathemaParser(filename)
+            self.characterSheet = parser.parse_to_dictionary()
+            self.name = self.characterSheet['Name']
         self.virtues = ['Compassion', 'Conviction', 'Temperance', 'Valor']
         self.populateGearStats()
         '''Temporary Stats'''
@@ -123,21 +123,6 @@ class ExaltedCharacter():
         if self.weaponStats['name'] == 'Punch':
             print(self.name, "is missing Weapon")
 
-    def gearList(self):
-        models = self.additionalModels()
-        gearNames = []
-        for i in range(1, 20):  # try grabbing a gear name
-            try:
-                gearNames.append(next(models['Equipment'][0][i][0].itertext()))
-            except:
-                pass
-        return gearNames
-
-    def additionalModels(self):
-        e = next(self.characterSheet.getiterator('AdditionalModels'))
-        availableModels = {x.get('templateId'): x for x in e.getchildren()}
-        return availableModels
-
     def parseArmor(self, itemName):
         filename = self.createItemPath(itemName)
         if filename is None:
@@ -207,54 +192,8 @@ class ExaltedCharacter():
         hardnessType = damageType + 'Hardness'
         return self.armorStats[hardnessType]
 
-
-    def parseXML(self, filename):
-        """:return: Root node of the XML character sheet"""
-        tree = ElementTree(file=filename)
-        root = tree.getroot()
-        return root
-
-    def getName(self):
-        return self.characterSheet.attrib['repositoryPrintName'].split()[0].split(',')[0]
-
-    def getStatNumber(self, element):
-        result = element.get('experiencedValue', None)
-        if not result:
-            result = element.get('creationValue', None)
-        return int(result or 0)
-
-    def getStat(self, statName):
-        statName = statName.lower().capitalize() #proper capitalization
-        # try: return self.magicalEffects[statName]
-        # except: pass
-        if statName == 'Martialarts': statName = 'MartialArts'
-        try:
-            element = next(self.characterSheet.iter(statName))
-        except:
-            raise KeyError(str(statName) + ": No such stat")
-        if statName == 'Craft':
-            branches = element.getiterator('subTrait')
-            result = max(list(map(self.getStatNumber, branches)))
-        else:
-            result = self.getStatNumber(element)
-
-        #check for specialties, assumes they are applicable to this roll
-        try:
-            specialtyElem = next(element.iter('Specialty'))
-            print("Specialty:", specialtyElem.attrib['name'], end=' ')
-                 #currently I'm print this out to remind people of the assumption
-            specialty = self.getStatNumber(specialtyElem)
-        except:
-            specialty = 0
-        result += specialty
-        return result
-
     def __getitem__(self, item):
         return self.getStat(item)
-
-    def getText(self, elem):
-        print(elem)
-        return ",".join(elem.itertext())
 
     def internalPenalties(self):
         return self.health.woundPenalty() + self.flurryPenalty()  # TODO: + self.magicalEffects['internalPenalty']
