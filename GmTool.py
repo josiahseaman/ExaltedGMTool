@@ -1,51 +1,87 @@
 from Glossary import *
 
-sc.characters = {}
-sc.addCharacter(skogur)
-sc.addExtras(5, zombie)
-sc.beginBattle()
 
-# from Glossary import *
-# import Scene
-# from ExaltedCharacter import actions
-#
-# __author__ = 'Josiah'
-# class UI():
-#     def __init__(self):
-#         self.scene = Scene.CombatScene(PlayerCharacters)
-#         self.scene.beginBattle()
-#
-#     def start(self):
-#         while True:
-#             actor = self.scene.battleWheel.getCurrentCharacter()
-#             # speed = self.promptUser(actor) #do stuff
-#
-#             self.scene.battleWheel.moveCurrentCharacterForward(speed)
-#
-#     def walkUserThroughParameters(self, actor, func):
-#         try:
-#             actionSpeed = func(actor) # call function
-#         except:
-#             target = mook #TODO: user inputs target character
-#             actionSpeed = func(actor, target)
-#         return actionSpeed
-#
-#     def promptUser(self, actor):
-#         for index, action in enumerate(actions):
-#             print str(index+1) + ")", action
-#         print actor.name, "is ready"
-#         actionNumber = input("Speed:") - 1
-#         declaredAction = actions[actionNumber][1] #figure out which action
-#
-#         actionSpeed = self.walkUserThroughParameters(actor, declaredAction)
-#
-#         defaultSpeed = actions[actionNumber][2]
-#         speed = actionSpeed if defaultSpeed is None else defaultSpeed # if defaultSpeed is specified, use that over actionSpeed
-#         return speed
-#
-# if __name__ == '__main__':
-#     print "==Exalted GM Assistant Activated=="
-#     gt = UI()
-#     print "New combat scene created containing: ", gt.scene.characters.values()
-#     gt.start()
-#
+import copy
+from ExaltedCharacter import ExaltedCharacter
+import Scene
+
+
+alatu = ExaltedCharacter('AlatutheForsaken.ecg')
+amod = ExaltedCharacter('Amod.ecg')
+quinn = ExaltedCharacter('QuinnLanus.ecg')
+qismet = ExaltedCharacter('Qismet.ecg')
+storm = ExaltedCharacter('BlindingStorm.ecg')
+gray = ExaltedCharacter('LordVarys.ecg')
+
+# load_masteries
+alatu.masteries = {"Melee":2,
+"Occult":3,
+"Presence":2}
+
+amod.masteries = {"Athletics":1,
+"Melee":3,
+"Occult":3,
+"Resistance":1,
+"Stealth":2,
+"Thrown":3,}
+
+quinn.masteries = {"Bureaucracy":1,
+"Presence":2,
+"Linguistics":2,
+"Craft":3,
+"Lore":3,
+"Investigation":2,
+"Martial Arts":2}
+
+qismet.masteries = {"Athletics":1,
+"Awareness":3,
+"Dodge":3,
+"Investigation":2,
+"Melee":2,
+"Occult":2,
+"Stealth":2}
+
+storm.masteries = {"Investigation":2,
+"Martial Arts":1,
+"Occult":3,
+"Resistance":3}
+
+gray.masteries = {"Awareness":2,
+"Integrity":2,
+"Investigation":3,
+"Martial Arts":2,
+"Occult":2}
+
+PlayerCharacters = [alatu, amod, quinn, qismet, storm, gray]
+
+jorah = ExaltedCharacter('JorahAdjunctoftheFinalSilence.ecg')
+NPCs = [jorah, ]
+
+def add_evil_clones(PlayerCharacters, NPCs):
+    names = ['alatu', 'amod', 'quinn', 'qismet', 'storm', 'gray']
+    for index, pc in enumerate(PlayerCharacters):
+        evil_pc = copy.deepcopy(pc)
+        evil_pc.name = "Evil " + evil_pc.name
+        locals()['evil_' + names[index]] = evil_pc
+        NPCs.append(evil_pc)
+
+# add_evil_clones(PlayerCharacters, NPCs)
+
+sc = Scene.CombatScene(PlayerCharacters + NPCs)
+
+
+def c():
+    return sc.current
+
+# swift = ExaltedCharacter('WarrickSwiftColson.ecg')
+# gin = ExaltedCharacter('GintheFearlessRadianceofAwesomeHonor.ecg')
+# # caedris = ExaltedCharacter('CaedrisEmissaryofTenThousandWinds.ecg')
+# caedin = ExaltedCharacter('CaidenUnionofWanderedStars.ecg')
+# zaela = ExaltedCharacter('ZaelaPrismaticUnfoldingLotus.ecg')
+# blix = ExaltedCharacter('Blixorthodon.ecg')
+# skogur = ExaltedCharacter('WanderingVengefulLink.ecg')
+# willow = ExaltedCharacter('Willow.ecg')
+# arc = ExaltedCharacter('Arczeckhi.ecg')
+# neph = ExaltedCharacter('Nephwrack.ecg')
+# zombie = ExaltedCharacter('Zombie.ecg')
+
