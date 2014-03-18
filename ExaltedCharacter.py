@@ -199,7 +199,7 @@ class ExaltedCharacter():
         base = self.characterSheet[statName]
         if statName in self.characterSheet[specialties]:
             entry = self.characterSheet[specialties][statName]
-            print("Specialty: ", entry[0], end='')
+            print("Specialty: ", entry[0], '     ', end='')
             return base + entry[1]
         return base
 
