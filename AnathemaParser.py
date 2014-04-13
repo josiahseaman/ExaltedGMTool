@@ -50,9 +50,13 @@ class AnathemaParser:
         self.sheet[field_name] = text
 
     def populate_numeric_field(self, field_name):
-        self.sheet[field_name] = self.getStat(field_name)
-        if self.getSpecialty(field_name):
-            self.sheet['Specialties'][field_name] = self.getSpecialty(field_name)
+        try:
+            self.sheet[field_name] = self.getStat(field_name)
+            if self.getSpecialty(field_name):
+                self.sheet['Specialties'][field_name] = self.getSpecialty(field_name)
+        except KeyError as e:
+            print(e)
+            self.sheet[field_name] = 0
 
     def getStatNumber(self, element):
         result = element.get('experiencedValue', None)
@@ -78,8 +82,7 @@ class AnathemaParser:
         try:
             element = next(self.root.iter(statName))
         except:
-            print("KeyError(str(", statName, ") + : No such stat")
-            return 0
+            raise KeyError(str(statName) + ": No such stat")
         if statName == 'Craft':
             branches = element.getiterator('subTrait')
             result = max(list(map(self.getStatNumber, branches)))
