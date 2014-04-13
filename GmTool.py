@@ -54,8 +54,12 @@ gray.masteries = {"Awareness":2,
 
 PlayerCharacters = [alatu, amod, quinn, qismet, storm, gray]
 
-jorah = ExaltedCharacter('JorahAdjunctoftheFinalSilence.ecg')
-NPCs = [jorah, ]
+# jorah = ExaltedCharacter('JorahAdjunctoftheFinalSilence.ecg')
+nishvathra = ExaltedCharacter('Zombie.ecg')
+nishvathra.name = 'Nishvathra'
+nishvathra.soak = lambda: 30
+NPCs = [nishvathra, ]
+
 
 def add_evil_clones(PlayerCharacters, NPCs):
     names = ['alatu', 'amod', 'quinn', 'qismet', 'storm', 'gray']
@@ -65,7 +69,7 @@ def add_evil_clones(PlayerCharacters, NPCs):
         locals()['evil_' + names[index]] = evil_pc
         NPCs.append(evil_pc)
 
-# add_evil_clones(PlayerCharacters, NPCs)
+add_evil_clones(PlayerCharacters, NPCs)
 
 sc = Scene.CombatScene(PlayerCharacters + NPCs)
 

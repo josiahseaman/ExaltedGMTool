@@ -105,6 +105,7 @@ class CombatScene():
     def beginBattle(self):
         self.battleWheel = BattleWheel(list(self.characters.values()))
         self.current = self.battleWheel.getCurrentCharacter()
+        print()
         print(self.battleWheel.tickLayout)
         return self.current
 

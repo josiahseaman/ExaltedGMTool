@@ -78,13 +78,15 @@ class AnathemaParser:
         try:
             element = next(self.root.iter(statName))
         except:
-            raise KeyError(str(statName) + ": No such stat")
+            print("KeyError(str(", statName, ") + : No such stat")
+            return 0
         if statName == 'Craft':
             branches = element.getiterator('subTrait')
             result = max(list(map(self.getStatNumber, branches)))
         else:
             result = self.getStatNumber(element)
         return result
+
 
     def gearList(self):
         models = self.additionalModels()
