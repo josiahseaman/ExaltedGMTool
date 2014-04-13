@@ -14,62 +14,49 @@ storm = ExaltedCharacter('BlindingStorm.ecg')
 gray = ExaltedCharacter('LordVarys.ecg')
 
 # load_masteries
-alatu.masteries = {"Melee":2,
-"Occult":3,
-"Presence":2}
+alatu.masteries = {"Melee": 2,
+                   "Occult": 3,
+                   "Presence": 2}
 
-amod.masteries = {"Athletics":1,
-"Melee":3,
-"Occult":3,
-"Resistance":1,
-"Stealth":2,
-"Thrown":3,}
+amod.masteries = {"Athletics": 1,
+                  "Melee": 3,
+                  "Occult": 3,
+                  "Resistance": 1,
+                  "Stealth": 2,
+                  "Thrown": 3}
 
-quinn.masteries = {"Bureaucracy":1,
-"Presence":2,
-"Linguistics":2,
-"Craft":3,
-"Lore":3,
-"Investigation":2,
-"Martial Arts":2}
+quinn.masteries = {"Bureaucracy": 1,
+                   "Presence": 2,
+                   "Linguistics": 2,
+                   "Craft": 3,
+                   "Lore": 3,
+                   "Investigation": 2,
+                   "Martial Arts": 2}
 
-qismet.masteries = {"Athletics":1,
-"Awareness":3,
-"Dodge":3,
-"Investigation":2,
-"Melee":2,
-"Occult":2,
-"Stealth":2}
+qismet.masteries = {"Athletics": 1,
+                    "Awareness": 3,
+                    "Dodge": 3,
+                    "Investigation": 2,
+                    "Melee": 2,
+                    "Occult": 2,
+                    "Stealth": 2}
 
-storm.masteries = {"Investigation":2,
-"Martial Arts":1,
-"Occult":3,
-"Resistance":3}
+storm.masteries = {"Investigation": 2,
+                   "Martial Arts": 1,
+                   "Occult": 3,
+                   "Resistance": 3}
 
-gray.masteries = {"Awareness":2,
-"Integrity":2,
-"Investigation":3,
-"Martial Arts":2,
-"Occult":2}
+gray.masteries = {"Awareness": 2,
+                  "Integrity": 2,
+                  "Investigation": 3,
+                  "Martial Arts": 2,
+                  "Occult": 2}
 
 PlayerCharacters = [alatu, amod, quinn, qismet, storm, gray]
 
 # jorah = ExaltedCharacter('JorahAdjunctoftheFinalSilence.ecg')
-nishvathra = ExaltedCharacter('Zombie.ecg')
-nishvathra.name = 'Nishvathra'
-nishvathra.soak = lambda: 30
-NPCs = [nishvathra, ]
+NPCs = [ ]
 
-
-def add_evil_clones(PlayerCharacters, NPCs):
-    names = ['alatu', 'amod', 'quinn', 'qismet', 'storm', 'gray']
-    for index, pc in enumerate(PlayerCharacters):
-        evil_pc = copy.deepcopy(pc)
-        evil_pc.name = "Evil " + evil_pc.name
-        locals()['evil_' + names[index]] = evil_pc
-        NPCs.append(evil_pc)
-
-add_evil_clones(PlayerCharacters, NPCs)
 
 sc = Scene.CombatScene(PlayerCharacters + NPCs)
 
