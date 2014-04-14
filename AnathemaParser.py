@@ -3,6 +3,15 @@ from xml.etree.ElementTree import ElementTree
 from Glossary import *
 
 
+class Background():
+    def __init__(self, typ, descr, dot):
+        self.group = typ
+        self.description = descr
+        self.dots = dot
+    def __repr__(self):
+        return "%s (%s): %i" % (self.group, self.description, self.dots)
+
+
 class AnathemaParser:
     def __init__(self, filename):
         tree = ElementTree(file='characters/' + filename)
@@ -38,6 +47,7 @@ class AnathemaParser:
         additional_models = ['Mutations', 'Intimacies', 'SolarVirtueFlaw', ]  # 'Equipment',
         # TODO: 'Craft', 'Linguistics' needs special care to get the right one
         self.sheet['Equipment'] = self.gearList()
+        self.sheet['Backgrounds'] = self.backgroundList()
 
     def populate_text_field(self, field_name, anathema_name = ''):
         if not anathema_name:
@@ -100,6 +110,15 @@ class AnathemaParser:
             except:
                 pass
         return gearNames
+
+    def backgroundList(self):
+        backgrounds = []
+        for background_root in self.root.iter('Backgrounds'):
+            for entry in background_root.iter('Background'):
+                group, description, extra = map(lambda x: x.strip(), list(entry.itertext()))
+                dots = max([int(x) for x in entry.attrib.values()])
+                backgrounds.append(Background(group, description, dots))
+        return backgrounds
 
     def additionalModels(self):
         e = next(self.root.getiterator('AdditionalModels'))
