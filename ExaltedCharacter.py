@@ -348,7 +348,7 @@ class ExaltedCharacter():
             if self.currentAction is not None and "Sorcery" in self.currentAction:
                 fin = skillCheckByNumber(self.sumDicePool("Wits", "Occult"), "Maintain Concentration: Sorcery", damageDealt)
                 if fin < 0:
-                    "Everyone within 2 yards takes", self['Essence'], "dice of lethal damage."  # TODO: Spell circle yards
+                    print("Everyone within 2 yards takes", self['Essence'], "dice of lethal damage.")  # TODO: Spell circle yards
 
     def heal(self, healthGained):
         self.health += healthGained
@@ -405,8 +405,6 @@ class ExaltedCharacter():
             self.dvPenalty = 0 # remove dv penalties
             self.longestActionSpeed = 3
             self.maintainClinch()# maintain clinch
-            # if self['Player'] != 'NPC':
-            self.regain(5)  # TODO: only regen for Player Characters
 
     def handleAction(self, actionName, hasPenalty=True):
         """handleAction() now takes the name of an action and applies dvPenalty and speed (can be weapon) to the
