@@ -1,6 +1,11 @@
 __author__ = 'Josiah'
 from xml.etree.ElementTree import ElementTree
 from Glossary import *
+import re
+
+
+def camel_case_spaces(text):
+    return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
 
 
 class Background():
@@ -48,6 +53,9 @@ class AnathemaParser:
         # TODO: 'Craft', 'Linguistics' needs special care to get the right one
         self.sheet['Equipment'] = self.gearList()
         self.sheet['Backgrounds'] = self.backgroundList()
+        self.sheet['Charms'] = self.charmList()
+        self.sheet['Spells'] = self.spellList()
+        self.sheet['Intimacies'] = self.intimacyList()
 
     def populate_text_field(self, field_name, anathema_name = ''):
         if not anathema_name:
@@ -122,6 +130,32 @@ class AnathemaParser:
                 except ValueError as e:
                     print("Received: ", list(map(lambda x: x.strip(), list(entry.itertext()))))
         return backgrounds
+
+    def charmList(self):
+        charms = []
+        for listing in self.root.iter('Charms'):
+            for group in listing.iter('CharmGroup'):
+                ability = camel_case_spaces(group.attrib['name'])
+                ex_type = group.attrib['type']
+                for charm in group:
+                    full_name = charm.attrib['name'].split('.')[1]
+                    charms.append((camel_case_spaces(full_name), ability, ex_type))
+        return charms
+
+    def spellList(self):
+        spells = []
+        for listing in self.root.iter('Spells'):
+            for spell in listing.iter('Spell'):
+                circle, name = spell.attrib['name'].split('.')
+                spells.append((camel_case_spaces(name), circle))
+        return spells
+
+    def intimacyList(self):
+        models = self.additionalModels()
+        intimacies = []
+        for entry in models['Intimacies'][0][0]:
+            intimacies.append((entry.attrib['name'], int(entry.find('Trait').attrib['creationValue'])))
+        return intimacies
 
     def additionalModels(self):
         e = next(self.root.getiterator('AdditionalModels'))
