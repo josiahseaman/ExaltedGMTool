@@ -115,9 +115,12 @@ class AnathemaParser:
         backgrounds = []
         for background_root in self.root.iter('Backgrounds'):
             for entry in background_root.iter('Background'):
-                group, description, extra = map(lambda x: x.strip(), list(entry.itertext()))
-                dots = max([int(x) for x in entry.attrib.values()])
-                backgrounds.append(Background(group, description, dots))
+                try:
+                    group, description, extra = ([x.strip() for x in list(entry.itertext())] + ['', '', ''])[:3]
+                    dots = max([int(x) for x in entry.attrib.values()])
+                    backgrounds.append(Background(group, description, dots))
+                except ValueError as e:
+                    print("Received: ", list(map(lambda x: x.strip(), list(entry.itertext()))))
         return backgrounds
 
     def additionalModels(self):
