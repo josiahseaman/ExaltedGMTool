@@ -161,6 +161,9 @@
             <Intimacy name="Family unit" complete="true">
               <Trait creationValue="4"/>
             </Intimacy>
+            <Intimacy name="The Circle" complete="true">
+              <Trait creationValue="4"/>
+            </Intimacy>
           </Intimacies>
         </Content>
       </Model>

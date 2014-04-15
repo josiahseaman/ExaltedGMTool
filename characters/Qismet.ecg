@@ -117,7 +117,7 @@
       </Stealth>
       <Bureaucracy creationValue="0"/>
       <Linguistics creationValue="1"/>
-      <Ride creationValue="0"/>
+      <Ride creationValue="2"/>
       <Sail creationValue="3"/>
       <Socialize creationValue="0"/>
     </Abilities>
@@ -126,14 +126,14 @@
         <Description><![CDATA[Hidden Blades]]></Description>
       </Background>
       <Background creationValue="3"><![CDATA[Resources]]></Background>
-      <Background creationValue="4"><![CDATA[Henchmen]]>
-        <Description><![CDATA[The Brotherhood of Assassins]]></Description>
-      </Background>
       <Background creationValue="5"><![CDATA[Allies]]>
         <Description><![CDATA[Fakharu]]></Description>
       </Background>
       <Background creationValue="4"><![CDATA[Artifact]]>
         <Description><![CDATA[Warbird]]></Description>
+      </Background>
+      <Background creationValue="4"><![CDATA[Henchmen]]>
+        <Description><![CDATA[The Assassin's Order]]></Description>
       </Background>
     </Backgrounds>
     <Charms>
@@ -210,7 +210,6 @@
             <templateId><![CDATA[Eagle's Sheathed Talons]]></templateId>
             <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
             <printedStats><![CDATA[Close]]></printedStats>
-            <printedStats><![CDATA[Close Combat]]></printedStats>
           </item>
           <item>
             <templateId><![CDATA[Warbird]]></templateId>
@@ -219,6 +218,11 @@
           <item>
             <templateId><![CDATA[Reinforced Buff Jacket (Concealed)]]></templateId>
             <printedStats><![CDATA[Armour]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Knife]]></templateId>
+            <printedStats><![CDATA[Close]]></printedStats>
+            <printedStats><![CDATA[Ranged]]></printedStats>
           </item>
         </Content>
       </Model>

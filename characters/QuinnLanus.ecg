@@ -127,7 +127,7 @@
       <Background creationValue="3"><![CDATA[Artifact]]>
         <Description><![CDATA[Hands of the Great Maker]]></Description>
       </Background>
-      <Background creationValue="3"><![CDATA[Backing]]>
+      <Background creationValue="2"><![CDATA[Backing]]>
         <Description><![CDATA[Celestial Bureaucracy]]></Description>
       </Background>
       <Background creationValue="5"><![CDATA[Resources]]>
@@ -135,35 +135,35 @@
       </Background>
     </Backgrounds>
     <Charms>
+      <CharmGroup name="Craft" type="Solar">
+        <Charm name="Solar.CraftsmanNeedsNoTools" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Craft" experienceLearned="false"/>
+      </CharmGroup>
       <CharmGroup name="Presence" type="Solar">
         <Charm name="Solar.IrresistibleSalesmanSpirit" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Presence" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Linguistics" type="Solar">
+        <Charm name="Solar.TwistedWordsTechnique" experienceLearned="false"/>
+        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
+        <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Linguistics" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Bureaucracy" type="Solar">
         <Charm name="Solar.SpeedWheels" experienceLearned="false"/>
         <Charm name="Solar.Bureau-RectifyingMethod" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Bureaucracy" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="Craft" type="Solar">
-        <Charm name="Solar.CraftsmanNeedsNoTools" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Craft" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Linguistics" type="Solar">
-        <Charm name="Solar.TwistedWordsTechnique" experienceLearned="false"/>
-        <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
-        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Linguistics" experienceLearned="false"/>
+      <CharmGroup name="Lore" type="Solar">
+        <Charm name="Solar.3rdExcellency.Lore" experienceLearned="false"/>
+        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
+        <Charm name="Solar.Wyld-ShapingTechnique" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Lore" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="MartialArts" type="Solar">
         <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
         <Charm name="Solar.OrichalcumConditioning" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.MartialArts" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Lore" type="Solar">
-        <Charm name="Solar.3rdExcellency.Lore" experienceLearned="false"/>
-        <Charm name="Solar.Wyld-ShapingTechnique" experienceLearned="false"/>
-        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Lore" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Investigation" type="Sidereal">
         <Charm name="Sidereal.EfficientSecretaryTechnique" experienceLearned="false"/>
@@ -180,15 +180,7 @@
     <Spells/>
     <Experience/>
     <AdditionalModels>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
-        </Content>
-      </Model>
       <Model templateId="Craft">
-        <Content/>
-      </Model>
-      <Model templateId="Specialties">
         <Content/>
       </Model>
       <Model templateId="Equipment">
@@ -219,17 +211,6 @@
             <printedStats><![CDATA[Armour]]></printedStats>
             <printedStats><![CDATA[Artifact.FullyAttuned]]></printedStats>
           </item>
-        </Content>
-      </Model>
-      <Model templateId="Linguistics">
-        <Content>
-          <linguistics>
-            <language><![CDATA[Seatongue]]></language>
-            <language><![CDATA[HighHolySpeech]]></language>
-            <language><![CDATA[HighRealm]]></language>
-            <language><![CDATA[OldRealm]]></language>
-            <language><![CDATA[Skytongue]]></language>
-          </linguistics>
         </Content>
       </Model>
       <Model templateId="Intimacies">
@@ -266,6 +247,25 @@
               <Trait creationValue="3"/>
             </Intimacy>
           </Intimacies>
+        </Content>
+      </Model>
+      <Model templateId="Linguistics">
+        <Content>
+          <linguistics>
+            <language><![CDATA[Seatongue]]></language>
+            <language><![CDATA[HighHolySpeech]]></language>
+            <language><![CDATA[HighRealm]]></language>
+            <language><![CDATA[OldRealm]]></language>
+            <language><![CDATA[Skytongue]]></language>
+          </linguistics>
+        </Content>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
         </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">

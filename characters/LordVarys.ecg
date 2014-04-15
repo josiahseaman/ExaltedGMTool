@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ExaltedCharacter repositoryId="LordVarys" repositoryPrintName="&quot;Lord Varys&quot;">
+<ExaltedCharacter repositoryId="LordVarys" repositoryPrintName="Lord Grey">
   <Description>
-    <CharacterName><![CDATA["Lord Varys"]]></CharacterName>
+    <CharacterName><![CDATA[Lord Grey]]></CharacterName>
     <Player><![CDATA[Graham]]></Player>
     <Concept><![CDATA[Master of Secrets]]></Concept>
   </Description>
   <Description>
-    <CharacterName><![CDATA["Lord Varys"]]></CharacterName>
+    <CharacterName><![CDATA[Lord Grey]]></CharacterName>
     <Player><![CDATA[Graham]]></Player>
     <Concept><![CDATA[Master of Secrets]]></Concept>
   </Description>
@@ -97,41 +97,41 @@
       </Background>
     </Backgrounds>
     <Charms>
-      <CharmGroup name="Awareness" type="Solar">
-        <Charm name="Solar.2ndExcellency.Awareness" experienceLearned="false"/>
-        <Charm name="Solar.InescapableEyeOfTheSun" experienceLearned="false"/>
-        <Charm name="Solar.SurpriseAnticipationMethod" experienceLearned="false"/>
-      </CharmGroup>
       <CharmGroup name="Integrity" type="Solar">
-        <Charm name="Solar.Integrity-PotectingPrana" experienceLearned="false"/>
         <Charm name="Solar.RighteousLionDefense" experienceLearned="false">
           <Special>
             <LearnCount creationValue="1"/>
           </Special>
         </Charm>
+        <Charm name="Solar.Integrity-PotectingPrana" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="Investigation" type="Solar">
-        <Charm name="Solar.2ndExcellency.Investigation" experienceLearned="false"/>
-        <Charm name="Solar.Courtier'sEyeTechnique" experienceLearned="false"/>
-        <Charm name="Solar.CraftyObservationMethod" experienceLearned="false"/>
-        <Charm name="Solar.IrresistibleQuestioningTechnique" experienceLearned="false"/>
-        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
-        <Charm name="Solar.KnowSoul'sPrice" experienceLearned="false"/>
-        <Charm name="Solar.LegacyDetectingGlance" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Larceny" type="Solar">
-        <Charm name="Solar.2ndExcellency.Larceny" experienceLearned="false"/>
-        <Charm name="Solar.FlawlesslyImpenetrableDisguise" experienceLearned="false"/>
-        <Charm name="Solar.PerfectMirror" experienceLearned="false"/>
-        <Charm name="Solar.VileAnathemaShroud" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="MartialArts" type="Solar">
-        <Charm name="Solar.2ndExcellency.MartialArts" experienceLearned="false"/>
-        <Charm name="Solar.OrichalcumConditioning" experienceLearned="false"/>
-        <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
+      <CharmGroup name="Awareness" type="Solar">
+        <Charm name="Solar.InescapableEyeOfTheSun" experienceLearned="false"/>
+        <Charm name="Solar.SurpriseAnticipationMethod" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Awareness" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Occult" type="Solar">
         <Charm name="Solar.Spirit-DetectingGlance" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="MartialArts" type="Solar">
+        <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
+        <Charm name="Solar.OrichalcumConditioning" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.MartialArts" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Larceny" type="Solar">
+        <Charm name="Solar.VileAnathemaShroud" experienceLearned="false"/>
+        <Charm name="Solar.PerfectMirror" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Larceny" experienceLearned="false"/>
+        <Charm name="Solar.FlawlesslyImpenetrableDisguise" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Investigation" type="Solar">
+        <Charm name="Solar.Courtier'sEyeTechnique" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Investigation" experienceLearned="false"/>
+        <Charm name="Solar.LegacyDetectingGlance" experienceLearned="false"/>
+        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
+        <Charm name="Solar.KnowSoul'sPrice" experienceLearned="false"/>
+        <Charm name="Solar.CraftyObservationMethod" experienceLearned="false"/>
+        <Charm name="Solar.IrresistibleQuestioningTechnique" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="ThroneShadowStyle" type="Sidereal">
         <Charm name="Celestial.LotusEyeTactics" experienceLearned="false"/>
@@ -167,6 +167,9 @@
           <linguistics/>
         </Content>
       </Model>
+      <Model templateId="Specialties">
+        <Content/>
+      </Model>
       <Model templateId="Mutations">
         <Content>
           <Mutations/>
@@ -178,9 +181,6 @@
             <Limit creationValue="0"/>
           </VirtueFlaw>
         </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
       </Model>
     </AdditionalModels>
   </Statistics>
