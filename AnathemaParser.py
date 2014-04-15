@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 __author__ = 'Josiah'
 from xml.etree.ElementTree import ElementTree
 from Glossary import *
@@ -8,13 +10,17 @@ def camel_case_spaces(text):
     return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
 
 
-class Background():
-    def __init__(self, typ, descr, dot):
-        self.group = typ
-        self.description = descr
-        self.dots = dot
-    def __repr__(self):
-        return "%s (%s): %i" % (self.group, self.description, self.dots)
+Background = namedtuple('Background', 'group, description, dots')
+Background.__repr__ = lambda self: "%s (%s): %i" % (self.group, self.description, self.dots)
+
+Intimacy = namedtuple('Intimacy', ['name', 'dots'])
+Intimacy.__repr__ = lambda self: "%s: %i" % (self.name, self.dots)
+
+Spell = namedtuple('Spell', ['name', 'circle'])
+Spell.__repr__ = lambda self: "%s, %s" % (self.name, self.circle)
+
+CharacterCharm = namedtuple('CharacterCharm', ['name', 'ability', 'exalt_type'])
+CharacterCharm.__repr__ = lambda self: "%s: %s" % (self.name, self.ability)
 
 
 class AnathemaParser:
@@ -139,7 +145,7 @@ class AnathemaParser:
                 ex_type = group.attrib['type']
                 for charm in group:
                     full_name = charm.attrib['name'].split('.')[1]
-                    charms.append((camel_case_spaces(full_name), ability, ex_type))
+                    charms.append(CharacterCharm(camel_case_spaces(full_name), ability, ex_type))
         return charms
 
     def spellList(self):
@@ -147,14 +153,14 @@ class AnathemaParser:
         for listing in self.root.iter('Spells'):
             for spell in listing.iter('Spell'):
                 circle, name = spell.attrib['name'].split('.')
-                spells.append((camel_case_spaces(name), circle))
+                spells.append(Spell(camel_case_spaces(name), circle))
         return spells
 
     def intimacyList(self):
         models = self.additionalModels()
         intimacies = []
         for entry in models['Intimacies'][0][0]:
-            intimacies.append((entry.attrib['name'], int(entry.find('Trait').attrib['creationValue'])))
+            intimacies.append(Intimacy(entry.attrib['name'], int(entry.find('Trait').attrib['creationValue'])))
         return intimacies
 
     def additionalModels(self):
