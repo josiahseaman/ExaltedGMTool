@@ -6,7 +6,7 @@ from Glossary import *
 import re
 
 
-def camel_case_spaces(text):
+def spaces_for_camel_case(text):
     return re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
 
 
@@ -141,11 +141,11 @@ class AnathemaParser:
         charms = []
         for listing in self.root.iter('Charms'):
             for group in listing.iter('CharmGroup'):
-                ability = camel_case_spaces(group.attrib['name'])
+                ability = spaces_for_camel_case(group.attrib['name'])
                 ex_type = group.attrib['type']
                 for charm in group:
                     full_name = charm.attrib['name'].split('.')[1]
-                    charms.append(CharacterCharm(camel_case_spaces(full_name), ability, ex_type))
+                    charms.append(CharacterCharm(spaces_for_camel_case(full_name), ability, ex_type))
         return charms
 
     def spellList(self):
@@ -153,7 +153,7 @@ class AnathemaParser:
         for listing in self.root.iter('Spells'):
             for spell in listing.iter('Spell'):
                 circle, name = spell.attrib['name'].split('.')
-                spells.append(Spell(camel_case_spaces(name), circle))
+                spells.append(Spell(spaces_for_camel_case(name), circle))
         return spells
 
     def intimacyList(self):
