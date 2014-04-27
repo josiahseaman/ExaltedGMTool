@@ -54,8 +54,7 @@ class AnathemaParser:
             self.populate_numeric_field(x)
 
     def parse_lists(self):
-        lists = ['Spells', 'Combos', 'Charms', 'Backgrounds']
-        additional_models = ['Mutations', 'Intimacies', 'SolarVirtueFlaw', ]  # 'Equipment',
+        lists = ['Combos', 'Mutations', 'SolarVirtueFlaw', ]
         # TODO: 'Craft', 'Linguistics' needs special care to get the right one
         self.sheet['Equipment'] = self.gearList()
         self.sheet['Backgrounds'] = self.backgroundList()

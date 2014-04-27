@@ -32,29 +32,35 @@
       <Physical>
         <Strength creationValue="2"/>
         <Dexterity creationValue="5"/>
-        <Stamina creationValue="3"/>
+        <Stamina creationValue="2"/>
       </Physical>
       <Social>
         <Charisma creationValue="3"/>
         <Manipulation creationValue="5"/>
-        <Appearance creationValue="4"/>
+        <Appearance creationValue="5"/>
       </Social>
       <Mental>
         <Perception creationValue="5"/>
-        <Intelligence creationValue="3"/>
+        <Intelligence creationValue="2"/>
         <Wits creationValue="4"/>
       </Mental>
     </Attributes>
     <Abilities>
       <Archery creationValue="0"/>
-      <MartialArts creationValue="5" favored="true"/>
-      <Melee creationValue="0"/>
+      <MartialArts creationValue="0"/>
+      <Melee creationValue="5" favored="true">
+        <Specialty creationValue="3" name="Daggers"/>
+      </Melee>
       <Thrown creationValue="0"/>
       <War creationValue="0"/>
-      <Integrity creationValue="5"/>
+      <Integrity creationValue="5">
+        <Specialty creationValue="3" name="While being interrogated"/>
+      </Integrity>
       <Performance creationValue="0"/>
-      <Presence creationValue="0"/>
-      <Resistance creationValue="0"/>
+      <Presence creationValue="5">
+        <Specialty creationValue="3" name="Confidant"/>
+      </Presence>
+      <Resistance creationValue="3"/>
       <Survival creationValue="0"/>
       <Craft>
         <subTrait creationValue="0">
@@ -73,20 +79,30 @@
           <traitName><![CDATA[Wood]]></traitName>
         </subTrait>
       </Craft>
-      <Investigation creationValue="5" favored="true"/>
-      <Lore creationValue="0"/>
+      <Investigation creationValue="5" favored="true">
+        <Specialty creationValue="3" name="Interrogation"/>
+      </Investigation>
+      <Lore creationValue="3"/>
       <Medicine creationValue="0"/>
       <Occult creationValue="3"/>
       <Athletics creationValue="0"/>
-      <Awareness creationValue="5"/>
-      <Dodge creationValue="3"/>
-      <Larceny creationValue="5"/>
+      <Awareness creationValue="5">
+        <Specialty creationValue="3" name="Paranoia"/>
+      </Awareness>
+      <Dodge creationValue="5">
+        <Specialty creationValue="3" name="One on One"/>
+      </Dodge>
+      <Larceny creationValue="5">
+        <Specialty creationValue="3" name="While disguised as a death knight"/>
+      </Larceny>
       <Stealth creationValue="0"/>
-      <Bureaucracy creationValue="0"/>
-      <Linguistics creationValue="0"/>
+      <Bureaucracy creationValue="2"/>
+      <Linguistics creationValue="1"/>
       <Ride creationValue="0"/>
-      <Sail creationValue="0"/>
-      <Socialize creationValue="0"/>
+      <Sail creationValue="3"/>
+      <Socialize creationValue="5">
+        <Specialty creationValue="3" name="While disguised as a death knight"/>
+      </Socialize>
     </Abilities>
     <Backgrounds>
       <Background creationValue="3"><![CDATA[Artifact]]>
@@ -95,46 +111,48 @@
       <Background creationValue="4"><![CDATA[Artifact]]>
         <Description><![CDATA[Venom's Tail (Dagger)]]></Description>
       </Background>
+      <Background creationValue="5"><![CDATA[Contacts]]>
+        <Description><![CDATA[Informants]]></Description>
+      </Background>
+      <Background creationValue="2"><![CDATA[Resources]]></Background>
     </Backgrounds>
     <Charms>
+      <CharmGroup name="Awareness" type="Solar">
+        <Charm name="Solar.2ndExcellency.Awareness" experienceLearned="false"/>
+        <Charm name="Solar.InescapableEyeOfTheSun" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Dodge" type="Solar">
+        <Charm name="Solar.LeapingDodgeMethod" experienceLearned="false"/>
+        <Charm name="Solar.ReflexSidestepTechnique" experienceLearned="false"/>
+        <Charm name="Solar.SevenShadowEvasion" experienceLearned="false"/>
+        <Charm name="Solar.ShadowOverWater" experienceLearned="false"/>
+      </CharmGroup>
       <CharmGroup name="Integrity" type="Solar">
+        <Charm name="Solar.Integrity-PotectingPrana" experienceLearned="false"/>
         <Charm name="Solar.RighteousLionDefense" experienceLearned="false">
           <Special>
             <LearnCount creationValue="1"/>
           </Special>
         </Charm>
-        <Charm name="Solar.Integrity-PotectingPrana" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Awareness" type="Solar">
-        <Charm name="Solar.InescapableEyeOfTheSun" experienceLearned="false"/>
-        <Charm name="Solar.SurpriseAnticipationMethod" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Awareness" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Occult" type="Solar">
-        <Charm name="Solar.Spirit-DetectingGlance" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="MartialArts" type="Solar">
-        <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
-        <Charm name="Solar.OrichalcumConditioning" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.MartialArts" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Larceny" type="Solar">
-        <Charm name="Solar.VileAnathemaShroud" experienceLearned="false"/>
-        <Charm name="Solar.PerfectMirror" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Larceny" experienceLearned="false"/>
-        <Charm name="Solar.FlawlesslyImpenetrableDisguise" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Investigation" type="Solar">
-        <Charm name="Solar.Courtier'sEyeTechnique" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Investigation" experienceLearned="false"/>
-        <Charm name="Solar.LegacyDetectingGlance" experienceLearned="false"/>
-        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
-        <Charm name="Solar.KnowSoul'sPrice" experienceLearned="false"/>
+        <Charm name="Solar.Courtier'sEyeTechnique" experienceLearned="false"/>
         <Charm name="Solar.CraftyObservationMethod" experienceLearned="false"/>
         <Charm name="Solar.IrresistibleQuestioningTechnique" experienceLearned="false"/>
+        <Charm name="Solar.Judge'sEarTechnique" experienceLearned="false"/>
+        <Charm name="Solar.KnowSoul'sPrice" experienceLearned="false"/>
+        <Charm name="Solar.LegacyDetectingGlance" experienceLearned="false"/>
       </CharmGroup>
-      <CharmGroup name="ThroneShadowStyle" type="Sidereal">
-        <Charm name="Celestial.LotusEyeTactics" experienceLearned="false"/>
+      <CharmGroup name="Larceny" type="Solar">
+        <Charm name="Solar.2ndExcellency.Larceny" experienceLearned="false"/>
+        <Charm name="Solar.FlawlesslyImpenetrableDisguise" experienceLearned="false"/>
+        <Charm name="Solar.PerfectMirror" experienceLearned="false"/>
+        <Charm name="Solar.VileAnathemaShroud" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Socialize" type="Solar">
+        <Charm name="Solar.TabooInflictingDiatribe" experienceLearned="false"/>
+        <Charm name="Solar.VenomousWhispersTechnique" experienceLearned="false"/>
       </CharmGroup>
       <Combos/>
       <CharmFilters>
@@ -155,6 +173,18 @@
             <printedStats><![CDATA[Kick]]></printedStats>
             <printedStats><![CDATA[Clinch]]></printedStats>
           </item>
+          <item>
+            <templateId><![CDATA[Chain Shirt]]></templateId>
+            <printedStats><![CDATA[Armour]]></printedStats>
+          </item>
+          <item>
+            <templateId><![CDATA[Eagle's Sheathed Talons]]></templateId>
+            <customTitle><![CDATA[Venom's Tail]]></customTitle>
+            <customDescription><![CDATA[10A/minute Yozi Venom]]></customDescription>
+            <printedStats><![CDATA[Close]]>
+              <specialty name="Daggers" type="Melee"/>
+            </printedStats>
+          </item>
         </Content>
       </Model>
       <Model templateId="Intimacies">
@@ -167,9 +197,6 @@
           <linguistics/>
         </Content>
       </Model>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
       <Model templateId="Mutations">
         <Content>
           <Mutations/>
@@ -181,6 +208,9 @@
             <Limit creationValue="0"/>
           </VirtueFlaw>
         </Content>
+      </Model>
+      <Model templateId="Specialties">
+        <Content/>
       </Model>
     </AdditionalModels>
   </Statistics>

@@ -70,7 +70,7 @@
       <Presence creationValue="5" favored="true">
         <Specialty creationValue="3" name="Explanation"/>
       </Presence>
-      <Resistance creationValue="3"/>
+      <Resistance creationValue="2"/>
       <Survival creationValue="0"/>
       <Craft favored="true">
         <subTrait creationValue="0">
@@ -89,8 +89,9 @@
           <traitName><![CDATA[Wood]]></traitName>
         </subTrait>
         <subTrait creationValue="5">
-          <traitName><![CDATA[Genesis]]></traitName>
-          <Specialty creationValue="3" name="Anti-Magic"/>
+          <traitName><![CDATA[Elemental]]></traitName>
+          <Specialty creationValue="2" name="Genesis"/>
+          <Specialty creationValue="1" name="Magitech"/>
         </subTrait>
       </Craft>
       <Investigation creationValue="5" favored="true">
@@ -99,17 +100,18 @@
       <Lore creationValue="5">
         <Specialty creationValue="3" name="Wyld Shaping"/>
       </Lore>
-      <Medicine creationValue="3"/>
-      <Occult creationValue="4">
-        <Specialty creationValue="2" name="Thaumaturgy"/>
+      <Medicine creationValue="5"/>
+      <Occult creationValue="5">
+        <Specialty creationValue="1" name="Thaumaturgy"/>
+        <Specialty creationValue="2" name="Shadowlands"/>
       </Occult>
       <Athletics creationValue="0"/>
       <Awareness creationValue="3"/>
       <Dodge creationValue="0"/>
-      <Larceny creationValue="2"/>
+      <Larceny creationValue="0"/>
       <Stealth creationValue="0"/>
       <Bureaucracy creationValue="5">
-        <Specialty creationValue="3" name="Celestial"/>
+        <Specialty creationValue="2" name="Celestial"/>
       </Bureaucracy>
       <Linguistics creationValue="5">
         <Specialty creationValue="3" name="Writing"/>
@@ -135,18 +137,10 @@
       </Background>
     </Backgrounds>
     <Charms>
-      <CharmGroup name="Craft" type="Solar">
-        <Charm name="Solar.CraftsmanNeedsNoTools" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Craft" experienceLearned="false"/>
-      </CharmGroup>
-      <CharmGroup name="Presence" type="Solar">
-        <Charm name="Solar.IrresistibleSalesmanSpirit" experienceLearned="false"/>
-        <Charm name="Solar.2ndExcellency.Presence" experienceLearned="false"/>
-      </CharmGroup>
       <CharmGroup name="Linguistics" type="Solar">
         <Charm name="Solar.TwistedWordsTechnique" experienceLearned="false"/>
-        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
         <Charm name="Solar.SagaciousReadingIntent" experienceLearned="false"/>
+        <Charm name="Solar.Letter-Within-a-LetterTechnique" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Linguistics" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="Bureaucracy" type="Solar">
@@ -156,9 +150,13 @@
       </CharmGroup>
       <CharmGroup name="Lore" type="Solar">
         <Charm name="Solar.3rdExcellency.Lore" experienceLearned="false"/>
-        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
         <Charm name="Solar.Wyld-ShapingTechnique" experienceLearned="false"/>
+        <Charm name="Solar.Chaos-RepellingPattern" experienceLearned="false"/>
         <Charm name="Solar.2ndExcellency.Lore" experienceLearned="false"/>
+      </CharmGroup>
+      <CharmGroup name="Presence" type="Solar">
+        <Charm name="Solar.IrresistibleSalesmanSpirit" experienceLearned="false"/>
+        <Charm name="Solar.2ndExcellency.Presence" experienceLearned="false"/>
       </CharmGroup>
       <CharmGroup name="MartialArts" type="Solar">
         <Charm name="Solar.RefusalSutra" experienceLearned="false"/>
@@ -180,7 +178,15 @@
     <Spells/>
     <Experience/>
     <AdditionalModels>
+      <Model templateId="Mutations">
+        <Content>
+          <Mutations/>
+        </Content>
+      </Model>
       <Model templateId="Craft">
+        <Content/>
+      </Model>
+      <Model templateId="Specialties">
         <Content/>
       </Model>
       <Model templateId="Equipment">
@@ -258,14 +264,6 @@
             <language><![CDATA[OldRealm]]></language>
             <language><![CDATA[Skytongue]]></language>
           </linguistics>
-        </Content>
-      </Model>
-      <Model templateId="Specialties">
-        <Content/>
-      </Model>
-      <Model templateId="Mutations">
-        <Content>
-          <Mutations/>
         </Content>
       </Model>
       <Model templateId="SolarVirtueFlaw">

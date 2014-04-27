@@ -133,14 +133,19 @@ class ExaltedCharacter():
         stats = {}
         raw = json.load(open(filename))
         statBlock = raw["statsByRuleSet"]["SecondEdition"]
-        stats['lethalSoak'] = statBlock[0]["soakByHealthType"]['Lethal']
-        stats['bashingSoak'] = statBlock[0]["soakByHealthType"]['Bashing']
-        stats['lethalHardness'] = statBlock[0]["hardnessByHealthType"]['Lethal']
-        stats['bashingHardness'] = statBlock[0]["hardnessByHealthType"]['Bashing']
-        stats["fatigue"] = statBlock[0]["fatigue"]
-        stats["mobilityPenalty"] = statBlock[0]["mobilityPenalty"]
-        try: stats["attuneCost"] = statBlock[1]["attuneCost"] # second statBlock only exists if it's an artifact
-        except: pass
+        for block in statBlock:
+            try:
+                stats['lethalSoak'] = block["soakByHealthType"]['Lethal']
+                stats['bashingSoak'] = block["soakByHealthType"]['Bashing']
+                stats['lethalHardness'] = block["hardnessByHealthType"]['Lethal']
+                stats['bashingHardness'] = block["hardnessByHealthType"]['Bashing']
+                stats["fatigue"] = block["fatigue"]
+                stats["mobilityPenalty"] = block["mobilityPenalty"]
+            except: pass
+            try:
+                stats["attuneCost"] = block["attuneCost"] # second statBlock only exists if it's an artifact
+            except: pass
+        test = stats['lethalSoak']
         stats['name'] = raw['name']
         return stats
 
